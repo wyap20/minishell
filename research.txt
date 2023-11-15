@@ -56,17 +56,44 @@ pid_t wait4(pid_t pid, int *wstatus, int options, struct rusage *rusage)
 -equivalent to waitpid(pid, wstatus, options);
 
 ---<signal.h>---
-sigemptyset
-sigaddset
+int sigemptyset(sigset_t *set)
+- initialize the signal set given by "set" to empty, with all signals excluded from the set
 
-getcwd
-chdir
-stat
-lstat
-fstat
+int sigaddset(sigset_t *set, int signum)
+- add "signum" to "set"
 
-unlink
-execve
+---<unistd.h>---
+char *getcwd(char *buf, size_t size)
+- copies absolute pathname of the current working directory to *buf, that is of length "size"
+- return NULL if length of absolute pathname of cwd including null terminator exceeds "size"
+- **further reading in manual
+
+int chdir(const char *path)
+-changes the cwd of the calling process to the "path" directory
+
+---<unistd.h> <sys/types.h> <sys/stat.h>---
+int stat(const char *pathname, struct stat *statbuf)
+-return info about a file, in "statbuf"
+-permission is required on all of the directories in "pathname" that lead to the file
+
+int lstat(const char *pathname, struct stat *statbuf)
+-return info about a file pointed by pathname into "statbuf"
+-but if pathname is a symbolic link, it only returns information about the link itself
+
+int fstat(int fd, struct stat *statbuf)
+-return info about a file specified by fd into "statbuf"
+
+int unlink(const char *pathname)
+-deletes a name from the filesystem (?)
+-if name was the last link to a file and no process have the file open
+	-the file is deleted and the space is available for reuse
+-if name referred to symbolic link: the link is removed
+-if name referred to a socket, FIFO, or device, the name for it is removed 
+	-but processes which have the object open may continue to use it. (?)
+
+int execve(const char *pathname, char *const argv[], char *const envp[])
+-executes the program referred to by pathname
+-pathname must be binary executable or script starting with shebang: "#!"
 
 dup
 dup2
@@ -108,3 +135,12 @@ signal sigaction kill exit
 Shell behavior:
 up and down arrow key: navigates + display cmd history (if exist)
 left right arrow key: navigates input string, does not write input
+
+$PATH:
+- an environment variable used to specify a set of directories where executable programs
+are located.
+- when user type a command to terminal, the system search the listed directories in $PATH
+to find the corresponding file or command
+
+- example PATH list format "/your/directory/path1:/your/directory/path2:/another/path"
+The system to first look in path1, then path2, so on and so forth
