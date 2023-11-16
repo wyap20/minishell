@@ -1,18 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test.c                                             :+:      :+:    :+:   */
+/*   test_main.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wyap <wyap@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: atok <atok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 18:28:19 by wyap              #+#    #+#             */
-/*   Updated: 2023/11/11 01:40:06 by wyap             ###   ########.fr       */
+/*   Updated: 2023/11/16 12:10:51 by atok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// #include <readline/readline.h>
-// #include <readline/history.h>
+#include <readline/readline.h>
+#include <readline/history.h>
 // #include <stdbool.h>
+#include "minishell.h"
 #include <stdio.h>
 #include <unistd.h>
 #include <signal.h>
@@ -32,10 +33,10 @@ int	main(int ac, char **av, char **env)
 	{
 		while (1)
 		{
-			printf("%s> ", cur_path);
-			scanf("%s", cmd_buf); //forbidden function, only for testing
-			// prompt = ft_strjoin(cur_path, "> ");
-			// cmd_buf = readline(prompt);
+			// printf("%s> ", cur_path);
+			// scanf("%s", cmd_buf); //forbidden function, only for testing
+			prompt = ft_strjoin(cur_path, "> ");
+			cmd_buf = readline(prompt);
 			// if (ft_strlen(cmd_buf) > 0) //carriage return will not be added
 			// 	add_history(cmd_buf);
 			if (!strcmp(cmd_buf, "exit"))
@@ -44,6 +45,8 @@ int	main(int ac, char **av, char **env)
 		}
 	}
 }
+
+// gcc *.c -lreadline && ./a.out
 
 /*
 Q: why not scanf()?
