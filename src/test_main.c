@@ -3,27 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   test_main.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atok <atok@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: wyap <wyap@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 18:28:19 by wyap              #+#    #+#             */
-/*   Updated: 2023/11/16 12:10:51 by atok             ###   ########.fr       */
+/*   Updated: 2023/11/16 13:13:07 by wyap             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <readline/readline.h>
-#include <readline/history.h>
-// #include <stdbool.h>
-#include "minishell.h"
-#include <stdio.h>
-#include <unistd.h>
-#include <signal.h>
-#include <string.h> //tmp header, to replace with libft functions
-#include <stdlib.h>
-// #include "/usr/local/opt/readline/include" //(rl_clear_history)
-// /usr/local/opt/readline/lib
+// #include <readline/readline.h>
+// #include <readline/history.h>
+// // #include <stdbool.h>
+// #include <stdio.h>
+// #include <unistd.h>
+// #include <signal.h>
+// #include <string.h> //tmp header, to replace with libft functions
+// #include <stdlib.h>
+// // #include "/usr/local/opt/readline/include" //(rl_clear_history)
+// // /usr/local/opt/readline/lib
+#include "../minishell.h"
 
 int	main(int ac, char **av, char **env)
 {
+	(void) av;
+	(void) env;
 	char	*cmd_buf;
 	char	*prompt;
 	char	*cur_path;
