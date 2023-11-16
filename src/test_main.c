@@ -6,7 +6,7 @@
 /*   By: wyap <wyap@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 18:28:19 by wyap              #+#    #+#             */
-/*   Updated: 2023/11/16 16:27:24 by wyap             ###   ########.fr       */
+/*   Updated: 2023/11/16 19:18:10 by wyap             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,27 @@ void	print_env_var(char **envp, char *s)
 	printf("%s\n", pwd[1]);
 }
 
+static void	handle_usr_sig(int sig, siginfo_t *siginfo, void *context)
+{
+	// static int	i;
+	// static char	c;
+	(void) siginfo;
+	(void) context;
+	if (sig == SIGINT)
+	{
+		printf("\n***ctrl c***\n");
+		readline("placeholder>");
+	}
+	if (sig == EOF)
+	{
+		printf("ctrl d");
+		exit(1);
+	}	//free and exit shell
+		
+}
+
+struct sigaction	g_signal;
+
 int	main(int ac, char **av, char **envp)
 {
 	(void) av;
@@ -58,6 +79,11 @@ int	main(int ac, char **av, char **envp)
 	char	*prompt;
 	char	*cur_path;
 
+	g_signal.sa_sigaction = handle_usr_sig;
+	g_signal.sa_flags = SA_SIGINFO;
+
+	sigaction(SIGINT, &g_signal, NULL);
+	sigaction(EOF, &g_signal, NULL);			
 	if (ac == 1)
 	{
 		while (1)
@@ -74,7 +100,8 @@ int	main(int ac, char **av, char **envp)
 			if (!ft_strcmp(cmd_buf, "env"))
 				print_sys_env(envp);
 			if (!ft_strcmp(cmd_buf, "exit"))
-				break ;
+				exit(1);
+				// break ;
 			// free(cmd_buf); //readline malloc buffer
 			// free(cur_path); //getcwd malloc
 		}

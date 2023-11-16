@@ -12,6 +12,12 @@
 // #include "/usr/local/opt/readline/include" //(rl_clear_history)
 // /usr/local/opt/readline/lib
 
+// typedef struct s_shell{
+// 	char	*cmd_buf;
+// 	char	*prompt;
+// 	char	*cur_path;
+// }t_shell;
+
 /*libft + custom utils*/
 char	*ft_strjoin(char const *s1, char const *s2);
 size_t	ft_strlen(const char *str);
