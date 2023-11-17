@@ -6,7 +6,7 @@
 /*   By: wyap <wyap@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 18:28:19 by wyap              #+#    #+#             */
-/*   Updated: 2023/11/16 19:18:10 by wyap             ###   ########.fr       */
+/*   Updated: 2023/11/17 23:07:36 by wyap             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,14 @@ void	print_sys_env(char **envp)
 
 	i = -1;
 	while (envp[++i])
-        printf("%s\n", envp[i]);
+		printf("%s\n", envp[i]);
 	return ;
 }
 
 void	print_env_var(char **envp, char *s)
 {
-	int	i;
-	char **pwd;
+	int		i;
+	char	**pwd;
 
 	i = -1;
 	pwd = NULL;
@@ -51,26 +51,23 @@ void	print_env_var(char **envp, char *s)
 	printf("%s\n", pwd[1]);
 }
 
-static void	handle_usr_sig(int sig, siginfo_t *siginfo, void *context)
+static void	sighandler(int sig)
 {
-	// static int	i;
-	// static char	c;
-	(void) siginfo;
-	(void) context;
-	if (sig == SIGINT)
-	{
-		printf("\n***ctrl c***\n");
-		readline("placeholder>");
-	}
-	if (sig == EOF)
-	{
-		printf("ctrl d");
-		exit(1);
-	}	//free and exit shell
-		
+	if (sig != SIGINT)
+		return ;
+	printf("\n");
+	rl_on_new_line();
+	rl_redisplay();
 }
+void	echo_print(const char *str)
+{
+	int	i;
 
-struct sigaction	g_signal;
+	i = 4;
+	while (str[++i])
+		printf("%c", str[i]);
+	printf("\n");
+}
 
 int	main(int ac, char **av, char **envp)
 {
@@ -79,31 +76,43 @@ int	main(int ac, char **av, char **envp)
 	char	*prompt;
 	char	*cur_path;
 
-	g_signal.sa_sigaction = handle_usr_sig;
-	g_signal.sa_flags = SA_SIGINFO;
-
-	sigaction(SIGINT, &g_signal, NULL);
-	sigaction(EOF, &g_signal, NULL);			
+	signal(SIGINT, sighandler);
+	signal(SIGQUIT, SIG_IGN); //ignore ctrl + '\'
 	if (ac == 1)
 	{
 		while (1)
 		{
-			//get curr path
 			if ((cur_path = getcwd(NULL, 0)) == NULL)
 				perror("failed to get current working directory\n");
 			prompt = ft_strjoin(cur_path, "> ");
 			cmd_buf = readline(prompt);
-			if (ft_strlen(cmd_buf) > 0) //carriage return will not be added
+			if (cmd_buf == NULL)
+			{
+				cmd_buf = "exit";
+				printf("\nexit");
+			}
+			if (ft_strlen(cmd_buf) > 0){ //carriage return will not be added
+				if (cmd_buf[0] == ' ')
+					continue;
 				add_history(cmd_buf);
-			if (!ft_strcmp(cmd_buf, "pwd"))
+			}
+			// printf("cmd_buf: %s\n", cmd_buf);
+			// printf("%d\n", ft_strncmp(cmd_buf, "echo", 4) == 0);
+			if (!ft_strncmp(cmd_buf, "echo", 4)) //works but incorrect implementation
+				echo_print(cmd_buf);
+			else if (!ft_strcmp(cmd_buf, "pwd"))
 				print_env_var(envp, "PWD");
-			if (!ft_strcmp(cmd_buf, "env"))
+			else if (!ft_strcmp(cmd_buf, "env"))
 				print_sys_env(envp);
-			if (!ft_strcmp(cmd_buf, "exit"))
+			else if (!ft_strcmp(cmd_buf, "exit"))
+			{
+				free(cmd_buf); //readline malloc buffer
+				free(cur_path); //getcwd malloc
+				rl_clear_history();
 				exit(1);
-				// break ;
-			// free(cmd_buf); //readline malloc buffer
-			// free(cur_path); //getcwd malloc
+			}
+			// else  //if invalid command; create a 2d array of command keywords to match?
+			// 	printf("[minishell] %s: command not found\n", cmd_buf);
 		}
 	}
 }

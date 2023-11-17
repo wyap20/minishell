@@ -1,10 +1,13 @@
 #ifndef MINISHELL
 # define MINISHELL
 
+// #include "libreadline.a"
+#include <stdio.h>
 #include <readline/readline.h>
 #include <readline/history.h>
+// #include <readline.h>
+// #include <history.h>
 // #include <stdbool.h>
-#include <stdio.h>
 #include <unistd.h>
 #include <signal.h>
 #include <string.h> //tmp header, to replace with libft functions

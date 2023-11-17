@@ -6,7 +6,7 @@
 #    By: wyap <wyap@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/06 18:40:56 by wyap              #+#    #+#              #
-#    Updated: 2023/11/16 15:58:04 by wyap             ###   ########.fr        #
+#    Updated: 2023/11/17 17:16:13 by wyap             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,8 +26,9 @@ READLINE_MAC =
 
 .PHONY = all clean fclean re debug
 
+# Artie's PC: -lncurses flag required
 $(NAME): $(OBJ)
-	$(GCC) $(CFLAGS) $(OBJ) $(FSAN) -o $(NAME) -lreadline
+	$(GCC) $(CFLAGS) $(OBJ) -o $(NAME) -lreadline -lncurses
 # $(READLINE_MAC)
 
 all: $(NAME)
@@ -36,9 +37,10 @@ clean:
 	$(RM) $(OBJ)
 
 fclean: clean
-	$(RM) $(NAME)
+	$(RM) $(NAME) $(NAME)_debug
 	@echo $(RM) *.dSYM
 
 re: fclean all
 
-# debug: $(OBJ)
+debug: $(OBJ)
+	$(GCC) $(CFLAGS) $(OBJ) $(FSAN) -o $(NAME)_debug -lreadline -lncurses
