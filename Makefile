@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: wyap <wyap@student.42.fr>                  +#+  +:+       +#+         #
+#    By: atok <atok@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/06 18:40:56 by wyap              #+#    #+#              #
-#    Updated: 2023/11/17 17:16:13 by wyap             ###   ########.fr        #
+#    Updated: 2023/11/20 13:21:20 by atok             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ SRC = test_main.c utils/ft_split.c utils/ft_strlen.c utils/ft_strjoin.c utils/ft
 OBJ = $(addprefix $(SRC_DIR), $(SRC:.c=.o))
 
 GCC = gcc
-INCL = -I ./incl 
+INCL = -I /usr/local/opt/readline/include
 RM = rm -rf
 CFLAGS += -Wall -Wextra -Werror $(INCL)
 FSAN = -fsanitize=address -g3
@@ -28,7 +28,7 @@ READLINE_MAC =
 
 # Artie's PC: -lncurses flag required
 $(NAME): $(OBJ)
-	$(GCC) $(CFLAGS) $(OBJ) -o $(NAME) -lreadline -lncurses
+	$(GCC) $(CFLAGS) $(OBJ) -o $(NAME) -lreadline -L/usr/local/opt/readline/lib -lncurses
 # $(READLINE_MAC)
 
 all: $(NAME)
