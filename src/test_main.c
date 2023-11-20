@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test_main.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wyap <wyap@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: atok <atok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 18:28:19 by wyap              #+#    #+#             */
-/*   Updated: 2023/11/17 23:07:36 by wyap             ###   ########.fr       */
+/*   Updated: 2023/11/20 19:28:37 by atok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ int	main(int ac, char **av, char **envp)
 			{
 				free(cmd_buf); //readline malloc buffer
 				free(cur_path); //getcwd malloc
-				rl_clear_history();
+				rl_clear_history(); //-I /usr/local/opt/readline/include -L /usr/local/opt/readline/lib
 				exit(1);
 			}
 			// else  //if invalid command; create a 2d array of command keywords to match?
@@ -123,3 +123,31 @@ int	main(int ac, char **av, char **envp)
 Q: why not scanf()?
 A: will not accept enter as input, has no history capabilities
 */
+
+/*piping info/exercise*/
+// int	main(int ac, char **av, char **envp)
+// {
+// 	char *cmd1[] = {"/bin/ls", 0};
+// 	char *cmd2[] = {"/usr/bin/wc", 0};
+// 	int fd[2];
+
+
+// 	pipe(fd);
+
+// 	int i = fork();
+// 	if ( i == 0)
+// 	{
+// 		dup2(fd[1], STDOUT_FILENO); // fd[1] write or in
+// 		close(fd[1]);
+// 		close(fd[0]);
+// 		execve(cmd1[0], cmd1, envp);
+// 	}
+// 	else
+// 	{
+// 		dup2(fd[0], STDIN_FILENO); // fd[0] read or out
+// 		close(fd[1]);
+// 		close(fd[0]);
+// 		execve(cmd2[0], cmd2, envp);
+// 		perror("error"); // should be "zsh: command not found: ..."
+// 	}
+// }
