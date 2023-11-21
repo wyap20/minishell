@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: atok <atok@student.42.fr>                  +#+  +:+       +#+         #
+#    By: wyap <wyap@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/06 18:40:56 by wyap              #+#    #+#              #
-#    Updated: 2023/11/20 15:14:02 by atok             ###   ########.fr        #
+#    Updated: 2023/11/21 17:06:01 by wyap             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,8 @@ NAME = minishell
 
 SRC_DIR = src/
 SRC = test_main.c utils/ft_split.c utils/ft_strlen.c utils/ft_strjoin.c utils/ft_strcmp.c\
-		utils/ft_strncmp.c
+		utils/ft_strncmp.c utils/ft_isalnum.c utils/ft_strtrim.c utils/ft_strchr.c\
+		utils/ft_strdup.c utils/ft_substr.c parsing/parse_pipe.c
 OBJ = $(addprefix $(SRC_DIR), $(SRC:.c=.o))
 
 GCC = gcc
@@ -43,4 +44,4 @@ fclean: clean
 re: fclean all
 
 debug: $(OBJ)
-	$(GCC) $(CFLAGS) $(OBJ) $(FSAN) -o $(NAME)_debug -lreadline -lncurses
+	$(GCC) $(CFLAGS) $(OBJ) $(FSAN) -o $(NAME)_debug -lreadline -lncurses -L /usr/local/opt/readline/lib

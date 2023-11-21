@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test_main.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atok <atok@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: wyap <wyap@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 18:28:19 by wyap              #+#    #+#             */
-/*   Updated: 2023/11/20 19:28:37 by atok             ###   ########.fr       */
+/*   Updated: 2023/11/21 17:13:11 by wyap             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,10 +92,12 @@ int	main(int ac, char **av, char **envp)
 				printf("\nexit");
 			}
 			if (ft_strlen(cmd_buf) > 0){ //carriage return will not be added
-				if (cmd_buf[0] == ' ')
-					continue;
-				add_history(cmd_buf);
+				if (cmd_buf[0] != ' ')
+					add_history(cmd_buf);
+					// continue;
+				cmd_buf = ft_strtrim(cmd_buf, " "); //trim space
 			}
+			parse_pipe(cmd_buf);
 			// printf("cmd_buf: %s\n", cmd_buf);
 			// printf("%d\n", ft_strncmp(cmd_buf, "echo", 4) == 0);
 			if (!ft_strncmp(cmd_buf, "echo", 4)) //works but incorrect implementation
