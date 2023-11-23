@@ -6,7 +6,7 @@
 /*   By: atok <atok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 17:54:46 by atok              #+#    #+#             */
-/*   Updated: 2023/11/22 16:16:23 by atok             ###   ########.fr       */
+/*   Updated: 2023/11/23 13:05:38 by atok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ char **ft_split(char *str)
 
 int main (void)
 {
-	char str[] = "ls \'| grep \"Mov \'| wc \"\'\" -c";
+	char str[] = "ls \'| grep \"Mov \' | wc \"\'\" -c";
 	int i = 0;
 	char **split = ft_split(str);
 	//printf("%d\n",count(str));
