@@ -1,0 +1,173 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_parse.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: atok <atok@student.42.fr>                  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/11/24 14:31:24 by atok              #+#    #+#             */
+/*   Updated: 2023/11/24 15:56:16 by atok             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include <stdlib.h>
+#include <stdio.h>
+
+typedef struct s_node
+{
+	int				i;
+	char			*args;
+	struct s_node	*next;
+	struct s_node	*prev;
+}t_node;
+
+typedef struct s_stack
+{
+	t_node	*stack;
+	int		counter;
+}t_stack;
+
+size_t	sstrlen(char const *str)
+{
+	int	len;
+
+	len = 0;
+	while (str[len] != 0x00)
+		len++;
+	return (len);
+}
+
+char	*sstrdup(const char *src)
+{
+	char	*dup;
+	int		i;
+	int		len;
+
+	len = 0;
+	while (src[len])
+		len++;
+	dup = (char *) malloc(sizeof(char) * (len + 1));
+	if (dup == (NULL))
+		return (NULL);
+	i = 0;
+	while (src[i])
+	{
+		dup[i] = src[i];
+		i++;
+	}
+	dup[i] = 0x00;
+	return (dup);
+}
+
+char	*ft_substr(char const *s, unsigned int start, size_t len)
+{
+	char		*ss;
+	size_t		slen;
+
+	if (len == 0 || s == NULL)
+		return (sstrdup(""));
+	if (start >= sstrlen(s))
+		return (sstrdup(""));
+	ss = (char *)malloc((len + 1) * sizeof(char));
+	if (ss == NULL)
+		return (NULL);
+	slen = 0;
+	while (s[start] != 0x00 && slen < len)
+	{
+		ss[slen] = s[start];
+		start++;
+		slen++;
+	}
+	ss[slen] = 0x00;
+	return (ss);
+}
+
+void	ft_add_nodes_to_stack(t_stack *stack, char *args)
+{
+	t_node	*new_node;
+	t_node	*current_node;
+
+	new_node = (t_node *) malloc (sizeof(t_node));
+	// new_node->i = i; i++;
+	new_node->args = args;
+	new_node->next = NULL;
+	if (stack->stack == NULL)
+	{
+		new_node->prev = NULL;
+		stack->stack = new_node;
+		stack->counter++;
+	}
+	else
+	{
+		current_node = stack->stack;
+		while (current_node->next != NULL)
+			current_node = current_node->next;
+		current_node->next = new_node;
+		new_node->prev = current_node;
+		stack->counter++;
+	}
+}
+int left_arrow (char *str,int i)
+{
+	if (str[i + 1] == '<')
+		return (1);
+	if (str[i + 1] == '>')
+		return (0);
+	
+}
+
+int checker (char *str, int i)
+{
+	int x = 0;
+	if(str[i] == ' ')
+	if(str[i] == '|')
+	if(str[i] == '\'')
+	if(str[i] == '\"')
+	if(str[i] == '<')
+		x = left_arrow(str, i);
+	if(str[i] == '>')
+
+	return (x);
+
+}
+void ft_parse(t_stack *stack, char *str)
+{
+	char *delim = " |<\'>\"";
+	int i = 0;
+	int j;
+	int tmp = 0;
+	char *args;
+	while (str[i] != 0x00)
+	{
+		j= 0;
+		while (delim[j] != 0x00)
+		{
+			if(str[i] == delim[j])
+			{
+				args = ft_substr(str,tmp,i - tmp);
+				tmp = i;
+				ft_add_nodes_to_stack(stack,args);
+				i += checker(str,i);
+				j = 0;
+			}
+			j++;
+		}
+		i++;
+	}
+}
+
+
+int main (void)
+{
+	t_stack *stack;
+	// char str[] = "|ls\"| | \'|cat|c\"t| | | |zz|";
+	// char str[] = "ls<<\'| grep <>\"Mov \'| <wc> \"\'\" -c";
+	char str[] = "ls<< \'| grep <>\"Mov \' | <wc> \"\'\" -c";
+	// char str[] = "ls<<>><cat>";
+	int i = 0;
+	ft_parse(stack,str);
+
+	// printf("%s\n", add);
+	
+	return (0);
+}
