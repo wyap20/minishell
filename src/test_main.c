@@ -6,7 +6,7 @@
 /*   By: wyap <wyap@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 18:28:19 by wyap              #+#    #+#             */
-/*   Updated: 2023/11/21 17:13:11 by wyap             ###   ########.fr       */
+/*   Updated: 2023/11/26 01:57:32 by wyap             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,11 +75,16 @@ int	main(int ac, char **av, char **envp)
 	char	*cmd_buf;
 	char	*prompt;
 	char	*cur_path;
+	t_env	env;
 
 	signal(SIGINT, sighandler);
 	signal(SIGQUIT, SIG_IGN); //ignore ctrl + '\'
+
 	if (ac == 1)
 	{
+		store_env(&env, envp);
+		store_path(&env, envp);
+		// print_env_var(envp, "PATH"); compare with splitted path
 		while (1)
 		{
 			if ((cur_path = getcwd(NULL, 0)) == NULL)

@@ -21,6 +21,13 @@
 // 	char	*cur_path;
 // }t_shell;
 
+typedef struct s_env{
+	char **env_vars; //all env variable
+	char *env_path; //$PATH variable, single string
+	char **paths; //splitted paths
+	// char *cur_path;
+}t_env;
+
 /*libft + custom utils*/
 char	*ft_strjoin(char const *s1, char const *s2);
 size_t	ft_strlen(const char *str);
@@ -34,7 +41,12 @@ char	*ft_strchr(const char *s, int c);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	*ft_strtrim(char const *s1, char const *set);
 
+// expanding
+void	store_env(t_env *env, char **envp);
+void	store_path(t_env *env, char **envp);
+
 // parsing
 int parse_pipe(char *cmd_str);
+
 
 #endif
