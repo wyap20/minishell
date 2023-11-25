@@ -6,7 +6,7 @@
 /*   By: atok <atok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/24 14:31:24 by atok              #+#    #+#             */
-/*   Updated: 2023/11/24 15:56:16 by atok             ###   ########.fr       */
+/*   Updated: 2023/11/25 22:17:58 by atok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,7 @@ int checker (char *str, int i)
 }
 void ft_parse(t_stack *stack, char *str)
 {
-	char *delim = " |<\'>\"";
+	char *delim = " |<\'>\"";//-";
 	int i = 0;
 	int j;
 	int tmp = 0;
@@ -144,7 +144,7 @@ void ft_parse(t_stack *stack, char *str)
 		{
 			if(str[i] == delim[j])
 			{
-				args = ft_substr(str,tmp,i - tmp);
+				args = ft_substr(str,tmp,i - tmp + 1);
 				tmp = i;
 				ft_add_nodes_to_stack(stack,args);
 				i += checker(str,i);
@@ -162,7 +162,8 @@ int main (void)
 	t_stack *stack;
 	// char str[] = "|ls\"| | \'|cat|c\"t| | | |zz|";
 	// char str[] = "ls<<\'| grep <>\"Mov \'| <wc> \"\'\" -c";
-	char str[] = "ls<< \'| grep <>\"Mov \' | <wc> \"\'\" -c";
+	// char str[] = "ls<< \'| grep <>\"Mov \' | <wc> \"\'\" -c";
+	char str[] = "ls<< \'| grep <>\"Mov \' | <wc> \"\'\" \'test\'\'ting\'-c";
 	// char str[] = "ls<<>><cat>";
 	int i = 0;
 	ft_parse(stack,str);

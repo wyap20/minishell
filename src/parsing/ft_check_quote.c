@@ -6,7 +6,7 @@
 /*   By: atok <atok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 16:41:32 by atok              #+#    #+#             */
-/*   Updated: 2023/11/22 21:01:00 by atok             ###   ########.fr       */
+/*   Updated: 2023/11/25 16:40:59 by atok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,13 @@ int loop_to_pair(char *str, int i, int qt)
 {
 	while (str[i] != 0x00 || str[i] != qt) // && or ||??
 	{
-		if (str[i] == qt)
-			return (i);
+		// if (str[i] == qt)
+		// {
+		// 	if (str[i + 1] == ' ')
+		// 		return (i);
+		// 	else str[i + 1] == qt
+		// 		i++;
+		// } 
 		if (str[i] == 0x00)
 		{
 			printf("Error %c quote\n", qt); // perror():?
@@ -76,13 +81,14 @@ int ft_check_quote(char *str)
 	return (0);
 }
 
-// int main (void)
-// {
-// 	char str[] = "ls \'| grep \"Mov \'| wc \"\'\" -c"; //0 = no error
-// 	// char str[] = "ls \'| grep \"Mov \'| wc \'\" -c";// single quote error
-// 	// char str[] = "ls \'| grep \"Mov \'| wc \"\' -c";// double quote error
-// 	int i = ft_check_quote(str);
-// 	//printf("%d\n",count(str));
-// 	printf("%d\n",i);
-// 	return (0);
-// }
+int main (void)
+{
+	// char str[] = "echo \"hello \"world\'"; //0 = no error
+	// char str[] = "ls \'| grep \"Mov \'| wc \"\'\" -c"; //0 = no error
+	// char str[] = "ls \'| grep \"Mov \'| wc \'\" -c";// single quote error
+	// char str[] = "ls \'| grep \"Mov \'| wc \"\' -c";// double quote error
+	int i = ft_check_quote(str);
+	//printf("%d\n",count(str));
+	printf("%d\n",i);
+	return (0);
+}
