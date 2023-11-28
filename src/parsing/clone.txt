@@ -1,0 +1,146 @@
+https://tiswww.case.edu/php/chet/readline/readline.html
+
+---<readline/readline.h>---
+char *readline(const char *prompt)
+-read a line in terminal and return line (allocated with malloc)
+-uses prompt(str) as a prompt
+-if prompt = NULL or empty string, no prompt
+- return value: line; empty string if blank line; NULL if EOF & line is empty; "\n" if EOF and line is non-empty
+**must free memory when no longer in use
+
+void rl_clear_history(void)
+-clear history list by deleting all entries, same manner as GNU clear_history()
+-frees private data Readline saves in history list (different from GNU clear_history())
+
+int rl_on_new_line(void)
+-tell the update functions (?) we have moved to a new (empty) line, usually after outputting a newline (\n)
+
+void rl_replace_line(const char*text, int clear_undo)
+-replace contents of rl_line_buffer with char*text
+-if clear_undo is non-zero: undo list associated with current line is cleared
+(RT note: involved in recreate undo behavior (up down history) in terminal?)
+
+void rl_redisplay(void)
+-change what is displays on screen to reflect current contents of rl_line_buffer (?)
+
+-----
+https://tiswww.case.edu/php/chet/readline/history.html
+---<readline/history.h>---
+void add_history(const char* str)
+- place str in end of history list
+- associated data field (if any) is set to NULL (?)
+- oldest history is removed if new number history exceeds maximum
+(RT note: to manage command history in CLI,
+task: find out maximum number of history in normal shell)
+
+---<unistd.h>---
+int access(const char* pathname, int mode)
+-check whether calling process can access pathname file (if symbolic link, it is dereferenced (?))
+-mode: accessbility check type (**READ MANUAL for full desciption on checks**)
+
+pid_t fork(void)
+- creates child process from parent process
+
+---<sys/wait.h> <sys/resoure.h (?)> <sys/types.h (?)>---
+pid_t waitpid(pid_t pid, int *wstatus, int options)
+- suspend execution of parent thread until child process of the pid terminates
+(RT note: specifies program to wait for certain child to terminate)
+
+non standard wait():
+pid_t wait3(int *wstatus, int options, struct rusage *rusage)
+-similar to waitpid() but returns resouce usage in rusage
+-equivalent to waitpid(-1, wstatus, options);
+
+pid_t wait4(pid_t pid, int *wstatus, int options, struct rusage *rusage)
+-similar to waitpid() but returns resouce usage in rusage
+-equivalent to waitpid(pid, wstatus, options);
+
+---<signal.h>---
+int sigemptyset(sigset_t *set)
+- initialize the signal set given by "set" to empty, with all signals excluded from the set
+
+int sigaddset(sigset_t *set, int signum)
+- add "signum" to "set"
+
+---<unistd.h>---
+char *getcwd(char *buf, size_t size)
+- copies absolute pathname of the current working directory to *buf, that is of length "size"
+- return NULL if length of absolute pathname of cwd including null terminator exceeds "size"
+- **further reading in manual
+
+int chdir(const char *path)
+-changes the cwd of the calling process to the "path" directory
+
+---<unistd.h> <sys/types.h> <sys/stat.h>---
+int stat(const char *pathname, struct stat *statbuf)
+-return info about a file, in "statbuf"
+-permission is required on all of the directories in "pathname" that lead to the file
+
+int lstat(const char *pathname, struct stat *statbuf)
+-return info about a file pointed by pathname into "statbuf"
+-but if pathname is a symbolic link, it only returns information about the link itself
+
+int fstat(int fd, struct stat *statbuf)
+-return info about a file specified by fd into "statbuf"
+
+int unlink(const char *pathname)
+-deletes a name from the filesystem (?)
+-if name was the last link to a file and no process have the file open
+	-the file is deleted and the space is available for reuse
+-if name referred to symbolic link: the link is removed
+-if name referred to a socket, FIFO, or device, the name for it is removed 
+	-but processes which have the object open may continue to use it. (?)
+
+int execve(const char *pathname, char *const argv[], char *const envp[])
+-executes the program referred to by pathname
+-pathname must be binary executable or script starting with shebang: "#!"
+
+dup
+dup2
+
+pipe
+
+opendir
+closedir
+
+strerror
+perror
+
+isatty
+ttyname
+ttyslot
+
+ioctl
+getenv
+
+tcsetattr
+tcgetattr
+tgetent
+tgetflag
+tgetnum
+tgetstr
+tgoto
+tputs
+
+known functions:
+LIBFT functions
+printf
+malloc free
+write open read close
+wait()
+-suspends execution of parent thread until one of its child process terminates
+
+signal sigaction kill exit
+
+Shell behavior:
+up and down arrow key: navigates + display cmd history (if exist)
+left right arrow key: navigates input string, does not write input
+
+$PATH:
+- an environment variable used to specify a set of directories where executable programs
+are located.
+- when user type a command to terminal, the system search the listed directories in $PATH
+to find the corresponding file or command
+
+- example PATH list format "/your/directory/path1:/your/directory/path2:/another/path"
+The system to first look in path1, then path2, so on and so forth

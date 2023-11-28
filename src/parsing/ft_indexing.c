@@ -14,10 +14,6 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-#include <stdio.h>
-#include <unistd.h>
-#include <stdlib.h>
-
 int ft_len(char *str)
 {
 	int i;
@@ -226,7 +222,8 @@ int main (void)
 	// char str[] = "ls<< \'| grep <>\"Mov \' | <wc> \"\'\" \'test\'\"ting\"-c";
 	// char str[] = "echo 'test'\"ting\"";
 	// char str[] = "echo \"test\"\"ting\"";
-	char str[] = "echo \"test\"\"ting\"-c";
+	// char str[] = "echo \"test\"\"ting\"-c";
+	char str[] = "echo \"\"\"ting\"-c";
 	int *out;
 	
 	out = ft_setup(str);
@@ -240,7 +237,7 @@ int main (void)
 	out = ft_index_space(out,str);
 	out = ft_index_others(out);
 	out = ft_saperate(out,str);
-
+	// out = ft_remove_quote(out,str);
 	// printf("%c\n",str[20]);
 	int i = 0;
 	while(out[i] != -1)
