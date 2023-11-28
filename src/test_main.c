@@ -6,7 +6,7 @@
 /*   By: wyap <wyap@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 18:28:19 by wyap              #+#    #+#             */
-/*   Updated: 2023/11/26 01:57:32 by wyap             ###   ########.fr       */
+/*   Updated: 2023/11/28 20:14:23 by wyap             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ int	main(int ac, char **av, char **envp)
 					// continue;
 				cmd_buf = ft_strtrim(cmd_buf, " "); //trim space
 			}
+			//expand handle dollar sign
 			parse_pipe(cmd_buf);
 			// printf("cmd_buf: %s\n", cmd_buf);
 			// printf("%d\n", ft_strncmp(cmd_buf, "echo", 4) == 0);

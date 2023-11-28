@@ -34,6 +34,7 @@ size_t	ft_strlen(const char *str);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 char	**ft_split(char const *s, char c);
 int	ft_isalnum(int c);
+int	ft_isupper(int c);
 
 int		ft_strcmp(char *s1, char *s2);
 char	*ft_strdup(const char *s1);
