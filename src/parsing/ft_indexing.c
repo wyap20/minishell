@@ -223,7 +223,8 @@ int main (void)
 	// char str[] = "echo 'test'\"ting\"";
 	// char str[] = "echo \"test\"\"ting\"";
 	// char str[] = "echo \"test\"\"ting\"-c";
-	char str[] = "echo \"\"\"ting\"-c";
+	// char str[] = "echo \"\"\"ting\"-c";
+	char str[] = "echo hi\"$USER\"-c";
 	int *out;
 	
 	out = ft_setup(str);
