@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test_main.c                                        :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wyap <wyap@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 18:28:19 by wyap              #+#    #+#             */
-/*   Updated: 2023/11/30 01:33:48 by wyap             ###   ########.fr       */
+/*   Updated: 2023/12/01 02:19:02 by wyap             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,14 +51,7 @@ void	print_env_var(char **envp, char *s)
 	printf("%s\n", pwd[1]);
 }
 
-static void	sighandler(int sig)
-{
-	if (sig != SIGINT)
-		return ;
-	printf("\n");
-	rl_on_new_line();
-	rl_redisplay();
-}
+
 void	echo_print(const char *str)
 {
 	int	i;
@@ -69,17 +62,39 @@ void	echo_print(const char *str)
 	printf("\n");
 }
 
-int	main(int ac, char **av, char **envp)
+char	*get_cmd(char *cmd_buf)
 {
-	(void) av;
-	char	*cmd_buf;
 	char	*prompt;
 	char	*cur_path;
+
+	if ((cur_path = getcwd(NULL, 0)) == NULL)
+		perror("failed to get current working directory\n");
+	prompt = ft_strjoin(cur_path, "> ");
+	cmd_buf = readline(prompt);
+	if (cmd_buf == NULL)
+	{
+		cmd_buf = "exit";
+		printf("\nexit");
+	}
+	if (ft_strlen(cmd_buf) > 0){ //carriage return will not be added
+		if (cmd_buf[0] != ' ')
+			add_history(cmd_buf);
+			// continue;
+		cmd_buf = ft_strtrim(cmd_buf, " "); //trim space
+	}
+	free(prompt);
+	free(cur_path);
+	return (cmd_buf);
+}
+
+int	main(int ac, char **av, char **envp)
+{
+	char	*cmd_buf;
 	t_env	env;
+	t_node	**lst_cmd; //list to store parsed cmd
 
-	signal(SIGINT, sighandler);
-	signal(SIGQUIT, SIG_IGN); //ignore ctrl + '\'
-
+	(void) av;
+	signals();
 	if (ac == 1)
 	{
 		store_env(&env, envp);
@@ -87,25 +102,17 @@ int	main(int ac, char **av, char **envp)
 		// print_env_var(envp, "PATH"); compare with splitted path
 		while (1)
 		{
-			if ((cur_path = getcwd(NULL, 0)) == NULL)
-				perror("failed to get current working directory\n");
-			prompt = ft_strjoin(cur_path, "> ");
-			cmd_buf = readline(prompt);
-			if (cmd_buf == NULL)
-			{
-				cmd_buf = "exit";
-				printf("\nexit");
-			}
-			if (ft_strlen(cmd_buf) > 0){ //carriage return will not be added
-				if (cmd_buf[0] != ' ')
-					add_history(cmd_buf);
-					// continue;
-				cmd_buf = ft_strtrim(cmd_buf, " "); //trim space
-			}
-		/*parsing and expanding here*/
-			//create stack
-			//parsing -> split to nodes and add to stack
-			//expand handle dollar sign
+			cmd_buf = get_cmd(cmd_buf);
+	/*parsing and expanding here*/
+			lst_cmd = (t_node **)malloc(sizeof(t_node *));
+			if (!lst_cmd)
+				perror("lst_cmd not allocated");
+		//set head node
+			// lst_cmd = ft_ldlstnew()
+		//parsing -> split to nodes and add to stack
+			//ft_parse //to optimize function
+			//function to assign attribute and quote type in node
+			//expand handle dollar sign (loop through list and replace env var)
 		/*execution*/
 			parse_pipe(cmd_buf);
 			// printf("cmd_buf: %s\n", cmd_buf);
@@ -119,7 +126,6 @@ int	main(int ac, char **av, char **envp)
 			else if (!ft_strcmp(cmd_buf, "exit"))
 			{
 				free(cmd_buf); //readline malloc buffer
-				free(cur_path); //getcwd malloc
 				rl_clear_history(); //-I /usr/local/opt/readline/include -L /usr/local/opt/readline/lib
 				exit(1);
 			}

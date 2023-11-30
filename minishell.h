@@ -15,11 +15,28 @@
 // #include "/usr/local/opt/readline/include" //(rl_clear_history)
 // /usr/local/opt/readline/lib
 
-// typedef struct s_shell{
-// 	char	*cmd_buf;
-// 	char	*prompt;
-// 	char	*cur_path;
-// }t_shell;
+/*
+node struct:
+int index
+char *data //parsed string
+char *quote {none, s_quote, d_quote}
+char *attr {none, normal, env_var, operator}
+prev
+next
+*/
+typedef	struct s_node{
+	int		index;
+	char	*content;
+	char	*quote_type;
+	char	*attr;
+	struct	s_node	*next;
+	struct	s_node *prev;
+}t_node;
+
+// typedef	struct s_dlist{
+// 	t_node	**list_cmd; //double pointer for head node?
+// 	int	count;
+// }t_dlist;
 
 typedef struct s_env{
 	char **env_vars; //all env variable
@@ -41,6 +58,17 @@ char	*ft_strdup(const char *s1);
 char	*ft_strchr(const char *s, int c);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	*ft_strtrim(char const *s1, char const *set);
+
+/*RT's doubly list proto*/
+t_node	*ft_ldlstnew(long num);
+void	ft_dlstadd_front(t_node **lst, t_node *new);
+void	ft_dlstadd_back(t_node **lst, t_node *new);
+int		ft_dlstsize(t_node	*lst);
+t_node	*ft_dlstlast(t_node *lst);
+
+/*utils*/
+void	signals(void);
+
 
 // expanding
 void	store_env(t_env *env, char **envp);
