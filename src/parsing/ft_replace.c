@@ -34,6 +34,15 @@ char *ft_strcpy(char *dst, char *src)
 	return (dst);
 }
 
+int ft_not_alpha(char c)
+{
+	// if (c == ' ' || c == '\'' || c == '\"' || c == '|' || c == '<' || c == '>' || c == '$')
+	if (!((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z')))
+		return 1;
+	else 
+		return 0;
+}
+
 char *ft_strstr(char *str, char*ss)
 {
 	int i;
@@ -49,7 +58,7 @@ char *ft_strstr(char *str, char*ss)
 			// 	return ((char *) str + i);
 			j++;
 		}
-        if (ss[j] == 0x00)
+        if (ss[j] == 0x00 && ft_not_alpha(str[i + j]) == 1) // && str[i] == delim? space squo dquot 
             return ((char *)str + i);
 		i++;
 	}
@@ -130,7 +139,8 @@ int main(void)
 	// char *$output = "echo 42 kl is muy home 42";
 
 	// char *str = "echo me$USER";
-	char *str = "echo me$USER me";
+	char *str = "echo me$USERme";
+	// char *str = "echo me$USER me";
 	// char *str = "echo me$USER test$USER";
 
 
