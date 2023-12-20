@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_check_quote.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atok <atok@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: wyap <wyap@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 16:41:32 by atok              #+#    #+#             */
-/*   Updated: 2023/11/25 16:40:59 by atok             ###   ########.fr       */
+/*   Updated: 2023/12/20 14:02:28 by wyap             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,14 +81,14 @@ int ft_check_quote(char *str)
 	return (0);
 }
 
-int main (void)
-{
-	// char str[] = "echo \"hello \"world\'"; //0 = no error
-	// char str[] = "ls \'| grep \"Mov \'| wc \"\'\" -c"; //0 = no error
-	// char str[] = "ls \'| grep \"Mov \'| wc \'\" -c";// single quote error
-	// char str[] = "ls \'| grep \"Mov \'| wc \"\' -c";// double quote error
-	int i = ft_check_quote(str);
-	//printf("%d\n",count(str));
-	printf("%d\n",i);
-	return (0);
-}
+// int main (void)
+// {
+// 	// char str[] = "echo \"hello \"world\'"; //0 = no error
+// 	// char str[] = "ls \'| grep \"Mov \'| wc \"\'\" -c"; //0 = no error
+// 	// char str[] = "ls \'| grep \"Mov \'| wc \'\" -c";// single quote error
+// 	// char str[] = "ls \'| grep \"Mov \'| wc \"\' -c";// double quote error
+// 	int i = ft_check_quote(str);
+// 	//printf("%d\n",count(str));
+// 	printf("%d\n",i);
+// 	return (0);
+// }

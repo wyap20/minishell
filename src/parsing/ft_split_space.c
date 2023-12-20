@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_spilt_space.c                                   :+:      :+:    :+:   */
+/*   ft_split_space.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atok <atok@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: wyap <wyap@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 17:54:46 by atok              #+#    #+#             */
-/*   Updated: 2023/11/23 13:05:38 by atok             ###   ########.fr       */
+/*   Updated: 2023/12/20 14:07:15 by wyap             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,17 +80,17 @@ char **ft_split(char *str)
 	return (split);
 }
 
-int main (void)
-{
-	char str[] = "ls \'| grep \"Mov \' | wc \"\'\" -c";
-	int i = 0;
-	char **split = ft_split(str);
-	//printf("%d\n",count(str));
+// int main (void)
+// {
+// 	char str[] = "ls \'| grep \"Mov \' | wc \"\'\" -c";
+// 	int i = 0;
+// 	char **split = ft_split(str);
+// 	//printf("%d\n",count(str));
 
-	while (split[i] != 0x00)
-	{
-		printf("%s\n", split[i]);
-		i++;
-	}
-	return (0);
-}
+// 	while (split[i] != 0x00)
+// 	{
+// 		printf("%s\n", split[i]);
+// 		i++;
+// 	}
+// 	return (0);
+// }

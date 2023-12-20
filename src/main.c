@@ -6,7 +6,7 @@
 /*   By: wyap <wyap@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 18:28:19 by wyap              #+#    #+#             */
-/*   Updated: 2023/12/01 02:19:02 by wyap             ###   ########.fr       */
+/*   Updated: 2023/12/20 13:59:55 by wyap             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,11 +95,12 @@ int	main(int ac, char **av, char **envp)
 
 	(void) av;
 	signals();
+	cmd_buf = NULL;
 	if (ac == 1)
 	{
 		store_env(&env, envp);
 		store_path(&env, envp);
-		// print_env_var(envp, "PATH"); compare with splitted path
+		// print_env_var(envp, "PATH"); //compare with splitted path
 		while (1)
 		{
 			cmd_buf = get_cmd(cmd_buf);
@@ -108,7 +109,7 @@ int	main(int ac, char **av, char **envp)
 			if (!lst_cmd)
 				perror("lst_cmd not allocated");
 		//set head node
-			// lst_cmd = ft_ldlstnew()
+			lst_cmd = ft_ldlstnew("head");
 		//parsing -> split to nodes and add to stack
 			//ft_parse //to optimize function
 			//function to assign attribute and quote type in node

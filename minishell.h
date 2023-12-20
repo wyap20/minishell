@@ -27,8 +27,8 @@ next
 typedef	struct s_node{
 	int		index;
 	char	*content;
-	char	*quote_type;
-	char	*attr;
+	// char	*quote_type;
+	// char	*attr;
 	struct	s_node	*next;
 	struct	s_node *prev;
 }t_node;
@@ -60,7 +60,8 @@ char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	*ft_strtrim(char const *s1, char const *set);
 
 /*RT's doubly list proto*/
-t_node	*ft_ldlstnew(long num);
+t_node	*ft_ldlstnew(char *data);
+// t_node	*ft_ldlstnew(long num);
 void	ft_dlstadd_front(t_node **lst, t_node *new);
 void	ft_dlstadd_back(t_node **lst, t_node *new);
 int		ft_dlstsize(t_node	*lst);

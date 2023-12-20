@@ -40,15 +40,15 @@ size_t	rdrio(char *s)
 	return (0);
 }
 
-int main()
-{
-	char *s1, *s2, *s3;
+// int main()
+// {
+// 	char *s1, *s2, *s3;
 
-	s1 = "asdfasdf > file1";
-	s2 = "zxcvzxcv >> file1";
-	s3 = "tr \'a\' \'d\' < file1|csac";
+// 	s1 = "asdfasdf > file1";
+// 	s2 = "zxcvzxcv >> file1";
+// 	s3 = "tr \'a\' \'d\' < file1|csac";
 
-	rdrio(s1);
-	rdrio(s2);
-	rdrio(s3);
-}
+// 	rdrio(s1);
+// 	rdrio(s2);
+// 	rdrio(s3);
+// }

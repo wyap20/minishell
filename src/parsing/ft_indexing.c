@@ -215,40 +215,40 @@ int *ft_saperate(int *out, char *str)
 	return (out);
 }
 
-int main (void)
-{
-	// char str[] = "ls | grep Mov | wc -c";
-	// char str[] = "ls<< \'| grep <>\"Mov \' | <wc> \"\'\" \'test\'\'ting\'-c";
-	// char str[] = "ls<< \'| grep <>\"Mov \' | <wc> \"\'\" \'test\'\"ting\"-c";
-	// char str[] = "echo 'test'\"ting\"";
-	// char str[] = "echo \"test\"\"ting\"";
-	// char str[] = "echo \"test\"\"ting\"-c";
-	// char str[] = "echo \"\"\"ting\"-c";
-	char str[] = "echo hi\"$USER\"-c";
-	int *out;
+// int main (void)
+// {
+// 	// char str[] = "ls | grep Mov | wc -c";
+// 	// char str[] = "ls<< \'| grep <>\"Mov \' | <wc> \"\'\" \'test\'\'ting\'-c";
+// 	// char str[] = "ls<< \'| grep <>\"Mov \' | <wc> \"\'\" \'test\'\"ting\"-c";
+// 	// char str[] = "echo 'test'\"ting\"";
+// 	// char str[] = "echo \"test\"\"ting\"";
+// 	// char str[] = "echo \"test\"\"ting\"-c";
+// 	// char str[] = "echo \"\"\"ting\"-c";
+// 	char str[] = "echo hi\"$USER\"-c";
+// 	int *out;
 	
-	out = ft_setup(str);
+// 	out = ft_setup(str);
 
-	// out = ft_index_quote(out,str);
-	out = ft_index_uniquote(out,str);
+// 	// out = ft_index_quote(out,str);
+// 	out = ft_index_uniquote(out,str);
 	
-	out = ft_index_left_arrow(out,str);
-	out = ft_index_right_arrow(out,str);
-	out = ft_index_pipe(out,str);
-	out = ft_index_space(out,str);
-	out = ft_index_others(out);
-	out = ft_saperate(out,str);
-	// out = ft_remove_quote(out,str);
-	// printf("%c\n",str[20]);
-	int i = 0;
-	while(out[i] != -1)
-	// while(i < 22)
-	{
-		printf("%d,",out[i]);
-		i++;
-	}
-	printf("%d",out[i]);
-	printf("\n");
-	free(out);
-	return (0);
-}
+// 	out = ft_index_left_arrow(out,str);
+// 	out = ft_index_right_arrow(out,str);
+// 	out = ft_index_pipe(out,str);
+// 	out = ft_index_space(out,str);
+// 	out = ft_index_others(out);
+// 	out = ft_saperate(out,str);
+// 	// out = ft_remove_quote(out,str);
+// 	// printf("%c\n",str[20]);
+// 	int i = 0;
+// 	while(out[i] != -1)
+// 	// while(i < 22)
+// 	{
+// 		printf("%d,",out[i]);
+// 		i++;
+// 	}
+// 	printf("%d",out[i]);
+// 	printf("\n");
+// 	free(out);
+// 	return (0);
+// }
