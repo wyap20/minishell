@@ -6,7 +6,7 @@
 /*   By: atok <atok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/20 13:17:16 by atok              #+#    #+#             */
-/*   Updated: 2023/12/20 14:13:09 by atok             ###   ########.fr       */
+/*   Updated: 2023/12/20 15:14:23 by atok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ char *ft_check_key(char* str, char* key)
 	return(str);
 }
 
-int main (void)
-{
-	char *str = "echo me$USERme";
-	char *key = "$USER";
-}
+// int main (void)
+// {
+// 	char *str = "echo me$USERme";
+// 	char *key = "$USER";
+// }
