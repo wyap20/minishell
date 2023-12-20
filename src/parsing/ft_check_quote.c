@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_check_quote.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wyap <wyap@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: atok <atok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 16:41:32 by atok              #+#    #+#             */
-/*   Updated: 2023/12/20 16:50:34 by wyap             ###   ########.fr       */
+/*   Updated: 2023/12/20 19:39:09 by atok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,26 +15,54 @@
 int ft_check_quote(char *str)
 {
 	int i;
+	char c;
 
 	i = 0;
-	while(str[i] != 0x00 && i > 0)
+	c = 0x00;
+	while(str[i] != 0x00 && c == 0x00)
 	{
-		if (str[i] == '\'')
-		{	
+		if (str[i] == '\'' || str[i] == '\"')
+		{
+			c = str[i];
 			i++;
-			i = loop_to_pair(str,i,'\'');
-			i++;
-		}
-		if (str[i] == '\"')
-		{	
-			i++;
-			i = loop_to_pair(str,i,'\"');
-			i++;
+			while (str[i] != c &&  str[i] != 0x00)
+				i++;
+			if (str[i] == c)
+				c = 0x00;
+			if (str[i] == 0x00)
+				break;
 		}
 		i++;
 	}
-	if (i < 0)
-		return (-1);
+	if (c != 0x00)
+	{	
+		printf("Error %c quote\n", c); // perror():?
+		return (-99);
+	}
+
+	// int i;
+
+	// i = 0;
+	// while(str[i] != 0x00 && i >= 0)
+	// {
+	// 	if (str[i] == '\'')
+	// 	{	
+	// 		// i++;
+	// 		i = loop_to_pair(str,i,'\'');
+	// 		// i++;
+	// 	}
+	// 	else if (str[i] == '\"')
+	// 	{	
+	// 		// i++;
+	// 		i = loop_to_pair(str,i,'\"');
+	// 		// i++;
+	// 	}
+	// 	if (str[i] == 0x00)
+	// 		break;
+	// 	i++;
+	// }
+	// if (i < 0)
+	// 	return (-1);
 	return (0);
 }
 
