@@ -6,7 +6,7 @@
 #    By: wyap <wyap@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/06 18:40:56 by wyap              #+#    #+#              #
-#    Updated: 2023/12/01 02:15:07 by wyap             ###   ########.fr        #
+#    Updated: 2023/12/20 16:35:06 by wyap             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,8 @@ SRC_DIR = src/
 SRC = main.c utils/ft_split.c utils/ft_strlen.c utils/ft_strjoin.c utils/ft_strcmp.c\
 		utils/ft_strncmp.c utils/ft_isalnum.c utils/ft_strtrim.c utils/ft_strchr.c\
 		utils/ft_strdup.c utils/ft_substr.c parsing/parse_pipe.c expanding/store_env.c\
-		utils/utils1.c utils/doubly.c
+		utils/utils1.c utils/doubly.c parsing/ft_check_arrow.c parsing/loop_to_pair.c\
+		parsing/ft_check_quote.c parsing/ft_indexing.c parsing/ft_replace.c
 OBJ = $(addprefix $(SRC_DIR), $(SRC:.c=.o))
 
 GCC = gcc

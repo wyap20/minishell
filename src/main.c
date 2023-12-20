@@ -6,7 +6,7 @@
 /*   By: wyap <wyap@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 18:28:19 by wyap              #+#    #+#             */
-/*   Updated: 2023/12/20 13:59:55 by wyap             ###   ########.fr       */
+/*   Updated: 2023/12/20 17:06:59 by wyap             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,36 @@ char	*get_cmd(char *cmd_buf)
 	return (cmd_buf);
 }
 
+void	print_list(t_node **lst)
+{
+	t_node *tmp;
+
+	tmp = *lst;
+	printf("\n\t***lst_cmd***\n");
+	while (tmp)
+	{
+		printf("\tNode Index		:%d", tmp->index);
+		printf("\n\tNode Content		:%s", tmp->content);
+		printf("\n\tCurr Node Addr		:%p", tmp);
+		printf("\n\tPrev Node Addr		:%p", tmp->prev);
+		printf("\n\tNext Node Addr		:%p\n\n", tmp->next);
+		tmp = tmp->next;
+	}
+}
+
+bool	check_cmd(char *cmd_str)
+{
+	if (ft_check_quote(cmd_str) == -1)
+		return (false);
+	if (ft_check_arrow(cmd_str) == -1)
+	{
+		printf("Arrow Parse Error\n");
+		return (false);
+	}
+	// printf("\t**Quote and arrow OK!**\n");
+	return (true);
+}
+
 int	main(int ac, char **av, char **envp)
 {
 	char	*cmd_buf;
@@ -104,18 +134,24 @@ int	main(int ac, char **av, char **envp)
 		while (1)
 		{
 			cmd_buf = get_cmd(cmd_buf);
+	/*check cmd_buf*/
+			check_cmd(cmd_buf);
+		//if check_cmd == true, start parsing, else prompt again
 	/*parsing and expanding here*/
+		//init list
 			lst_cmd = (t_node **)malloc(sizeof(t_node *));
 			if (!lst_cmd)
 				perror("lst_cmd not allocated");
-		//set head node
-			lst_cmd = ft_ldlstnew("head");
+			*lst_cmd = NULL;
+			// print_list(lst_cmd);
+
 		//parsing -> split to nodes and add to stack
 			//ft_parse //to optimize function
 			//function to assign attribute and quote type in node
 			//expand handle dollar sign (loop through list and replace env var)
+
 		/*execution*/
-			parse_pipe(cmd_buf);
+			// parse_pipe(cmd_buf);
 			// printf("cmd_buf: %s\n", cmd_buf);
 			// printf("%d\n", ft_strncmp(cmd_buf, "echo", 4) == 0);
 			if (!ft_strncmp(cmd_buf, "echo", 4)) //works but incorrect implementation

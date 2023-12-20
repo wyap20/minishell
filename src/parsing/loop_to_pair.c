@@ -1,38 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_check_arrow.c                                   :+:      :+:    :+:   */
+/*   loop_to_pair.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wyap <wyap@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/23 17:33:43 by atok              #+#    #+#             */
-/*   Updated: 2023/12/20 17:08:10 by wyap             ###   ########.fr       */
+/*   Created: 2023/12/20 16:33:27 by wyap              #+#    #+#             */
+/*   Updated: 2023/12/20 16:43:28 by wyap             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../minishell.h"
+#include <stdio.h>
+#include <stdlib.h>
 
-int	ft_check_arrow(char *str)
+int loop_to_pair(char *str, int i, int qt)
 {
-	int	i;
-
-	i = 0;
-	while (str[i] != 0x00)
+	while (str[i] != 0x00 || str[i] != qt) // && or ||??
 	{
-		if (str[i] == '\'')
-		{	
-			i++;
-			i = loop_to_pair(str, i, '\'') + 1;
+		if (str[i] == qt)
+			return (i);
+		if (str[i] == 0x00)
+		{
+			printf("Error %c quote\n", qt); // perror():?
+			return (-99);
 		}
-		if (str[i] == '\"')
-		{	
-			i++;
-			i = loop_to_pair(str, i, '\"') + 1;
-		}
-		if (str[i] == '<' || str[i] == '>')
-			if (str[i + 1] == str[i] && str[i + 2] == str[i])
-				return (-1);
 		i++;
 	}
-	return (0);
+	return (i);
 }

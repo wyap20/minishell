@@ -7,7 +7,7 @@
 #include <readline/history.h>
 // #include <readline.h>
 // #include <history.h>
-// #include <stdbool.h>
+#include <stdbool.h>
 #include <unistd.h>
 #include <signal.h>
 #include <string.h> //tmp header, to replace with libft functions
@@ -30,7 +30,7 @@ typedef	struct s_node{
 	// char	*quote_type;
 	// char	*attr;
 	struct	s_node	*next;
-	struct	s_node *prev;
+	struct	s_node	*prev;
 }t_node;
 
 // typedef	struct s_dlist{
@@ -76,7 +76,12 @@ void	store_env(t_env *env, char **envp);
 void	store_path(t_env *env, char **envp);
 
 // parsing
+int ft_check_quote(char *str);
+int ft_check_arrow(char *str);
+int loop_to_pair(char *str, int i, int qt);
+
 int parse_pipe(char *cmd_str);
+
 
 
 #endif
