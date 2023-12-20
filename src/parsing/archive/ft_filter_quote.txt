@@ -58,29 +58,30 @@ char *ft_filter_quote(char *str)
 	return(str);
 }
 
-int main (void)
-{
+// int main (void)
+// {
 
-	// char str[] = "echo \"test\" \"ting\"";
-	// char str[] = "echo \"test""ting\"";
-	// char str[] = "echo\"test\"\"ting\"";
-	char str[] = "echo \"test\"\"ting\"";
-	char *add = ft_filter_quote(str);
-	// int i;
+// 	// char str[] = "echo \"test\" \"ting\"";
+// 	// char str[] = "echo \"test""ting\"";
+// 	// char str[] = "echo\"test\"\"ting\"";
+// 	char str[] = "echo \"test\"\"ting\"";
+// 	printf("%s\n", str);
 
-	// i = 0;
-	// while (str[i] != 0x00)
-	// 	write(1, &str[i++], 1);
-	// write(1, "\n", 1);
+// 	char *add = ft_filter_quote(str);
+// 	// int i;
 
-	// int i = 0;
-	// while (str[i] != 0x00)
-	// 	i++;
-	// printf("%d\n",i);
-	// printf("%ld\n", strlen(str));
+// 	// i = 0;
+// 	// while (str[i] != 0x00)
+// 	// 	write(1, &str[i++], 1);
+// 	// write(1, "\n", 1);
 
-	printf("%s\n", str);
-	printf("%s\n", add);
+// 	// int i = 0;
+// 	// while (str[i] != 0x00)
+// 	// 	i++;
+// 	// printf("%d\n",i);
+// 	// printf("%ld\n", strlen(str));
+
+// 	printf("%s\n", add);
 	
-	return (0);
-}
+// 	return (0);
+// }

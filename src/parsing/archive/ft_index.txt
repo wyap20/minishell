@@ -83,27 +83,27 @@ int *ft_index(char *str)
 	return (id);
 }
 // '| grep <>"Mov '
-int main (void)
-{
-	// char str[] = "ls | grep Mov | wc -c";
-	char str[] = "ls<< \'| grep <>\"Mov \' | <wc> \"\'\" \'test\'\'ting\'-c";
-	// char str[] = "echo 'test'\"ting\"";
-	// char str[] = "echo \"test\"\"ting\"";
-	int *out = ft_index(str);
+// int main (void)
+// {
+// 	// char str[] = "ls | grep Mov | wc -c";
+// 	char str[] = "ls<< \'| grep <>\"Mov \' | <wc> \"\'\" \'test\'\'ting\'-c";
+// 	// char str[] = "echo 'test'\"ting\"";
+// 	// char str[] = "echo \"test\"\"ting\"";
+// 	int *out = ft_index(str);
 
-	// printf("%c\n",str[20]);
+// 	// printf("%c\n",str[20]);
 
-	int i = 0;
-	while(out[i] != -1)
-	// while(i < 22)
-	{
-		printf("%d,",out[i]);
-		i++;
-	}
-	printf("\n");
-	free(out);
-	return (0);
-}
+// 	int i = 0;
+// 	while(out[i] != -1)
+// 	// while(i < 22)
+// 	{
+// 		printf("%d,",out[i]);
+// 		i++;
+// 	}
+// 	printf("\n");
+// 	free(out);
+// 	return (0);
+// }
 
 // int main (void)
 // {

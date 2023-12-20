@@ -108,8 +108,16 @@ char	*ft_strncpy(char *dest, const char *src, size_t n)
 	return (dest);
 }
 
+// char *ft_check_key(char* str, char* key)
+// {
+// 	//check if key matches the key in string
+// 	//if yes, proceed with ft_replace
+// 	//if no, memmove and remove it
+// }
+
 char *ft_replace (char *str, char *key, char *val)
 {
+	// ft_check_key(str,key);
 	int len = strlen(str)-strlen(key)+strlen(val);
 	char *ns = malloc(sizeof(char) * (len + 1));
 	
@@ -127,33 +135,33 @@ char *ft_replace (char *str, char *key, char *val)
 	return (ns);
 }
 
-int main(void)
-{
-	// char arg[]= "atok";
-	// char *$USER = arg;
-	// char *$USER = "atok";
-	// printf("hi%s\n", $USER);
+// int main(void)
+// {
+// 	// char arg[]= "atok";
+// 	// char *$USER = arg;
+// 	// char *$USER = "atok";
+// 	// printf("hi%s\n", $USER);
 
-	// char *intput = "echo $test 42";
-	// char *$test = "42 kl is muy home";
-	// char *$output = "echo 42 kl is muy home 42";
+// 	// char *intput = "echo $test 42";
+// 	// char *$test = "42 kl is muy home";
+// 	// char *$output = "echo 42 kl is muy home 42";
 
-	// char *str = "echo me$USER";
-	char *str = "echo me$USERme";
-	// char *str = "echo me$USER me";
-	// char *str = "echo me$USER test$USER";
+// 	// char *str = "echo me$USER";
+// 	char *str = "echo me$USERme";
+// 	// char *str = "echo me$USER me";
+// 	// char *str = "echo me$USER test$USER";
 
 
-	char *key = "$USER";
-	// char *val = "tok";
-	char *val = "usernameisatok";
-	char *ns;
+// 	char *key = "$USER";
+// 	// char *val = "tok";
+// 	char *val = "usernameisatok";
+// 	char *ns;
 
-	ns = ft_replace(str,key,val);
-	printf("%s\n",ns);
-	free(ns);
-	return(0);
-}
+// 	ns = ft_replace(str,key,val);
+// 	printf("%s\n",ns);
+// 	free(ns);
+// 	return(0);
+// }
 
 // while loop input find $
 // substr $... return it as char *key
