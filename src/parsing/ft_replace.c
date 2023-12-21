@@ -108,26 +108,26 @@ char	*ft_strncpy(char *dest, const char *src, size_t n)
 	return (dest);
 }
 
-// char *ft_check_key(char* str, char* key)
-// {
-// 	//check if key matches the key in string
-// 	//if yes, proceed with ft_replace
-// 	//if no, memmove and remove it
-// }
 
 char *ft_replace (char *str, char *key, char *val)
 {
-	// ft_check_key(str,key);
-	int len = strlen(str)-strlen(key)+strlen(val);
+	// if slen val = 0 //when there is no such key
+	// if slen val <= slen key // when val is <= key len
+	int len = strlen(str)+strlen(val); // most lazy and efficient way
+	// int len = strlen(str)-strlen(key)+strlen(val);
 	char *ns = malloc(sizeof(char) * (len + 1));
 	
 	ft_strcpy (ns, str);
 
 	char *ptr = ft_strstr (ns, key);
+	int i = 0;
+	// while (str[i] != *ptr)
+	// 	i++;
 	if (ptr)
 	{
 		//dst will be where the end of val is. src wiil be end of key. n will be wehre key/src end
 		// moving the raminder to the back remainder=anyhong after key)
+		// ft_strncpy (ns, str, i);
 		ft_memmove (ptr+strlen(val), ptr+strlen(key), strlen(ptr+strlen(key))+1);
 		ft_strncpy (ptr, val, strlen(val));
 	}
@@ -147,13 +147,15 @@ char *ft_replace (char *str, char *key, char *val)
 // 	// char *$output = "echo 42 kl is muy home 42";
 
 // 	// char *str = "echo me$USER";
-// 	char *str = "echo me$USERme";
+// 	char *str = "echo me$USERme xop";
 // 	// char *str = "echo me$USER me";
 // 	// char *str = "echo me$USER test$USER";
 
 
-// 	char *key = "$USER";
+// 	// char *key = "$USER";
+// 	char *key = "$USERme";
 // 	// char *val = "tok";
+// 	// char *val = "";
 // 	char *val = "usernameisatok";
 // 	char *ns;
 
@@ -166,3 +168,42 @@ char *ft_replace (char *str, char *key, char *val)
 // while loop input find $
 // substr $... return it as char *key
 // for val, use key to find val
+
+
+// echo hello world | wc
+
+// node1
+// Cmd_string = echo hello world
+// Cmd_array = {echo, hello, world. NULL}
+// redir1
+// redirype = <<
+// redirtext = end
+//    heredoc = ""
+
+// node 2
+// Cmd_string = wc
+// Cmd_array = {wc NULL}
+
+// node1
+// echo
+// node2
+// hello
+// node3
+// world
+// node4
+// |
+// node5
+// wc
+
+// check node until | or end
+// array {echo, NULL}
+// array {echo,world,NULL}
+// array {echo,world,hello,NULL}
+
+// | -> run Cmd 
+
+// array {wc, NULL}
+
+// \0 -> run Cmd
+
+
