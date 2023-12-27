@@ -6,7 +6,7 @@
 /*   By: wyap <wyap@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 18:28:19 by wyap              #+#    #+#             */
-/*   Updated: 2023/12/27 16:20:12 by wyap             ###   ########.fr       */
+/*   Updated: 2023/12/27 17:46:38 by wyap             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,36 +21,6 @@
 // // #include "/usr/local/opt/readline/include" //(rl_clear_history)
 // // /usr/local/opt/readline/lib
 #include "../minishell.h"
-
-void	print_sys_env(char **envp)
-{
-	int	i;
-
-	i = -1;
-	while (envp[++i])
-		printf("%s\n", envp[i]);
-	return ;
-}
-
-void	print_env_var(char **envp, char *s)
-{
-	int		i;
-	char	**pwd;
-
-	i = -1;
-	pwd = NULL;
-	s = ft_strjoin(s, "=");
-	while (envp[++i])
-	{
-		if (!ft_strncmp(envp[i], s, 4))
-		{
-			pwd = ft_split(envp[i], '=');
-			break ;
-		}
-	}
-	printf("%s\n", pwd[1]);
-}
-
 
 void	echo_print(const char *str)
 {
@@ -85,23 +55,6 @@ char	*get_cmd(char *cmd_buf)
 	free(prompt);
 	free(cur_path);
 	return (cmd_buf);
-}
-
-void	print_list(t_node **lst)
-{
-	t_node *tmp;
-
-	tmp = *lst;
-	printf("\n\t***lst_cmd***\n");
-	while (tmp)
-	{
-		printf("\tNode Index		:%d", tmp->index);
-		printf("\n\tNode Content		:%s", tmp->content);
-		printf("\n\tCurr Node Addr		:%p", tmp);
-		printf("\n\tPrev Node Addr		:%p", tmp->prev);
-		printf("\n\tNext Node Addr		:%p\n\n", tmp->next);
-		tmp = tmp->next;
-	}
 }
 
 bool	check_cmd(char *cmd_str)
@@ -145,10 +98,10 @@ int	main(int ac, char **av, char **envp)
 			if (!lst_cmd)
 				perror("lst_cmd not allocated");
 			*lst_cmd = NULL;
-			// print_list(lst_cmd);
 
 		//parsing -> split to nodes and add to stack
-			ft_parse(lst_cmd, cmd_buf); //to optimize function
+			ft_parse(lst_cmd, cmd_buf, ft_index(cmd_buf)); //to optimize function
+			// print_list(lst_cmd);
 			//function to assign attribute and quote type in node
 			//expand handle dollar sign (loop through list and replace env var)
 

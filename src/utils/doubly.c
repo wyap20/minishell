@@ -6,7 +6,7 @@
 /*   By: wyap <wyap@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 19:32:28 by wyap              #+#    #+#             */
-/*   Updated: 2023/12/20 13:19:57 by wyap             ###   ########.fr       */
+/*   Updated: 2023/12/27 17:27:42 by wyap             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char *attr {normal, env_var, operator}
 prev
 next
 */
-t_node	*ft_ldlstnew(char *data)
+t_node	*ft_dlstnew(char *data)
 {
 	t_node	*new;
 

@@ -60,7 +60,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	*ft_strtrim(char const *s1, char const *set);
 
 /*RT's doubly list proto*/
-t_node	*ft_ldlstnew(char *data);
+t_node	*ft_dlstnew(char *data);
 // t_node	*ft_ldlstnew(long num);
 void	ft_dlstadd_front(t_node **lst, t_node *new);
 void	ft_dlstadd_back(t_node **lst, t_node *new);
@@ -69,6 +69,11 @@ t_node	*ft_dlstlast(t_node *lst);
 
 /*utils*/
 void	signals(void);
+// void	print_nodes(t_node **lst_cmd);
+void	print_list(t_node **lst);
+void	print_sys_env(char **envp);
+void	print_env_var(char **envp, char *s);
+
 
 
 // expanding
@@ -80,7 +85,8 @@ int	ft_check_quote(char *str);
 int	ft_check_arrow(char *str);
 // int loop_to_pair(char *str, int i, int qt);
 int	*ft_index(char *cmd_buf);
-t_node	*ft_parse(t_node **lst_cmd ,char *cmd_buf);
+void	ft_parse(t_node **lst_cmd ,char *cmd_buf, int *int_array);
+// t_node	**ft_parse(t_node **lst_cmd ,char *cmd_buf);
 
 
 int	parse_pipe(char *cmd_str);
