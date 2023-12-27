@@ -2,29 +2,39 @@
 #include <stdio.h> // perror
 #include <string.h> // strerror
 #include <errno.h> // errno
+#include <dirent.h> // opendir(), readdir() & closedir()
 
 int main() 
 {
 	char *buffer;
-	int tmp;
+	int error_no; // 0 for success & -1 for error
+
+	DIR *dir;
+	struct dirent *dp;
 
 	printf("%s\n",(getcwd(buffer,__INT_MAX__)));
-	// chdir("..");
-	chdir(".");
-	// tmp = chdir("test"); // if no path
-	// tmp = chdir("src"); // if there is path
-	// tmp = chdir("src/parsing"); // if multi link path
-	// tmp = chdir("/usr/local/bin"); // direct
 	
-	if (tmp != 0)
+	dir = opendir(".");
+	while ((dp = readdir(dir)) != NULL)
+		printf ("[%s]\n", dp->d_name);
+	
+	// error_no = chdir(".."); // move up 1 level aka go back
+	// error_no = chdir("."); //changes the current working directory of the process to the current directory
+	// error_no = chdir("test"); // if no path
+	error_no = chdir("src"); // if there is path
+	// error_no = chdir("src/parsing"); // if multi link path
+	// error_no = chdir("/usr/local/bin"); // direct
+	
+	if (error_no == -1) // if not scuessfull
 		printf("%s\n",strerror(errno));
-		// perror("");
-	else
+		// perror(""); // perror catches both Succes and Error & print it out...
+	else if (error_no == 0)
 		printf("%s\n",(getcwd(buffer,__INT_MAX__)));
-		// perror(""); // perror catches Succes and Error....
+		// perror(""); 
 	
+	closedir(dir);
 	return 0;
 }
 
 /* #include <dirent.h>
-need ot use in conjuntion with opendir() readdir() & closedir()? */
+need tp use in conjuntion with opendir() readdir() & closedir()? */
