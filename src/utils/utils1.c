@@ -6,7 +6,7 @@
 /*   By: wyap <wyap@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 01:12:54 by wyap              #+#    #+#             */
-/*   Updated: 2023/12/27 17:45:47 by wyap             ###   ########.fr       */
+/*   Updated: 2023/12/27 18:35:24 by wyap             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,10 @@ void	print_list(t_node **lst)
 	printf("\n\t***lst_cmd***\n");
 	while (tmp)
 	{
-		printf("\tNode Index		:%d", tmp->index);
+		// printf("\tNode Index		:%d", tmp->index);
 		printf("\n\tNode Content		:%s", tmp->content);
+		printf("\n\tAttribute		:%s", tmp->attr);
+		printf("\n\tQuote Type		:%s", tmp->quote_type);
 		printf("\n\tCurr Node Addr		:%p", tmp);
 		printf("\n\tPrev Node Addr		:%p", tmp->prev);
 		printf("\n\tNext Node Addr		:%p\n\n", tmp->next);

@@ -6,7 +6,7 @@
 /*   By: wyap <wyap@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 15:27:27 by wyap              #+#    #+#             */
-/*   Updated: 2023/12/27 17:43:24 by wyap             ###   ########.fr       */
+/*   Updated: 2023/12/27 18:13:30 by wyap             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void add_back(t_node **lst_cmd, char *cmd_buf, int *int_array, int index)
 }
 			// printf("parse node:%s#\n", ft_substr(cmd_buf, start, len));
 
+/*parsing: split command to substring and add to list as nodes*/
 void	ft_parse(t_node **lst_cmd, char *cmd_buf, int *int_array)
 {
 	int		index;

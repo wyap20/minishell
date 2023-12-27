@@ -27,8 +27,8 @@ next
 typedef	struct s_node{
 	int		index;
 	char	*content;
-	// char	*quote_type;
-	// char	*attr;
+	char	*quote_type;
+	char	*attr;
 	struct	s_node	*next;
 	struct	s_node	*prev;
 }t_node;
@@ -81,6 +81,7 @@ void	store_env(t_env *env, char **envp);
 void	store_path(t_env *env, char **envp);
 
 // parsing
+bool	check_cmd(char *cmd_str);
 int	ft_check_quote(char *str);
 int	ft_check_arrow(char *str);
 // int loop_to_pair(char *str, int i, int qt);
@@ -91,6 +92,7 @@ void	ft_parse(t_node **lst_cmd ,char *cmd_buf, int *int_array);
 
 int	parse_pipe(char *cmd_str);
 
-
+/*built in*/
+void	echo_print(const char *str);
 
 #endif

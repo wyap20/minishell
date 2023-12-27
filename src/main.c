@@ -6,7 +6,7 @@
 /*   By: wyap <wyap@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 18:28:19 by wyap              #+#    #+#             */
-/*   Updated: 2023/12/27 17:46:38 by wyap             ###   ########.fr       */
+/*   Updated: 2023/12/27 18:47:31 by wyap             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,6 @@
 // // #include "/usr/local/opt/readline/include" //(rl_clear_history)
 // // /usr/local/opt/readline/lib
 #include "../minishell.h"
-
-void	echo_print(const char *str)
-{
-	int	i;
-
-	i = 4;
-	while (str[++i])
-		printf("%c", str[i]);
-	printf("\n");
-}
 
 char	*get_cmd(char *cmd_buf)
 {
@@ -56,20 +46,13 @@ char	*get_cmd(char *cmd_buf)
 	free(cur_path);
 	return (cmd_buf);
 }
-
-bool	check_cmd(char *cmd_str)
+t_node **init_lst(t_node **lst_cmd)
 {
-	if (ft_check_quote(cmd_str) == -1)
-		return (false);
-	if (ft_check_arrow(cmd_str) == -1)
-	{
-		printf("Arrow Parse Error\n");
-		return (false);
-	}
-	if (cmd_str[0] == 0)
-		return (false);
-	// printf("\t**Quote and arrow OK!**\n");
-	return (true);
+	lst_cmd = (t_node **)malloc(sizeof(t_node *));
+	if (!lst_cmd)
+		perror("lst_cmd not allocated");
+	*lst_cmd = NULL;
+	return (lst_cmd);
 }
 
 int	main(int ac, char **av, char **envp)
@@ -89,38 +72,30 @@ int	main(int ac, char **av, char **envp)
 		while (1)
 		{
 			cmd_buf = get_cmd(cmd_buf);
-	/*check cmd_buf*/
-			if (check_cmd(cmd_buf) == true){
-		//if check_cmd == true, start parsing, else prompt again
-	/*parsing and expanding here*/
-		//init list
-			lst_cmd = (t_node **)malloc(sizeof(t_node *));
-			if (!lst_cmd)
-				perror("lst_cmd not allocated");
-			*lst_cmd = NULL;
-
-		//parsing -> split to nodes and add to stack
-			ft_parse(lst_cmd, cmd_buf, ft_index(cmd_buf)); //to optimize function
-			// print_list(lst_cmd);
-			//function to assign attribute and quote type in node
+			if (check_cmd(cmd_buf) == true)
+			{
+				lst_cmd = init_lst(lst_cmd);
+				ft_parse(lst_cmd, cmd_buf, ft_index(cmd_buf)); //to optimize function
+				print_list(lst_cmd);
+			//function: whileloop to assign attribute and quote type in node
 			//expand handle dollar sign (loop through list and replace env var)
 
-		/*execution*/
-			// parse_pipe(cmd_buf);
-			// printf("cmd_buf: %s\n", cmd_buf);
-			// printf("%d\n", ft_strncmp(cmd_buf, "echo", 4) == 0);
-			if (!ft_strncmp(cmd_buf, "echo", 4)) //works but incorrect implementation
-				echo_print(cmd_buf);
-			else if (!ft_strcmp(cmd_buf, "pwd"))
-				print_env_var(envp, "PWD");
-			else if (!ft_strcmp(cmd_buf, "env"))
-				print_sys_env(envp);
-			else if (!ft_strcmp(cmd_buf, "exit"))
-			{
-				free(cmd_buf); //readline malloc buffer
-				rl_clear_history(); //-I /usr/local/opt/readline/include -L /usr/local/opt/readline/lib
-				exit(1);
-			}
+			/*execution*/
+				// parse_pipe(cmd_buf);
+				// printf("cmd_buf: %s\n", cmd_buf);
+				// printf("%d\n", ft_strncmp(cmd_buf, "echo", 4) == 0);
+				if (!ft_strncmp(cmd_buf, "echo", 4)) //works but incorrect implementation
+					echo_print(cmd_buf);
+				else if (!ft_strcmp(cmd_buf, "pwd"))
+					print_env_var(envp, "PWD");
+				else if (!ft_strcmp(cmd_buf, "env"))
+					print_sys_env(envp);
+				else if (!ft_strcmp(cmd_buf, "exit"))
+				{
+					free(cmd_buf); //readline malloc buffer
+					rl_clear_history(); //-I /usr/local/opt/readline/include -L /usr/local/opt/readline/lib
+					exit(1);
+				}
 			// else  //if invalid command; create a 2d array of command keywords to match?
 			// 	printf("[minishell] %s: command not found\n", cmd_buf);
 			}
