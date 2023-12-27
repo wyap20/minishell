@@ -6,13 +6,13 @@
 /*   By: wyap <wyap@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 15:27:27 by wyap              #+#    #+#             */
-/*   Updated: 2023/12/27 16:15:13 by wyap             ###   ########.fr       */
+/*   Updated: 2023/12/27 16:19:39 by wyap             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-t_node	*ft_parse(t_node *lst_cmd ,char *cmd_buf)
+t_node	**ft_parse(t_node **lst_cmd ,char *cmd_buf)
 {
 	int	i;
 	int len;

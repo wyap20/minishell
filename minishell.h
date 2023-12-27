@@ -80,7 +80,7 @@ int	ft_check_quote(char *str);
 int	ft_check_arrow(char *str);
 // int loop_to_pair(char *str, int i, int qt);
 int	*ft_index(char *cmd_buf);
-t_node	*ft_parse(t_node *lst_cmd ,char *cmd_buf);
+t_node	*ft_parse(t_node **lst_cmd ,char *cmd_buf);
 
 
 int	parse_pipe(char *cmd_str);

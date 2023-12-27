@@ -6,7 +6,7 @@
 /*   By: wyap <wyap@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 18:28:19 by wyap              #+#    #+#             */
-/*   Updated: 2023/12/27 15:52:36 by wyap             ###   ########.fr       */
+/*   Updated: 2023/12/27 16:20:12 by wyap             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,7 +148,7 @@ int	main(int ac, char **av, char **envp)
 			// print_list(lst_cmd);
 
 		//parsing -> split to nodes and add to stack
-			ft_parse(*lst_cmd, cmd_buf); //to optimize function
+			ft_parse(lst_cmd, cmd_buf); //to optimize function
 			//function to assign attribute and quote type in node
 			//expand handle dollar sign (loop through list and replace env var)
 
