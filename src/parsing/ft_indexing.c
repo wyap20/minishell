@@ -13,25 +13,37 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include "../../minishell.h"
 
-int ft_len(char *str)
-{
-	int i;
+// int ft_len(char *str)
+// {
+// 	int i;
 
-	i = 0;
-	while (str[i] != 0x00)
-		i++;
+// 	i = 0;
+// 	while (str[i] != 0x00)
+// 		i++;
 	
-	return (i);
-}
-
+// 	return (i);
+// }
+/*
+-1: EOL
+0: unassigned
+1: quote & chars inside quote pair & other character
+2: (none)
+3: single right arrow (>)
+4: single left arrow (<)
+5: double right arrow (>>)
+6: double left arrow (<<)
+7: pipe (|)
+8: space
+*/
 
 int *ft_setup(char *str)
 {
 	int len;
 
-	len = ft_len(str);
-	printf("len - %d\n",len);
+	len = (int)ft_strlen(str);
+	// printf("len - %d\n",len);
 	int *id;
 
 	id = (int*)malloc(sizeof(int) * (len + 1));
@@ -46,32 +58,32 @@ int *ft_setup(char *str)
 	return (id);
 }
 
-int *ft_index_quote(int *out, char *str)
-{
-	int i;
+// int *ft_index_quote(int *out, char *str)
+// {
+// 	int i;
 
-	i = 0;
-	while (str[i] != 0x00)
-	{
-		if(str[i] == '\'')
-		{
-			out[i++] = 1;
-			while(str[i] != '\'')
-				out[i++] = 1;
-			out[i] = 1;
-		}	
-		else if(str[i] == '\"')
-		{
-			out[i++] = 2;
-			while(str[i] != '\"')
-				out[i++] = 2;
-			out[i] = 2;
-		}	
-		i++;
-	}
-	return (out);
+// 	i = 0;
+// 	while (str[i] != 0x00)
+// 	{
+// 		if(str[i] == '\'')
+// 		{
+// 			out[i++] = 1;
+// 			while(str[i] != '\'')
+// 				out[i++] = 1;
+// 			out[i] = 1;
+// 		}	
+// 		else if(str[i] == '\"')
+// 		{
+// 			out[i++] = 2;
+// 			while(str[i] != '\"')
+// 				out[i++] = 2;
+// 			out[i] = 2;
+// 		}	
+// 		i++;
+// 	}
+// 	return (out);
+// }
 
-}
 int *ft_index_uniquote(int *out, char *str)
 {
 	int i;
@@ -102,20 +114,18 @@ int *ft_index_left_arrow(int *out, char *str)
 	i = 0;
 	while (str[i] != 0x00)
 	{
-		if(str[i] == '<' && str[i + 1] == '<')
+		if (str[i] == '<' && str[i + 1] == '<')
 		{
-			if(out[i] == 0)
+			if (out[i] == 0)
+			{
 				out[i] = 6;
-			i++;
-			if(out[i] == 0)
-				out[i] = 6;
-			i++;
+				out[i + 1] = 6;
+			}
+			i += 2;
 		}
-		if(str[i] == '<' && str[i + 1] != '<')
-		{
-			if(out[i] == 0)
+		if (str[i] == '<' && str[i + 1] != '<')
+			if (out[i] == 0)
 				out[i] = 4;
-		}
 		i++;
 	}
 	return (out);
@@ -128,24 +138,21 @@ int *ft_index_right_arrow(int *out, char *str)
 	i = 0;
 	while (str[i] != 0x00)
 	{
-		if(str[i] == '>' && str[i + 1] == '>')
+		if (str[i] == '>' && str[i + 1] == '>')
 		{
-			if(out[i] == 0)
+			if (out[i] == 0)
+			{
 				out[i] = 5;
-			i++;
-			if(out[i] == 0)
-				out[i] = 5;
-			i++;
+				out[i + 1] = 5;
+			}
+			i += 2;
 		}
-		if(str[i] == '>' && str[i + 1] != '>')
-		{
-			if(out[i] == 0)
+		if (str[i] == '>' && str[i + 1] != '>')
+			if (out[i] == 0)
 				out[i] = 3;
-		}
 		i++;
 	}
 	return (out);
-
 }
 
 int *ft_index_pipe(int *out, char *str)
@@ -155,7 +162,7 @@ int *ft_index_pipe(int *out, char *str)
 	i = 0;
 	while (str[i] != 0x00)
 	{
-		if(str[i] == '|') 
+		if(str[i] == '|')
 		{
 			if(out[i] == 0)
 				out[i] = 7;
@@ -198,7 +205,7 @@ int *ft_index_others(int *out)
 	return (out);
 }
 
-int *ft_saperate(int *out, char *str)
+int *ft_separate(int *out, char *str)
 {
 	int i;
 
@@ -215,40 +222,27 @@ int *ft_saperate(int *out, char *str)
 	return (out);
 }
 
-// int main (void)
-// {
-// 	// char str[] = "ls | grep Mov | wc -c";
-// 	// char str[] = "ls<< \'| grep <>\"Mov \' | <wc> \"\'\" \'test\'\'ting\'-c";
-// 	// char str[] = "ls<< \'| grep <>\"Mov \' | <wc> \"\'\" \'test\'\"ting\"-c";
-// 	// char str[] = "echo 'test'\"ting\"";
-// 	// char str[] = "echo \"test\"\"ting\"";
-// 	// char str[] = "echo \"test\"\"ting\"-c";
-// 	// char str[] = "echo \"\"\"ting\"-c";
-// 	char str[] = "echo hi\"$USER\"-c";
-// 	int *out;
-	
-// 	out = ft_setup(str);
+int *ft_index(char *cmd_buf)
+{
+	int	*out;
 
-// 	// out = ft_index_quote(out,str);
-// 	out = ft_index_uniquote(out,str);
-	
-// 	out = ft_index_left_arrow(out,str);
-// 	out = ft_index_right_arrow(out,str);
-// 	out = ft_index_pipe(out,str);
-// 	out = ft_index_space(out,str);
-// 	out = ft_index_others(out);
-// 	out = ft_saperate(out,str);
-// 	// out = ft_remove_quote(out,str);
-// 	// printf("%c\n",str[20]);
-// 	int i = 0;
-// 	while(out[i] != -1)
-// 	// while(i < 22)
-// 	{
-// 		printf("%d,",out[i]);
-// 		i++;
-// 	}
-// 	printf("%d",out[i]);
-// 	printf("\n");
-// 	free(out);
-// 	return (0);
-// }
+	out = ft_setup(cmd_buf);
+	// out = ft_index_quote(out, cmd_buf);
+	out = ft_index_uniquote(out, cmd_buf);
+	out = ft_index_left_arrow(out, cmd_buf);
+	out = ft_index_right_arrow(out, cmd_buf);
+	out = ft_index_pipe(out, cmd_buf);
+	out = ft_index_space(out, cmd_buf);
+	out = ft_index_others(out);
+	// out = ft_separate(out, cmd_buf);
+	// out = ft_remove_quote(out, cmd_buf);
+	// printf("%c\n", cmd_buf[20]);
+	int i = 0;
+	while(out[i] != -1)
+	{
+		printf("%d,",out[i]);
+		i++;
+	}
+	printf("%d\n",out[i]);
+	return (out);
+}

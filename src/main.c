@@ -6,7 +6,7 @@
 /*   By: wyap <wyap@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 18:28:19 by wyap              #+#    #+#             */
-/*   Updated: 2023/12/20 17:06:59 by wyap             ###   ########.fr       */
+/*   Updated: 2023/12/27 15:52:36 by wyap             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ char	*get_cmd(char *cmd_buf)
 		cmd_buf = "exit";
 		printf("\nexit");
 	}
-	if (ft_strlen(cmd_buf) > 0){ //carriage return will not be added
+	if (ft_strlen(cmd_buf) > 1){ //carriage return will not be added
 		if (cmd_buf[0] != ' ')
 			add_history(cmd_buf);
 			// continue;
@@ -113,6 +113,8 @@ bool	check_cmd(char *cmd_str)
 		printf("Arrow Parse Error\n");
 		return (false);
 	}
+	if (cmd_str[0] == 0)
+		return (false);
 	// printf("\t**Quote and arrow OK!**\n");
 	return (true);
 }
@@ -135,7 +137,7 @@ int	main(int ac, char **av, char **envp)
 		{
 			cmd_buf = get_cmd(cmd_buf);
 	/*check cmd_buf*/
-			check_cmd(cmd_buf);
+			if (check_cmd(cmd_buf) == true){
 		//if check_cmd == true, start parsing, else prompt again
 	/*parsing and expanding here*/
 		//init list
@@ -146,7 +148,7 @@ int	main(int ac, char **av, char **envp)
 			// print_list(lst_cmd);
 
 		//parsing -> split to nodes and add to stack
-			//ft_parse //to optimize function
+			ft_parse(*lst_cmd, cmd_buf); //to optimize function
 			//function to assign attribute and quote type in node
 			//expand handle dollar sign (loop through list and replace env var)
 
@@ -168,6 +170,7 @@ int	main(int ac, char **av, char **envp)
 			}
 			// else  //if invalid command; create a 2d array of command keywords to match?
 			// 	printf("[minishell] %s: command not found\n", cmd_buf);
+			}
 		}
 	}
 }

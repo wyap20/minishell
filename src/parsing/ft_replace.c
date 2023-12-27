@@ -120,7 +120,7 @@ char *ft_replace (char *str, char *key, char *val)
 	ft_strcpy (ns, str);
 
 	char *ptr = ft_strstr (ns, key);
-	int i = 0;
+	// int i = 0;
 	// while (str[i] != *ptr)
 	// 	i++;
 	if (ptr)
