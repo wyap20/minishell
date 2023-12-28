@@ -1,19 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test.c                                             :+:      :+:    :+:   */
+/*   ft_replace.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atok <atok@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: wyap <wyap@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/30 01:43:18 by atok              #+#    #+#             */
-/*   Updated: 2023/11/30 01:43:18 by atok             ###   ########.fr       */
+/*   Created: 2023/12/28 14:52:12 by wyap              #+#    #+#             */
+/*   Updated: 2023/12/28 14:52:12 by wyap             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <string.h>
+// #include <stdio.h>
+// #include <unistd.h>
+// #include <stdlib.h>
+// #include <string.h>
+#include "../../minishell.h"
 
 // ft_mememove
 // ft_strcpy
@@ -109,7 +110,7 @@ char	*ft_strncpy(char *dest, const char *src, size_t n)
 }
 
 
-char *ft_replace (char *str, char *key, char *val)
+char	*ft_replace (char *str, char *key, char *val)
 {
 	// if slen val = 0 //when there is no such key
 	// if slen val <= slen key // when val is <= key len
@@ -133,6 +134,80 @@ char *ft_replace (char *str, char *key, char *val)
 	}
 
 	return (ns);
+}
+
+char	*get_key(t_node *token)
+{
+	char	*key;
+	char	*tmp;
+	int		i;
+	int		j;
+
+	i = 0;
+	j = 0;
+	tmp = token->content;
+	while (tmp[i])
+	{
+		if (tmp[i] == '$')
+		{
+			while (tmp[i] != ' ' && tmp[i])
+			{
+				i++;
+				j++;
+			}
+			key = ft_substr(tmp, i - j, j);
+		}
+		i++;
+	}
+	printf("get key:%s\n", key);
+	return (key);
+}
+
+char	*get_val(t_env *env, char *key)
+{
+	int		i;
+	int		len;
+	char	*val;
+
+	i = 0;
+	key = ft_strjoin(key, "=");
+	len = (int)ft_strlen(key);
+	// printf("get_val key:%s\nlen:%i\n", key, len);
+	val = NULL;
+	while (env->env_vars[i][0])
+	{
+		if (!ft_strncmp(env->env_vars[i], key, len))
+			val = ft_substr(env->env_vars[i], len, (int)ft_strlen(env->env_vars[i]) - len);
+		i++;
+	}
+	return (val);
+}
+	// printf("**View stored env**\n");
+	// for (int j = 0; env->env_vars[j][0]; j++)
+	// 	printf("%d: %s\n", j, env->env_vars[j]);
+
+void	ft_expand(t_node **lst_cmd, t_env *env)
+{
+	t_node	*ptr;
+	char	*key;
+	char	*val;
+
+	// (void) env;
+
+	ptr = *lst_cmd;
+	while (ptr)
+	{
+		if (!ft_strcmp(ptr->quote_type, "double") || !ft_strcmp(ptr->quote_type, "none"))
+		{
+			key = ft_strtrim(get_key(ptr), "$\"");
+			printf("trim:%s\n", key);
+			val = get_val(env, key);
+			printf("val:%s\n", val);
+		}
+		// free(key);
+		// free(val);
+		ptr = ptr->next;
+	}
 }
 
 // int main(void)

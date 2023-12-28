@@ -6,7 +6,7 @@
 #    By: wyap <wyap@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/06 18:40:56 by wyap              #+#    #+#              #
-#    Updated: 2023/12/27 18:33:07 by wyap             ###   ########.fr        #
+#    Updated: 2023/12/28 16:24:07 by wyap             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,7 +36,7 @@ $(NAME): $(OBJ)
 	$(GCC) $(CFLAGS) $(OBJ) -o $(NAME) -lreadline -lncurses -L /usr/local/opt/readline/lib
 # $(READLINE_MAC)
 
-all: $(NAME)
+all: $(NAME) debug
 
 clean:
 	$(RM) $(OBJ)

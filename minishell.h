@@ -19,8 +19,8 @@
 node struct:
 int index
 char *data //parsed string
-char *quote {none, s_quote, d_quote}
-char *attr {none, normal, env_var, operator}
+char *quote {(null), single (s), double (d)} 
+char *attr {(null), builtin (b), external (e), flag (f), operator (o)}
 prev
 next
 */
@@ -79,6 +79,8 @@ void	print_env_var(char **envp, char *s);
 // expanding
 void	store_env(t_env *env, char **envp);
 void	store_path(t_env *env, char **envp);
+void	ft_expand(t_node **lst_cmd, t_env *env);
+
 
 // parsing
 bool	check_cmd(char *cmd_str);
@@ -87,7 +89,8 @@ int	ft_check_arrow(char *str);
 // int loop_to_pair(char *str, int i, int qt);
 int	*ft_index(char *cmd_buf);
 void	ft_parse(t_node **lst_cmd ,char *cmd_buf, int *int_array);
-// t_node	**ft_parse(t_node **lst_cmd ,char *cmd_buf);
+void	assign_attr(t_node **lst_cmd);
+
 
 
 int	parse_pipe(char *cmd_str);

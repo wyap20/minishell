@@ -6,13 +6,13 @@
 /*   By: wyap <wyap@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 15:27:27 by wyap              #+#    #+#             */
-/*   Updated: 2023/12/27 18:13:30 by wyap             ###   ########.fr       */
+/*   Updated: 2023/12/28 16:09:37 by wyap             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
-/*get remaining substr and add node to list*/
-void add_back(t_node **lst_cmd, char *cmd_buf, int *int_array, int index)
+/*tokenize: add node to list*/
+void	tokenize(t_node **lst_cmd, char *cmd_buf, int *int_array, int index)
 {
 	int		i;
 	int		len;
@@ -46,8 +46,33 @@ void	ft_parse(t_node **lst_cmd, char *cmd_buf, int *int_array)
 	int		index;
 
 	index = int_array[0];
-	add_back(lst_cmd, cmd_buf, int_array, index);
+	tokenize(lst_cmd, cmd_buf, int_array, index);
 	free (int_array);
-	// print_nodes(lst_cmd);
 	return ;
+}
+
+void	assign_attr(t_node **lst_cmd)
+{
+	t_node	*ptr;
+
+	ptr = *lst_cmd;
+	while (ptr)
+	{
+		if (ptr->content[0] == '\"')
+			ptr->quote_type = "double";
+		if (ptr->content[0] == '\'')
+			ptr->quote_type = "single";
+		if (ptr->content[0] != '\'' && ptr->content[0] != '\"')
+			ptr->quote_type = "none";
+		if (!ft_strcmp(ptr->content, "<<") || !ft_strcmp(ptr->content, ">>")
+			|| !ft_strcmp(ptr->content, "<") || !ft_strcmp(ptr->content, ">")
+			|| !ft_strcmp(ptr->content, "|"))
+			ptr->attr = "operator";
+		if (!ft_strcmp(ptr->content, "echo") || !ft_strcmp(ptr->content, "cd")
+			|| !ft_strcmp(ptr->content, "pwd") || !ft_strcmp(ptr->content, "export")
+			|| !ft_strcmp(ptr->content, "unset") || !ft_strcmp(ptr->content, "env")
+			|| !ft_strcmp(ptr->content, "exit"))
+			ptr->attr = "builtin";
+		ptr = ptr->next;
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: wyap <wyap@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/26 01:50:06 by wyap              #+#    #+#             */
-/*   Updated: 2023/12/20 13:58:28 by wyap             ###   ########.fr       */
+/*   Updated: 2023/12/28 17:26:05 by wyap             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,11 @@ void	store_env(t_env *env, char **envp)
 	i = -1;
 	while (envp[++i])
 		env->env_vars[i] = ft_substr(envp[i], 0, (ft_strlen(envp[i])));
-	// check stored env
-	// printf("**View stored env**\n");
-	// for (int j = 0; j < i; j++)
-	// 	printf("%d: %s\n", j, env->env_vars[j]);
+	env->env_vars[i] = ft_strdup("\0");
 }
+	// printf("**View stored env**\n");
+	// for (int j = 0; env->env_vars[j][0]; j++)
+	// 	printf("%d: %s\n", j, env->env_vars[j]);
 
 void	split_path(t_env *env)
 {

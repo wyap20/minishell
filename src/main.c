@@ -6,7 +6,7 @@
 /*   By: wyap <wyap@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 18:28:19 by wyap              #+#    #+#             */
-/*   Updated: 2023/12/27 18:47:31 by wyap             ###   ########.fr       */
+/*   Updated: 2023/12/28 17:19:25 by wyap             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,9 @@ int	main(int ac, char **av, char **envp)
 				lst_cmd = init_lst(lst_cmd);
 				ft_parse(lst_cmd, cmd_buf, ft_index(cmd_buf)); //to optimize function
 				print_list(lst_cmd);
+				assign_attr(lst_cmd);
+				print_list(lst_cmd);
+				ft_expand(lst_cmd, &env);
 			//function: whileloop to assign attribute and quote type in node
 			//expand handle dollar sign (loop through list and replace env var)
 
@@ -93,6 +96,7 @@ int	main(int ac, char **av, char **envp)
 				else if (!ft_strcmp(cmd_buf, "exit"))
 				{
 					free(cmd_buf); //readline malloc buffer
+					// free(lst_cmd);
 					rl_clear_history(); //-I /usr/local/opt/readline/include -L /usr/local/opt/readline/lib
 					exit(1);
 				}
