@@ -11,7 +11,8 @@ int main()
 	args[1] = "-l";
 	args[2] = NULL; //<< must have
 
-	execve(args[0], args, NULL); // path , 2d array format, NULL
+	// execve(args[0], args, NULL); // path , 2d array format, NULL
+	execve("/bin/ls", (char*[]){"anything", "-l", NULL}, NULL); // 1st arg cannot be NULL but can be anything
 	perror("execve"); //<< perror usage
 	return 1;
 }

@@ -15,7 +15,7 @@ int main()
 	printf("%s\n",(getcwd(buffer,__INT_MAX__)));
 	
 	dir = opendir(".");
-	while ((dp = readdir(dir)) != NULL)
+	while ((dp = readdir(dir)) != NULL) // for wildcard BONUS
 		printf ("[%s]\n", dp->d_name);
 	
 	// error_no = chdir(".."); // move up 1 level aka go back
@@ -25,6 +25,13 @@ int main()
 	// error_no = chdir("src/parsing"); // if multi link path
 	// error_no = chdir("/usr/local/bin"); // direct
 	
+	/* method A */
+	if (chdir("src")) // valid path
+		perror("");
+	if (chdir("test")) // no valid path
+		perror("");
+
+	/* method B */
 	if (error_no == -1) // if not scuessfull
 		printf("%s\n",strerror(errno));
 		// perror(""); // perror catches both Succes and Error & print it out...
