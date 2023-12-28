@@ -6,7 +6,7 @@
 /*   By: wyap <wyap@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/26 01:50:06 by wyap              #+#    #+#             */
-/*   Updated: 2023/12/28 17:26:05 by wyap             ###   ########.fr       */
+/*   Updated: 2023/12/28 18:42:56 by wyap             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	store_env(t_env *env, char **envp)
 	while (envp[i])
 		i++;
 	// printf("%d\n", i);
-	env->env_vars = (char **)malloc(i * sizeof(char *));
+	env->env_vars = (char **)malloc((i + 1) * sizeof(char *)); //+1 to have additional array for tail node to insert null
 	//copy entire env
 	i = -1;
 	while (envp[++i])

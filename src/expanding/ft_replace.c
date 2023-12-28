@@ -112,6 +112,7 @@ char	*ft_strncpy(char *dest, const char *src, size_t n)
 
 char	*ft_replace (char *str, char *key, char *val)
 {
+	// printf("\n[replace]\nstr:%s\nkey:%s\nval:%s\n\n", str, key, val);
 	// if slen val = 0 //when there is no such key
 	// if slen val <= slen key // when val is <= key len
 	int len = strlen(str)+strlen(val); // most lazy and efficient way
@@ -131,8 +132,8 @@ char	*ft_replace (char *str, char *key, char *val)
 		// ft_strncpy (ns, str, i);
 		ft_memmove (ptr+strlen(val), ptr+strlen(key), strlen(ptr+strlen(key))+1);
 		ft_strncpy (ptr, val, strlen(val));
+		// free(str);
 	}
-
 	return (ns);
 }
 
@@ -146,16 +147,25 @@ char	*get_key(t_node *token)
 	i = 0;
 	j = 0;
 	tmp = token->content;
+	// printf("tmp:%s\n",tmp);
+	// printf("tmp[6]:%d\n", tmp[6]);
+	key = NULL;
 	while (tmp[i])
 	{
 		if (tmp[i] == '$')
 		{
-			while (tmp[i] != ' ' && tmp[i])
+			i++;
+			j++;
+			while (tmp[i] != ' ' && tmp[i] != '$' && tmp[i])//&& tmp[i + 1] != '$')
 			{
+				printf("mark");
 				i++;
 				j++;
 			}
+			printf("\n");
 			key = ft_substr(tmp, i - j, j);
+			if (strlen(key) > 0)
+				break ;
 		}
 		i++;
 	}
@@ -170,7 +180,7 @@ char	*get_val(t_env *env, char *key)
 	char	*val;
 
 	i = 0;
-	key = ft_strjoin(key, "=");
+	key = ft_strjoin(ft_strtrim(key, "$"), "=");
 	len = (int)ft_strlen(key);
 	// printf("get_val key:%s\nlen:%i\n", key, len);
 	val = NULL;
@@ -192,17 +202,20 @@ void	ft_expand(t_node **lst_cmd, t_env *env)
 	char	*key;
 	char	*val;
 
-	// (void) env;
-
 	ptr = *lst_cmd;
 	while (ptr)
 	{
 		if (!ft_strcmp(ptr->quote_type, "double") || !ft_strcmp(ptr->quote_type, "none"))
 		{
-			key = ft_strtrim(get_key(ptr), "$\"");
-			printf("trim:%s\n", key);
-			val = get_val(env, key);
-			printf("val:%s\n", val);
+			key = get_key(ptr);
+			if (key != NULL)
+			{
+				key = ft_strtrim(key, "\"");
+				printf("trim:%s\n", key);
+				val = get_val(env, key);
+				printf("val:%s\n", val);
+				ptr->content = ft_replace(ptr->content, key, val);
+			}
 		}
 		// free(key);
 		// free(val);
