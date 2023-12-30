@@ -17,3 +17,5 @@ void	trim_quotes(t_node **lst_cmd)
 		ptr = ptr->next;	
 	}
 }
+
+

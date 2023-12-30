@@ -24,7 +24,7 @@ void	tokenize(t_node **lst_cmd, char *cmd_buf, int *int_array, int index)
 	start = 0;
 	while (int_array[i] != -1)
 	{
-		if (int_array[i] == 8)
+		while (int_array[i] == 8)
 			i++;
 		index = int_array[i];
 		if (int_array[i++] == index)
