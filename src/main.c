@@ -81,8 +81,10 @@ int	main(int ac, char **av, char **envp)
 				// print_list(lst_cmd);
 				ft_expand(lst_cmd, &env); //expand handle dollar sign (loop through list and replace env var)
 				print_list(lst_cmd);
-				//trim quote
-				// print_list(lst_cmd);
+				trim_quotes(lst_cmd);
+				print_list(lst_cmd);
+				clear_empty_node(lst_cmd);
+				print_list(lst_cmd);
 			/*execution*/
 				// parse_pipe(cmd_buf);
 				// printf("cmd_buf: %s\n", cmd_buf);

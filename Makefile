@@ -16,7 +16,7 @@ SRC_DIR = src/
 SRC = main.c utils/ft_split.c utils/ft_strlen.c utils/ft_strjoin.c utils/ft_strcmp.c\
 		utils/ft_strncmp.c utils/ft_isalnum.c utils/ft_strtrim.c utils/ft_strchr.c\
 		utils/ft_strdup.c utils/ft_substr.c parsing/parse_pipe.c expanding/store_env.c\
-		utils/utils1.c utils/doubly.c parsing/ft_checker.c\
+		utils/utils1.c utils/doubly.c parsing/ft_checker.c parsing/trim_quotes.c\
 		parsing/ft_indexing.c expanding/ft_replace.c parsing/parser.c\
 		builtins/builtin_utils.c builtins/echo.c
 # parsing/loop_to_pair.c
