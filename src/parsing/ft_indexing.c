@@ -29,13 +29,14 @@
 -1: EOL
 0: unassigned
 1: quote & chars inside quote pair & other character
-2: (none)
+2: double single quote ('')
 3: single right arrow (>)
 4: single left arrow (<)
 5: double right arrow (>>)
 6: double left arrow (<<)
 7: pipe (|)
 8: space
+9: double double quote ("")
 */
 
 int *ft_setup(char *str)
@@ -56,6 +57,28 @@ int *ft_setup(char *str)
 		i++;
 	}
 	return (id);
+}
+
+int *ft_quote_pair(int *out, char *str)
+{
+	int i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '\'' && str[i + 1] == '\'')
+		{
+			out[i] = 2;
+			out[i + 1] = 2;
+		}
+		if (str[i] == '\"' && str[i + 1] == '\"')
+		{
+			out[i] = 9;
+			out[i + 1] = 9;
+		}
+		i++;
+	}
+	return (out);
 }
 
 // int *ft_index_quote(int *out, char *str)
@@ -229,6 +252,7 @@ int *ft_index(char *cmd_buf)
 	out = ft_setup(cmd_buf);
 	// out = ft_index_quote(out, cmd_buf);
 	out = ft_index_uniquote(out, cmd_buf);
+	out = ft_quote_pair(out, cmd_buf);
 	out = ft_index_left_arrow(out, cmd_buf);
 	out = ft_index_right_arrow(out, cmd_buf);
 	out = ft_index_pipe(out, cmd_buf);

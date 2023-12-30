@@ -77,13 +77,12 @@ int	main(int ac, char **av, char **envp)
 				lst_cmd = init_lst(lst_cmd);
 				ft_parse(lst_cmd, cmd_buf, ft_index(cmd_buf)); //to optimize function
 				// print_list(lst_cmd);
-			//function: whileloop to assign attribute and quote type in node
-				assign_attr(lst_cmd);
+				assign_attr(lst_cmd); //whileloop to assign attribute and quote type in node
+				// print_list(lst_cmd);
+				ft_expand(lst_cmd, &env); //expand handle dollar sign (loop through list and replace env var)
 				print_list(lst_cmd);
-			//expand handle dollar sign (loop through list and replace env var)
-				ft_expand(lst_cmd, &env);
-				print_list(lst_cmd);
-
+				//trim quote
+				// print_list(lst_cmd);
 			/*execution*/
 				// parse_pipe(cmd_buf);
 				// printf("cmd_buf: %s\n", cmd_buf);
