@@ -97,10 +97,11 @@ int	main(int ac, char **av, char **envp)
 				else if (!ft_strcmp(cmd_buf, "exit"))
 				{
 					free(cmd_buf); //readline malloc buffer
-					free(lst_cmd);
+					// free(lst_cmd);
 					rl_clear_history(); //-I /usr/local/opt/readline/include -L /usr/local/opt/readline/lib
 					exit(1);
 				}
+				free(lst_cmd);
 			// else  //if invalid command; create a 2d array of command keywords to match?
 			// 	printf("[minishell] %s: command not found\n", cmd_buf);
 			}

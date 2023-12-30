@@ -12,25 +12,101 @@
 
 #include "../../minishell.h"
 
+// size_t	sstrlen(char const *str)
+// {
+// 	int	len;
+
+// 	len = 0;
+// 	while (str[len] != 0x00)
+// 		len++;
+// 	return (len);
+// }
+
+// char	*sstrdup(const char *src)
+// {
+// 	char	*dup;
+// 	int		i;
+// 	int		len;
+
+// 	len = 0;
+// 	while (src[len])
+// 		len++;
+// 	dup = (char *) malloc(sizeof(char) * (len + 1));
+// 	if (dup == (NULL))
+// 		return (NULL);
+// 	i = 0;
+// 	while (src[i])
+// 	{
+// 		dup[i] = src[i];
+// 		i++;
+// 	}
+// 	dup[i] = 0x00;
+// 	return (dup);
+// }
+
+// char	*ft_substr(char const *s, unsigned int start, size_t len)
+// {
+// 	char		*ss;
+// 	size_t		slen;
+
+// 	if (len == 0 || s == NULL)
+// 		return (sstrdup(""));
+// 	if (start >= sstrlen(s))
+// 		return (sstrdup(""));
+// 	ss = (char *)malloc((len + 1) * sizeof(char));
+// 	if (ss == NULL)
+// 		return (NULL);
+// 	slen = 0;
+// 	while (s[start] != 0x00 && slen < len)
+// 	{
+// 		ss[slen] = s[start];
+// 		start++;
+// 		slen++;
+// 	}
+// 	ss[slen] = 0x00;
+// 	return (ss);
+// }
+
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
 	char	*sub;
 	size_t	i;
 
 	i = 0;
-	if (!s || len == 0)
+	if (!s || len == 0 || start >= ft_strlen(s))
 		return (ft_strdup(""));
 	sub = (char *)malloc((len + 1) * sizeof(char));
 	if (!sub)
 		return (0);
-	while (*s && i < len)
+	while (s[start] && i < len)
 	{
 		if (s[start] == 0x00)
 			break ;
-		if (start >= ft_strlen(s))
-			return (ft_strdup(""));
 		sub[i++] = s[start++];
 	}
 	sub[i] = 0x00;
 	return (sub);
 }
+
+// char	*ft_substr(char const *s, unsigned int start, size_t len)
+// {
+// 	char	*sub;
+// 	size_t	i;
+
+// 	i = 0;
+// 	if (!s || len == 0)
+// 		return (ft_strdup(""));
+// 	sub = (char *)malloc((len + 1) * sizeof(char));
+// 	if (!sub)
+// 		return (0);
+// 	while (*s && i < len)
+// 	{
+// 		if (s[start] == 0x00)
+// 			break ;
+// 		if (start >= ft_strlen(s))
+// 			return (ft_strdup(""));
+// 		sub[i++] = s[start++];
+// 	}
+// 	sub[i] = 0x00;
+// 	return (sub);
+// }

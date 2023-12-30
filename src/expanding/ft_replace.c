@@ -113,6 +113,8 @@ char	*ft_strncpy(char *dest, const char *src, size_t n)
 char	*ft_replace (char *str, char *key, char *val)
 {
 	// printf("\n[replace]\nstr:%s\nkey:%s\nval:%s\n\n", str, key, val);
+	if (val == NULL)
+		val = "\0";
 	// if slen val = 0 //when there is no such key
 	// if slen val <= slen key // when val is <= key len
 	int len = strlen(str)+strlen(val); // most lazy and efficient way
@@ -147,8 +149,6 @@ char	*get_key(t_node *token)
 	i = 0;
 	j = 0;
 	tmp = token->content;
-	// printf("tmp:%s\n",tmp);
-	// printf("tmp[6]:%d\n", tmp[6]);
 	key = NULL;
 	while (tmp[i])
 	{
@@ -156,7 +156,7 @@ char	*get_key(t_node *token)
 		{
 			i++;
 			j++;
-			while (tmp[i] != ' ' && tmp[i] != '$' && tmp[i])//&& tmp[i + 1] != '$')
+			while (tmp[i] != ' ' && tmp[i] != '$' && tmp[i])
 			{
 				printf("mark");
 				i++;
@@ -205,7 +205,7 @@ void	ft_expand(t_node **lst_cmd, t_env *env)
 	ptr = *lst_cmd;
 	while (ptr)
 	{
-		if (!ft_strcmp(ptr->quote_type, "double") || !ft_strcmp(ptr->quote_type, "none"))
+		if (!ft_strcmp(ptr->quote_type, "double") || !ft_strcmp(ptr->quote_type, "none")) //if is double or open quote
 		{
 			key = get_key(ptr);
 			if (key != NULL)
@@ -217,9 +217,9 @@ void	ft_expand(t_node **lst_cmd, t_env *env)
 				ptr->content = ft_replace(ptr->content, key, val);
 			}
 		}
-		// free(key);
-		// free(val);
-		ptr = ptr->next;
+		//if is single quote or there's no more $ to replace
+		if (!ft_strcmp(ptr->quote_type, "single") || !ft_strchr(ptr->content, '$'))
+			ptr = ptr->next;
 	}
 }
 
