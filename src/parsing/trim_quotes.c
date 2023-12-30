@@ -18,4 +18,25 @@ void	trim_quotes(t_node **lst_cmd)
 	}
 }
 
+void	clear_empty_node(t_node **lst_cmd)
+{
+	t_node	*ptr;
+	t_node	*tmp;
 
+	ptr = *lst_cmd;
+	while (ptr)
+	{
+		tmp = ptr->next;
+		if (ft_strlen(ptr->content) == 0)
+		{
+			if (ptr->prev) //is not NULL
+				ptr->prev->next = ptr->next;
+			else
+				*lst_cmd = ptr->next;
+			if (ptr->next)
+				ptr->next->prev = ptr->prev;
+			free(ptr);
+		}
+		ptr = tmp;
+	}
+}
