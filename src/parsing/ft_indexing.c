@@ -240,22 +240,22 @@ int *ft_index_others(int *out)
 	return (out);
 }
 
-int *ft_separate(int *out, char *str)
-{
-	int i;
+// int *ft_separate(int *out, char *str)
+// {
+// 	int i;
 
-	i = 0;
-	while (out[i] != -1)
-	{
-		if (out[i] == 10)
-			i++;
-		write(1, &str[i], 1);
-		if (out[i] != out[i + 1])
-			write(1, "\n", 1);
-		i++;
-	}
-	return (out);
-}
+// 	i = 0;
+// 	while (out[i] != -1)
+// 	{
+// 		if (out[i] == 10)
+// 			i++;
+// 		write(1, &str[i], 1);
+// 		if (out[i] != out[i + 1])
+// 			write(1, "\n", 1);
+// 		i++;
+// 	}
+// 	return (out);
+// }
 
 int *ft_index(char *cmd_buf)
 {
@@ -263,15 +263,14 @@ int *ft_index(char *cmd_buf)
 
 	out = ft_setup(cmd_buf);
 	// out = ft_index_quote(out, cmd_buf);
-	out = ft_index_uniquote(out, cmd_buf);
 	out = ft_quote_pair(out, cmd_buf);
+	out = ft_index_uniquote(out, cmd_buf);
 	out = ft_index_left_arrow(out, cmd_buf);
 	out = ft_index_right_arrow(out, cmd_buf);
 	out = ft_index_pipe(out, cmd_buf);
 	out = ft_index_space(out, cmd_buf);
 	out = ft_index_others(out);
 	// out = ft_separate(out, cmd_buf);
-	// out = ft_remove_quote(out, cmd_buf);
 	// printf("%c\n", cmd_buf[20]);
 	int i = 0;
 	while(out[i] != -1)
