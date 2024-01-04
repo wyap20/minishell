@@ -12,6 +12,33 @@
 
 #include "../../minishell.h"
 
+void	trim_inner_quotes(t_node *ptr)
+{
+	int		i;
+	int		j;
+	int		len;
+	char	quote;
+
+	i = 0;
+	j = 0;
+	len = ft_strlen(ptr->content);
+	if (!ft_strcmp(ptr->quote_type, "none"))
+		return ;
+	else if (!ft_strcmp(ptr->quote_type, "double"))
+		quote = '\"';
+	else if (!ft_strcmp(ptr->quote_type, "single"))
+		quote = '\'';
+	while (i < len)
+	{
+		if (ptr->content[i] == quote && ptr->content[i + 1] == quote)
+			i++;
+		else
+			ptr->content[j++] = ptr->content[i];
+		i++;
+	}
+	ptr->content[j] = '\0';
+}
+
 void	trim_quotes(t_node **lst_cmd)
 {
 	t_node	*ptr;
@@ -25,7 +52,8 @@ void	trim_quotes(t_node **lst_cmd)
 			ptr->content = ft_strtrim(ptr->content, "\'");
 		else if ((!ft_strcmp(ptr->quote_type, "double") || !ft_strcmp(ptr->quote_type, "single")) && ft_strlen(ptr->content) == 3) //parse string with 1 char;
 			ptr->content = ft_substr(ptr->content, 1, 1);
-		printf("%lu\n", ft_strlen(ptr->content));
+		// printf("%lu\n", ft_strlen(ptr->content));
+		trim_inner_quotes(ptr);
 		ptr = ptr->next;	
 	}
 }
