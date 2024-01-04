@@ -6,7 +6,7 @@
 #    By: wyap <wyap@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/06 18:40:56 by wyap              #+#    #+#              #
-#    Updated: 2023/12/28 16:24:07 by wyap             ###   ########.fr        #
+#    Updated: 2024/01/04 13:35:16 by wyap             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,7 +43,7 @@ clean:
 
 fclean: clean
 	$(RM) $(NAME) $(NAME)_debug
-	@echo $(RM) *.dSYM
+	@$(RM) *.dSYM
 
 re: fclean all
 

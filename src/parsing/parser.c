@@ -6,7 +6,7 @@
 /*   By: wyap <wyap@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 15:27:27 by wyap              #+#    #+#             */
-/*   Updated: 2023/12/28 16:09:37 by wyap             ###   ########.fr       */
+/*   Updated: 2024/01/04 13:42:26 by wyap             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	tokenize(t_node **lst_cmd, char *cmd_buf, int *int_array, int index)
 	start = 0;
 	while (int_array[i] != -1)
 	{
-		while (int_array[i] == 8)
+		while (int_array[i] == 10)
 			i++;
 		index = int_array[i];
 		if (int_array[i++] == index)

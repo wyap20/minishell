@@ -210,7 +210,7 @@ void	ft_expand(t_node **lst_cmd, t_env *env)
 			key = get_key(ptr);
 			if (key != NULL)
 			{
-				key = ft_strtrim(key, "\"");
+				key = ft_strtrim(key, "\"\'");
 				printf("trim:%s\n", key);
 				val = get_val(env, key);
 				printf("val:%s\n", val);

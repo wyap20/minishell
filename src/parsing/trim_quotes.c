@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   trim_quotes.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: wyap <wyap@student.42.fr>                  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/04 13:28:19 by wyap              #+#    #+#             */
+/*   Updated: 2024/01/04 13:28:20 by wyap             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../minishell.h"
 
 void	trim_quotes(t_node **lst_cmd)
@@ -11,7 +23,7 @@ void	trim_quotes(t_node **lst_cmd)
 			ptr->content = ft_strtrim(ptr->content, "\"");
 		if (!ft_strcmp(ptr->quote_type, "single"))
 			ptr->content = ft_strtrim(ptr->content, "\'");
-		if ((!ft_strcmp(ptr->quote_type, "double") || !ft_strcmp(ptr->quote_type, "single")) && ft_strlen(ptr->content) == 3)
+		if ((!ft_strcmp(ptr->quote_type, "double") || !ft_strcmp(ptr->quote_type, "single")) && ft_strlen(ptr->content) == 3) //parse string with 1 char;
 			ptr->content = ft_substr(ptr->content, 1, 1);
 		printf("%lu\n", ft_strlen(ptr->content));
 		ptr = ptr->next;	

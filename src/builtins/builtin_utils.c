@@ -6,7 +6,7 @@
 /*   By: wyap <wyap@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 17:45:23 by wyap              #+#    #+#             */
-/*   Updated: 2023/12/27 17:45:50 by wyap             ###   ########.fr       */
+/*   Updated: 2024/01/04 13:30:15 by wyap             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	print_sys_env(char **envp)
 	return ;
 }
 
+/*prints out specified environment variable, s* is case sensitive*/
 void	print_env_var(char **envp, char *s)
 {
 	int		i;

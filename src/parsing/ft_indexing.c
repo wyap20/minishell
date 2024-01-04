@@ -28,17 +28,20 @@
 /*
 -1: EOL
 0: unassigned
-1: quote & chars inside quote pair & other character
+1: single quote & chars inside quotes
 2: double single quote ('')
-3: single right arrow (>)
-4: single left arrow (<)
-5: double right arrow (>>)
-6: double left arrow (<<)
-7: pipe (|)
-8: space
-9: double double quote ("")
+3: double double quote ("")
+4: single right arrow (>)
+5: single left arrow (<)
+6: double right arrow (>>)
+7: double left arrow (<<)
+8: pipe (|)
+9: other characters
+10: space
+11: double quote & chars inside quotes
 */
 
+/*set all element as 0 before indexing*/
 int *ft_setup(char *str)
 {
 	int len;
@@ -73,8 +76,8 @@ int *ft_quote_pair(int *out, char *str)
 		}
 		if (str[i] == '\"' && str[i + 1] == '\"')
 		{
-			out[i] = 9;
-			out[i + 1] = 9;
+			out[i] = 3;
+			out[i + 1] = 3;
 		}
 		i++;
 	}
@@ -115,7 +118,7 @@ int *ft_index_uniquote(int *out, char *str)
 	i = 0;
 	while (str[i] != 0x00)
 	{
-		if(str[i] == '\'' || str[i] == '\"')
+		if(str[i] == '\'')// || str[i] == '\"')
 		{
 			c = str[i];
 			out[i] = 1;
@@ -124,8 +127,17 @@ int *ft_index_uniquote(int *out, char *str)
 				out[i++] = 1;
 			out[i] = 1;
 			c = 0x00;
-		}	
-		i++;
+		}
+		if(str[i] == '\"')
+		{
+			c = str[i];
+			out[i] = 11;
+			i++;
+			while(str[i] != c)
+				out[i++] = 11;
+			out[i] = 11;
+			c = 0x00;
+		}		i++;
 	}
 	return (out);
 }
@@ -141,14 +153,14 @@ int *ft_index_left_arrow(int *out, char *str)
 		{
 			if (out[i] == 0)
 			{
-				out[i] = 6;
-				out[i + 1] = 6;
+				out[i] = 7;
+				out[i + 1] = 7;
 			}
 			i += 2;
 		}
 		if (str[i] == '<' && str[i + 1] != '<')
 			if (out[i] == 0)
-				out[i] = 4;
+				out[i] = 5;
 		i++;
 	}
 	return (out);
@@ -165,14 +177,14 @@ int *ft_index_right_arrow(int *out, char *str)
 		{
 			if (out[i] == 0)
 			{
-				out[i] = 5;
-				out[i + 1] = 5;
+				out[i] = 6;
+				out[i + 1] = 6;
 			}
 			i += 2;
 		}
 		if (str[i] == '>' && str[i + 1] != '>')
 			if (out[i] == 0)
-				out[i] = 3;
+				out[i] = 4;
 		i++;
 	}
 	return (out);
@@ -188,7 +200,7 @@ int *ft_index_pipe(int *out, char *str)
 		if(str[i] == '|')
 		{
 			if(out[i] == 0)
-				out[i] = 7;
+				out[i] = 8;
 		}
 		i++;
 	}
@@ -205,7 +217,7 @@ int *ft_index_space(int *out, char *str)
 		if(str[i] == ' ') 
 		{
 			if(out[i] == 0)
-				out[i] = 8;
+				out[i] = 10;
 		}
 		i++;
 	}
@@ -221,7 +233,7 @@ int *ft_index_others(int *out)
 	{
 		if(out[i] == 0) 
 		{
-			out[i] = 1;
+			out[i] = 9;
 		}
 		i++;
 	}
@@ -235,7 +247,7 @@ int *ft_separate(int *out, char *str)
 	i = 0;
 	while (out[i] != -1)
 	{
-		if (out[i] == 8)
+		if (out[i] == 10)
 			i++;
 		write(1, &str[i], 1);
 		if (out[i] != out[i + 1])
