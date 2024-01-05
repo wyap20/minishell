@@ -6,7 +6,7 @@
 /*   By: wyap <wyap@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 18:28:19 by wyap              #+#    #+#             */
-/*   Updated: 2024/01/05 16:46:46 by wyap             ###   ########.fr       */
+/*   Updated: 2024/01/05 20:40:02 by wyap             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,15 +78,17 @@ int	main(int ac, char **av, char **envp)
 				ft_parse(lst_cmd, cmd_buf, ft_index(cmd_buf)); //to optimize function
 				//printf("\tparse:\n"); print_list(lst_cmd);
 				assign_attr(lst_cmd); //whileloop to assign attribute and quote type in node
-				printf("\tassign attr:\n"); print_list(lst_cmd);
+				// printf("\tassign attr:\n"); print_list(lst_cmd);
 				if (check_operator(lst_cmd) == true)
 				{
 					ft_expand(lst_cmd, &env); //expand handle dollar sign (loop through list and replace env var)
-					printf("\texpand:\n"); print_list(lst_cmd);
+					// printf("\texpand:\n"); print_list(lst_cmd);
 					trim_quotes(lst_cmd);
-					printf("\ttrim quotes:\n"); print_list(lst_cmd);
+					// printf("\ttrim quotes:\n"); print_list(lst_cmd);
 					clear_empty_node(lst_cmd);
 					printf("\tremove null node:\n"); print_list(lst_cmd);
+					combine_nodes(lst_cmd);
+					printf("\tcombine:\n"); print_list(lst_cmd);
 				/*execution*/
 					// parse_pipe(cmd_buf);
 					// printf("cmd_buf: %s\n", cmd_buf);

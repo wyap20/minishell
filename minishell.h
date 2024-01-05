@@ -93,6 +93,7 @@ void	store_path(t_env *env, char **envp);
 void	ft_expand(t_node **lst_cmd, t_env *env);
 void	trim_quotes(t_node **lst_cmd);
 void	clear_empty_node(t_node **lst_cmd);
+void	combine_nodes(t_node **lst_cmd);
 
 int	parse_pipe(char *cmd_str);
 
