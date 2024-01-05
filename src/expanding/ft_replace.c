@@ -152,6 +152,8 @@ char	*get_key(t_node *token)
 	key = NULL;
 	while (tmp[i])
 	{
+		// if (tmp[i] == '$' && (tmp[i + 1] == '\"' || tmp[i + 1]))
+		// 	return (NULL);
 		if (tmp[i] == '$')
 		{
 			i++;
@@ -196,6 +198,23 @@ char	*get_val(t_env *env, char *key)
 	// for (int j = 0; env->env_vars[j][0]; j++)
 	// 	printf("%d: %s\n", j, env->env_vars[j]);
 
+// bool check_dollar(const char *str)
+// {
+// 	int i;
+	
+// 	i = 0;
+// 	while (str[i] != '\0')
+// 	{
+// 		if (str[i] == '$')
+// 		{
+// 			if (str[i + 1] == '\"' || !ft_not_alpha(str[i + 1]))
+// 				return false; //nothing left to replace
+// 		}
+// 		i++;
+// 	}
+// 	  return true;
+// }
+
 void	ft_expand(t_node **lst_cmd, t_env *env)
 {
 	t_node	*ptr;
@@ -208,7 +227,7 @@ void	ft_expand(t_node **lst_cmd, t_env *env)
 		if (!ft_strcmp(ptr->quote_type, "double") || !ft_strcmp(ptr->quote_type, "none")) //if is double or open quote
 		{
 			key = get_key(ptr);
-			if (key != NULL)
+			if (key != NULL)// && ft_strcmp(key, "$")) //if not null and key is not "$"
 			{
 				key = ft_strtrim(key, "\"\'");
 				printf("trim:%s\n", key);
@@ -218,8 +237,10 @@ void	ft_expand(t_node **lst_cmd, t_env *env)
 			}
 		}
 		//if is single quote or there's no more $ to replace
-		if (!ft_strcmp(ptr->quote_type, "single") || !ft_strchr(ptr->content, '$'))
+		// if (!ft_strcmp(ptr->quote_type, "single") || !(check_dollar(ptr->content) == false))
+		if (!ft_strcmp(ptr->quote_type, "single") || !ft_strchr(ptr->content, '$')) 
 			ptr = ptr->next;
+		printf("expandmark\n");
 	}
 }
 
