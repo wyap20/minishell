@@ -6,7 +6,7 @@
 /*   By: wyap <wyap@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 15:27:27 by wyap              #+#    #+#             */
-/*   Updated: 2024/01/04 13:42:26 by wyap             ###   ########.fr       */
+/*   Updated: 2024/01/05 15:59:55 by wyap             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ void	tokenize(t_node **lst_cmd, char *cmd_buf, int *int_array, int index)
 	start = 0;
 	while (int_array[i] != -1)
 	{
-		while (int_array[i] == 10)
-			i++;
+		// while (int_array[i] == 10)
+		// 	i++;
 		index = int_array[i];
 		if (int_array[i++] == index)
 			len++;
@@ -68,11 +68,35 @@ void	assign_attr(t_node **lst_cmd)
 			|| !ft_strcmp(ptr->content, "<") || !ft_strcmp(ptr->content, ">")
 			|| !ft_strcmp(ptr->content, "|"))
 			ptr->attr = "operator";
-		if (!ft_strcmp(ptr->content, "echo") || !ft_strcmp(ptr->content, "cd")
+		else if (!ft_strcmp(ptr->content, "echo") || !ft_strcmp(ptr->content, "cd")
 			|| !ft_strcmp(ptr->content, "pwd") || !ft_strcmp(ptr->content, "export")
 			|| !ft_strcmp(ptr->content, "unset") || !ft_strcmp(ptr->content, "env")
 			|| !ft_strcmp(ptr->content, "exit"))
 			ptr->attr = "builtin";
+		else
+			ptr->attr = "none";
 		ptr = ptr->next;
 	}
+}
+
+bool	check_operator(t_node **lst_cmd)
+{
+	t_node	*ptr;
+
+	ptr = *lst_cmd;
+	if (ft_dlstsize(ptr) < 2)
+		return true;
+	while (ptr)
+	{
+		if (ptr->next)
+		{
+			if (!ft_strcmp(ptr->attr, "operator") && !ft_strcmp(ptr->next->attr, "operator"))
+			{
+				printf("Parse Error: consecutive operators\n");
+				return (false);
+			}
+		}
+		ptr = ptr->next;
+	}
+	return (true);
 }

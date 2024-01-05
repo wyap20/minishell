@@ -6,7 +6,7 @@
 /*   By: wyap <wyap@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 18:28:19 by wyap              #+#    #+#             */
-/*   Updated: 2023/12/28 19:05:25 by wyap             ###   ########.fr       */
+/*   Updated: 2024/01/05 16:46:46 by wyap             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,33 +76,36 @@ int	main(int ac, char **av, char **envp)
 			{
 				lst_cmd = init_lst(lst_cmd);
 				ft_parse(lst_cmd, cmd_buf, ft_index(cmd_buf)); //to optimize function
-				// print_list(lst_cmd);
+				//printf("\tparse:\n"); print_list(lst_cmd);
 				assign_attr(lst_cmd); //whileloop to assign attribute and quote type in node
-				// print_list(lst_cmd);
-				ft_expand(lst_cmd, &env); //expand handle dollar sign (loop through list and replace env var)
-				print_list(lst_cmd);
-				trim_quotes(lst_cmd);
-				print_list(lst_cmd);
-				clear_empty_node(lst_cmd);
-				print_list(lst_cmd);
-			/*execution*/
-				// parse_pipe(cmd_buf);
-				// printf("cmd_buf: %s\n", cmd_buf);
-				// printf("%d\n", ft_strncmp(cmd_buf, "echo", 4) == 0);
-				if (!ft_strncmp(cmd_buf, "echo", 4)) //works but incorrect implementation
-					echo_print(cmd_buf);
-				else if (!ft_strcmp(cmd_buf, "pwd"))
-					print_env_var(envp, "PWD");
-				else if (!ft_strcmp(cmd_buf, "env"))
-					print_sys_env(envp);
-				else if (!ft_strcmp(cmd_buf, "exit"))
+				printf("\tassign attr:\n"); print_list(lst_cmd);
+				if (check_operator(lst_cmd) == true)
 				{
-					free(cmd_buf); //readline malloc buffer
-					// free(lst_cmd);
-					rl_clear_history(); //-I /usr/local/opt/readline/include -L /usr/local/opt/readline/lib
-					exit(1);
+					ft_expand(lst_cmd, &env); //expand handle dollar sign (loop through list and replace env var)
+					printf("\texpand:\n"); print_list(lst_cmd);
+					trim_quotes(lst_cmd);
+					printf("\ttrim quotes:\n"); print_list(lst_cmd);
+					clear_empty_node(lst_cmd);
+					printf("\tremove null node:\n"); print_list(lst_cmd);
+				/*execution*/
+					// parse_pipe(cmd_buf);
+					// printf("cmd_buf: %s\n", cmd_buf);
+					// printf("%d\n", ft_strncmp(cmd_buf, "echo", 4) == 0);
+					if (!ft_strncmp(cmd_buf, "echo", 4)) //works but incorrect implementation
+						echo_print(cmd_buf);
+					else if (!ft_strcmp(cmd_buf, "pwd"))
+						print_env_var(envp, "PWD");
+					else if (!ft_strcmp(cmd_buf, "env"))
+						print_sys_env(envp);
+					else if (!ft_strcmp(cmd_buf, "exit"))
+					{
+						free(cmd_buf); //readline malloc buffer
+						// free(lst_cmd);
+						rl_clear_history(); //-I /usr/local/opt/readline/include -L /usr/local/opt/readline/lib
+						exit(1);
+					}
+					free(lst_cmd);
 				}
-				free(lst_cmd);
 			// else  //if invalid command; create a 2d array of command keywords to match?
 			// 	printf("[minishell] %s: command not found\n", cmd_buf);
 			}

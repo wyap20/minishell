@@ -6,7 +6,7 @@
 #    By: wyap <wyap@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/06 18:40:56 by wyap              #+#    #+#              #
-#    Updated: 2024/01/04 13:35:16 by wyap             ###   ########.fr        #
+#    Updated: 2024/01/05 16:30:38 by wyap             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ GCC = gcc
 INCL = -I /usr/local/opt/readline/include
 RM = rm -rf
 CFLAGS += -Wall -Wextra -Werror $(INCL)
-FSAN = -fsanitize=address -g3
+FSAN = -fsanitize=address -g3 -ggdb
 READLINE_MAC = 
 
 .PHONY = all clean fclean re debug
