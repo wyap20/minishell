@@ -6,7 +6,7 @@
 /*   By: wyap <wyap@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 18:28:19 by wyap              #+#    #+#             */
-/*   Updated: 2024/01/09 15:53:49 by wyap             ###   ########.fr       */
+/*   Updated: 2024/01/09 19:44:40 by wyap             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ char	*get_cmd(char *cmd_buf)
 	free(cur_path);
 	return (cmd_buf);
 }
+
 t_node **init_lst(t_node **lst_cmd)
 {
 	lst_cmd = (t_node **)malloc(sizeof(t_node *));
@@ -117,9 +118,9 @@ int	main(int ac, char **av, char **envp)
 					ft_expand(lst_cmd, &env); //expand handle dollar sign (loop through list and replace env var)
 					// printf("\texpand:\n"); print_list(lst_cmd);
 					trim_quotes(lst_cmd);
-					// printf("\ttrim quotes:\n"); print_list(lst_cmd);
+					printf("\ttrim quotes:\n"); print_list(lst_cmd);
 					clear_empty_node(lst_cmd);
-					// printf("\tremove null node:\n"); print_list(lst_cmd);
+					printf("\tremove null node:\n"); print_list(lst_cmd);
 					combine_nodes(lst_cmd);
 					printf("\tcombine:\n"); print_list(lst_cmd);
 				/*execution*/
@@ -132,6 +133,8 @@ int	main(int ac, char **av, char **envp)
 						print_env_var(envp, "PWD");
 					else if (!ft_strcmp(cmd_buf, "env"))
 						print_sys_env(envp);
+					else if (!ft_strcmp(cmd_buf, "export"))
+						ft_export(&env, "a+=\"\'aaaaaa\'\" b@=\"xaxaxax\" 2c=0812734917");
 					else if (!ft_strcmp(cmd_buf, "exit"))
 					{
 						free(cmd_buf); //readline malloc buffer

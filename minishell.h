@@ -45,7 +45,7 @@ typedef struct s_env{
 	// char *cur_path;
 }t_env;
 
-/*libft + custom utils*/
+/*libft + basic utils*/
 char	*ft_strjoin(char const *s1, char const *s2);
 size_t	ft_strlen(const char *str);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
@@ -60,6 +60,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	*ft_strtrim(char const *s1, char const *set);
 void	*ft_memmove(void *dest, const void *src, size_t n);
 char	*ft_strncpy(char *dest, const char *src, size_t n);
+int	ft_isalpha(int c);
 
 
 /*RT's doubly list proto*/
@@ -101,5 +102,7 @@ int	parse_pipe(char *cmd_str);
 
 /*built in*/
 void	echo_print(const char *str);
+void	ft_export(t_env *env, char *add);
+
 
 #endif
