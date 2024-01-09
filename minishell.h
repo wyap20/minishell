@@ -76,6 +76,8 @@ void	signals(void);
 void	print_list(t_node **lst);
 void	print_sys_env(char **envp);
 void	print_env_var(char **envp, char *s);
+void	free_node(t_node *node);
+void	free_list(t_node **lst_cmd);
 
 // parsing
 bool	check_cmd(char *cmd_str);

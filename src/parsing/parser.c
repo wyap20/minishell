@@ -6,7 +6,7 @@
 /*   By: wyap <wyap@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 15:27:27 by wyap              #+#    #+#             */
-/*   Updated: 2024/01/05 19:50:36 by wyap             ###   ########.fr       */
+/*   Updated: 2024/01/09 15:19:00 by wyap             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,21 +18,21 @@ void	tokenize(t_node **lst_cmd, char *cmd_buf, int *int_array, int index)
 	int		len;
 	int		start;
 	t_node	*node;
+	char	*sub;
 
 	i = 0;
 	len = 0;
 	start = 0;
 	while (int_array[i] != -1)
 	{
-		// while (int_array[i] == 10)
-		// 	i++;
 		index = int_array[i];
 		if (int_array[i++] == index)
 			len++;
 		if (int_array[i] != index)
 		{
 			start = i - len;
-			node = ft_dlstnew(ft_substr(cmd_buf, start, len));
+			sub = ft_substr(cmd_buf, start, len);
+			node = ft_dlstnew(sub);
 			if (index == 10)
 				node->attr = "space";
 			ft_dlstadd_back(lst_cmd, node);
@@ -40,6 +40,8 @@ void	tokenize(t_node **lst_cmd, char *cmd_buf, int *int_array, int index)
 		}
 	}
 }
+		// while (int_array[i] == 10)
+		// 	i++;
 			// printf("parse node:%s#\n", ft_substr(cmd_buf, start, len));
 
 /*parsing: split command to substring and add to list as nodes*/
@@ -49,7 +51,7 @@ void	ft_parse(t_node **lst_cmd, char *cmd_buf, int *int_array)
 
 	index = int_array[0];
 	tokenize(lst_cmd, cmd_buf, int_array, index);
-	free (int_array);
+	free(int_array);
 	return ;
 }
 

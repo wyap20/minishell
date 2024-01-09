@@ -6,7 +6,7 @@
 #    By: wyap <wyap@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/06 18:40:56 by wyap              #+#    #+#              #
-#    Updated: 2024/01/05 19:21:41 by wyap             ###   ########.fr        #
+#    Updated: 2024/01/09 14:46:34 by wyap             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,7 @@ READLINE_MAC =
 
 # Artie's PC: -lncurses flag required
 $(NAME): $(OBJ)
-	$(GCC) $(CFLAGS) $(OBJ) -o $(NAME) -lreadline -lncurses -L /usr/local/opt/readline/lib
+	$(GCC) $(CFLAGS) -g $(OBJ) -o $(NAME) -lreadline -lncurses -L /usr/local/opt/readline/lib
 # $(READLINE_MAC)
 
 all: $(NAME) debug

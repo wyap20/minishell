@@ -6,7 +6,7 @@
 /*   By: wyap <wyap@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 01:12:54 by wyap              #+#    #+#             */
-/*   Updated: 2023/12/27 18:35:24 by wyap             ###   ########.fr       */
+/*   Updated: 2024/01/09 14:01:41 by wyap             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	print_list(t_node **lst)
 		printf("\n\tQuote Type		:%s", tmp->quote_type);
 		printf("\n\tCurr Node Addr		:%p", tmp);
 		printf("\n\tPrev Node Addr		:%p", tmp->prev);
-		printf("\n\tNext Node Addr		:%p\n\n", tmp->next);
+		printf("\n\tNext Node Addr		:%p\n", tmp->next);
 		tmp = tmp->next;
 	}
 }

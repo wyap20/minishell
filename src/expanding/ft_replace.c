@@ -160,7 +160,7 @@ char	*get_key(t_node *token)
 			j++;
 			while (tmp[i] != ' ' && tmp[i] != '$' && tmp[i])
 			{
-				printf("mark");
+				// printf("mark");
 				i++;
 				j++;
 			}
@@ -171,7 +171,7 @@ char	*get_key(t_node *token)
 		}
 		i++;
 	}
-	printf("get key:%s\n", key);
+	// printf("get key:%s\n", key);
 	return (key);
 }
 
@@ -230,9 +230,9 @@ void	ft_expand(t_node **lst_cmd, t_env *env)
 			if (key != NULL)// && ft_strcmp(key, "$")) //if not null and key is not "$"
 			{
 				key = ft_strtrim(key, "\"\'");
-				printf("trim:%s\n", key);
+				// printf("trim:%s\n", key);
 				val = get_val(env, key);
-				printf("val:%s\n", val);
+				// printf("val:%s\n", val);
 				ptr->content = ft_replace(ptr->content, key, val);
 			}
 		}
@@ -240,7 +240,7 @@ void	ft_expand(t_node **lst_cmd, t_env *env)
 		// if (!ft_strcmp(ptr->quote_type, "single") || !(check_dollar(ptr->content) == false))
 		if (!ft_strcmp(ptr->quote_type, "single") || !ft_strchr(ptr->content, '$')) 
 			ptr = ptr->next;
-		printf("expandmark\n");
+		// printf("expandmark\n");
 	}
 }
 

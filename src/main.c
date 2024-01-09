@@ -6,7 +6,7 @@
 /*   By: wyap <wyap@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 18:28:19 by wyap              #+#    #+#             */
-/*   Updated: 2024/01/05 20:40:02 by wyap             ###   ########.fr       */
+/*   Updated: 2024/01/09 15:53:49 by wyap             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,40 @@ t_node **init_lst(t_node **lst_cmd)
 	lst_cmd = (t_node **)malloc(sizeof(t_node *));
 	if (!lst_cmd)
 		perror("lst_cmd not allocated");
-	*lst_cmd = NULL;
+	else
+	{
+		*lst_cmd = (t_node *)malloc(sizeof(t_node));  // Allocate memory for a single node
+		if (!(*lst_cmd))
+		{
+			free(lst_cmd);
+			perror("lst_cmd head node not allocated");
+		}
+		*lst_cmd = NULL;
+	}
 	return (lst_cmd);
+}
+
+void	free_node(t_node *node)
+{
+	// free(node->attr);
+	free(node->content);
+	// free(node->next);
+	// free(node->prev);
+	// free(node->quote_type);
+	free(node);
+}
+
+void	free_list(t_node **lst_cmd)
+{
+	t_node *ptr = *lst_cmd;
+	t_node *tmp;
+
+	while (ptr)
+	{
+		tmp = ptr->next;
+		free_node(ptr);
+		ptr = tmp;
+	}
 }
 
 int	main(int ac, char **av, char **envp)
@@ -72,11 +104,12 @@ int	main(int ac, char **av, char **envp)
 		while (1)
 		{
 			cmd_buf = get_cmd(cmd_buf);
+			printf("cmd_buf input:%s\n", cmd_buf);
 			if (check_cmd(cmd_buf) == true)
 			{
 				lst_cmd = init_lst(lst_cmd);
 				ft_parse(lst_cmd, cmd_buf, ft_index(cmd_buf)); //to optimize function
-				//printf("\tparse:\n"); print_list(lst_cmd);
+				// printf("\tparse:\n"); print_list(lst_cmd);
 				assign_attr(lst_cmd); //whileloop to assign attribute and quote type in node
 				// printf("\tassign attr:\n"); print_list(lst_cmd);
 				if (check_operator(lst_cmd) == true)
@@ -86,7 +119,7 @@ int	main(int ac, char **av, char **envp)
 					trim_quotes(lst_cmd);
 					// printf("\ttrim quotes:\n"); print_list(lst_cmd);
 					clear_empty_node(lst_cmd);
-					printf("\tremove null node:\n"); print_list(lst_cmd);
+					// printf("\tremove null node:\n"); print_list(lst_cmd);
 					combine_nodes(lst_cmd);
 					printf("\tcombine:\n"); print_list(lst_cmd);
 				/*execution*/
@@ -102,12 +135,15 @@ int	main(int ac, char **av, char **envp)
 					else if (!ft_strcmp(cmd_buf, "exit"))
 					{
 						free(cmd_buf); //readline malloc buffer
-						// free(lst_cmd);
+						free_list(lst_cmd);
+						free(lst_cmd);
 						rl_clear_history(); //-I /usr/local/opt/readline/include -L /usr/local/opt/readline/lib
 						exit(1);
 					}
-					free(lst_cmd);
 				}
+				free(cmd_buf); //readline malloc buffer
+				free_list(lst_cmd);
+				free(lst_cmd);
 			// else  //if invalid command; create a 2d array of command keywords to match?
 			// 	printf("[minishell] %s: command not found\n", cmd_buf);
 			}

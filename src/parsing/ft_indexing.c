@@ -44,21 +44,26 @@
 /*set all element as 0 before indexing*/
 int *ft_setup(char *str)
 {
-	int len;
+	int	len;
+	int	i;
 
+	// len = ft_len(str);
+	i = 0;
 	len = (int)ft_strlen(str);
 	// printf("len - %d\n",len);
 	int *id;
 
-	id = (int*)malloc(sizeof(int) * (len + 1));
+	id = (int *)malloc(sizeof(int) * (len + 1));
 	id[len] = -1;
-	int i;
-	i = 0;
-	while (id[i] != -1)
+	while (i < len)
 	{
 		id[i] = 0;
 		i++;
 	}
+	printf("setup:\n");
+	for (i = 0; id[i] != -1 ; i++)
+		printf("%d,",id[i]);
+	printf("%d\n",id[i]);
 	return (id);
 }
 
