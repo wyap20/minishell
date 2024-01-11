@@ -39,9 +39,10 @@ typedef	struct s_node{
 // }t_dlist;
 
 typedef struct s_env{
-	char **env_vars; //all env variable
-	char *env_path; //$PATH variable, single string
-	char **paths; //splitted paths
+	char	**env_vars; //all env variable
+	char	*env_path; //$PATH variable, single string
+	char	**paths; //splitted paths
+	int		key_count;
 	// char *cur_path;
 }t_env;
 
