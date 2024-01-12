@@ -60,3 +60,19 @@ void	print_list(t_node **lst)
 		tmp = tmp->next;
 	}
 }
+
+/*free malloc all strings then free malloc of 2D array
+* !!! INSPECT FURTHER, COULD BE CAUSE OF MEMORY LEAKS
+*/
+void	free_2d_arr(char **arr)
+{
+	int	i;
+
+	i = 0;
+	if (!arr)
+		return ;
+	while (arr[i])
+		free(arr[i++]);
+	free(arr[i]);
+	free(arr);
+}

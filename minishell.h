@@ -75,9 +75,9 @@ t_node	*ft_dlstlast(t_node *lst);
 void	signals(void);
 // void	print_nodes(t_node **lst_cmd);
 void	print_list(t_node **lst);
-void	print_env_var(char **envp, char *s);
 void	free_node(t_node *node);
 void	free_list(t_node **lst_cmd);
+void	free_2d_arr(char **arr);
 
 // parsing
 bool	check_cmd(char *cmd_str);
@@ -101,8 +101,13 @@ int	parse_pipe(char *cmd_str);
 
 /*built in*/
 void	echo_print(const char *str);
-void	print_sys_env(t_env *env);
+void	print_env_var(char **envp, char *s); //pwd
 void	ft_export(t_env *env, char *add);
+char **check_export(char **add);
+void	add_to_env(t_env *env, char **add_vars);
+void	print_sys_env(t_env *env);
 
+/*built in utils*/
+int	get_array_count(char **array);
 
 #endif

@@ -12,26 +12,10 @@
 
 #include "../../minishell.h"
 
-char	*ft_strcat(char *dest, char *src)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	j = 0;
-	while (dest[i] != 0x00)
-		i++;
-	while (src[j] != 0x00)
-	{
-		dest[i] = src[j];
-		j++;
-		i++;
-	}	
-	dest[i] = 0x00;
-	return (dest);
-}
-
-/*combine nodes that is not operator or commands*/
+/*
+* combine nodes that is not operator or commands
+* !!: DIRECT LEAK DETECTED IN WSL
+*/
 void	combine_nodes(t_node **lst_cmd)
 {
 	t_node	*ptr;

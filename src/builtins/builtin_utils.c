@@ -12,6 +12,21 @@
 
 #include "../../minishell.h"
 
+/*get count of strings in 2D array*/
+int	get_array_count(char **array)
+{
+	int	size;
+	size = 0;
+	while (array[size])
+		size++;
+	return (size);
+}
+
+/*
+* minishell env command
+* loops through each string of env_var 2D array
+* and prints each string as terminal output
+*/
 void	print_sys_env(t_env *env)
 {
 	int	i;
@@ -22,7 +37,10 @@ void	print_sys_env(t_env *env)
 	return ;
 }
 
-/*prints out specified environment variable, s* is case sensitive*/
+/*
+* used by minishell pwd command
+* prints out specified environment variable, s* is case sensitive
+*/
 void	print_env_var(char **envp, char *s)
 {
 	int		i;
