@@ -132,9 +132,9 @@ int	main(int ac, char **av, char **envp)
 					else if (!ft_strcmp(cmd_buf, "pwd"))
 						print_env_var(envp, "PWD");
 					else if (!ft_strcmp(cmd_buf, "env"))
-						print_sys_env(envp);
+						print_sys_env(&env);
 					else if (!ft_strcmp(cmd_buf, "export"))
-						ft_export(&env, "a=\"\'aaaaaa\'\" _b=\"xaxaxax\" __c=0812734917 @_d=\"xaxaxax\" _e6=\"xaxaxax\" f^=\"xaxaxax\" 3g=\"xaxaxax\"");
+						ft_export(&env, "AAAAA=\'aaaaaa\' _b=\"xaxaxax\" __c=0812734917 @_d=\"xaxaxax\" _e6=\"xaxaxax\" f^=\"xaxaxax\" 3g=\"xaxaxax\"");
 					else if (!ft_strcmp(cmd_buf, "exit"))
 					{
 						free(cmd_buf); //readline malloc buffer

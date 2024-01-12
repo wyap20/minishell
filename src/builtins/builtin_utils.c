@@ -12,13 +12,13 @@
 
 #include "../../minishell.h"
 
-void	print_sys_env(char **envp)
+void	print_sys_env(t_env *env)
 {
 	int	i;
 
 	i = -1;
-	while (envp[++i])
-		printf("%s\n", envp[i]);
+	while (env->env_vars[++i])
+		printf("%s\n", env->env_vars[i]);
 	return ;
 }
 

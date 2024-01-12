@@ -26,7 +26,7 @@ void	store_env(t_env *env, char **envp)
 	i = -1;
 	while (envp[++i])
 		env->env_vars[i] = ft_substr(envp[i], 0, (ft_strlen(envp[i])));
-	env->env_vars[i] = ft_strdup("\0");
+	env->env_vars[i] = NULL;
 	env->key_count = i;
 }
 	// printf("**View stored env**\n");

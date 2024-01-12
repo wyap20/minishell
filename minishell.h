@@ -75,7 +75,6 @@ t_node	*ft_dlstlast(t_node *lst);
 void	signals(void);
 // void	print_nodes(t_node **lst_cmd);
 void	print_list(t_node **lst);
-void	print_sys_env(char **envp);
 void	print_env_var(char **envp, char *s);
 void	free_node(t_node *node);
 void	free_list(t_node **lst_cmd);
@@ -102,6 +101,7 @@ int	parse_pipe(char *cmd_str);
 
 /*built in*/
 void	echo_print(const char *str);
+void	print_sys_env(t_env *env);
 void	ft_export(t_env *env, char *add);
 
 
