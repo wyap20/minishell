@@ -5,7 +5,6 @@
 * validate remaining characters of variable to be alphanumeric or underscore
 * if no '=', or remaining characters is invalid, return space
 * otherwise return str as it is
-* !!: DIRECT LEAK DETECTED IN WSL
 */
 char	*check_remain_char1(char *str)
 {
@@ -25,6 +24,7 @@ char	*check_remain_char1(char *str)
 			if (!ft_isalnum(buf[j]) && buf[j] != '_') //if remaining char is not alnum or underscore
 			{
 				printf("mark B: minishell -> export: invalid format: %s\n", buf);
+				free_2d_arr(split);
 				return (" ");
 			}
 			j++;
@@ -136,8 +136,9 @@ char **check_export(char **add)
 	// printf("new arr size:%d\n", size);
 	updated = valid_vars(add, size);
 	free(add);
-	// printf("export: updated\n");
-	// while(updated[i])
-	// 	printf("%s\n", updated[i++]);
+	printf("export: updated (new variables to add)\n");
+	i = 0;
+	while(updated[i])
+		printf("\t%s\n", updated[i++]);
 	return (updated);
 }

@@ -51,10 +51,10 @@ char	**copy_env(t_env *env, int size)
 		res[i] = ft_strdup(env->env_vars[i]);
 		i++;
 	}
-	printf("i index:%d\nsize:%d\n", i ,size);
+	printf("**copy_env**\ni index:%d\nsize:%d\n*******\n", i ,size);
 	while (i <= size)
 	{
-		res[i] = ft_strdup(" ");
+		res[i] = " ";//ft_strdup(" ");
 		i++;
 	}
 	return (res);
@@ -110,14 +110,11 @@ char	**add_new_key(char **res, char **add_vars, int size, int new_size)
 	while (add_vars[j] && i < size)
 	{
 		if (!ft_strcmp(add_vars[j], " "))
-		{	
-			// printf("hit\n");
 			j++;
-		}
 		// else
 		// {
 		res[i] = ft_strdup(add_vars[j]);
-			// printf("%d: %s\n", i, res[i]);
+			printf("%d: %s added\n", i, res[i]);
 		j++;
 		i++;
 		// }
@@ -143,25 +140,30 @@ void	add_to_env(t_env *env, char **add_vars)
 	if (!new_size)
 		return ;
 	total_size = env->key_count + new_size;
+	printf("add_to_env: current env key count: %d\n", env->key_count);
 	res = copy_env(env, total_size);
 		/*replacing matching keys with new value*/
-		// printf("before\n");
+		printf("add_to_env before update existing key\n");
 		// for (int k = 0; k <= total_size; k++)
 		// 	printf("%d: %s\n", k, res[k]);
-		// for (int k = 0; k < 4; k++)
-		// 	printf("%d: %s\n", k, add_vars[k]);
+		for (int k = 0; k < 4; k++)
+			printf("%d: %s\n", k, add_vars[k]);
 	res = update_exist_key(env, res, add_vars, 0);
+	printf("add_to_env after update existing key\n");
+		for (int k = 0; k < 4; k++)
+			printf("%d: %s\n", k, add_vars[k]);
 	res = add_new_key(res, add_vars, total_size, new_size);
 		// printf("total_size:%d\n", total_size);
 	res[total_size - 1] = ft_strdup(env->env_vars[env->key_count - 1]);
 	res[total_size] = NULL;
-		printf("after\n");
-		for (int k = 0; k <= total_size; k++)
-			printf("%d: %s\n", k, res[k]);
+		// printf("after\n");
+		// for (int k = 0; k <= total_size; k++)
+		// 	printf("%d: %s\n", k, res[k]);
 	free_2d_arr(env->env_vars);
 	env->env_vars = (char **)malloc((total_size + 1) * sizeof(char *));
 	env->env_vars = res;
 	env->key_count = total_size + 1;
+	printf("add_to_env: updated env key count: %d\n", env->key_count);
 }
 	// int i = -1;
 	// while (res[++i])

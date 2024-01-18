@@ -105,6 +105,7 @@ void	print_env_var(char **envp, char *s); //pwd
 void	ft_export(t_env *env, char *add);
 char **check_export(char **add);
 void	add_to_env(t_env *env, char **add_vars);
+void	ft_unset(t_env *env, char *del);
 void	print_sys_env(t_env *env);
 
 /*built in utils*/
