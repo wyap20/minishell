@@ -44,6 +44,7 @@ char	*check_remain_char2(char *str)
 	char	**split;
 	char	*buf;
 
+	split = NULL;
 	if (ft_strchr(str, '='))
 	{
 		split = ft_split(str, '=');
