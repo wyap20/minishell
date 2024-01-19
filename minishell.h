@@ -25,7 +25,7 @@ prev
 next
 */
 typedef	struct s_node{
-	int		index;
+	// int		index;
 	char	*content;
 	char	*quote_type;
 	char	*attr;

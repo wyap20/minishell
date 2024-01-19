@@ -77,7 +77,7 @@ char	**update_exist_key(t_env *env, char **res, char **add_vars, int i)
 			if (!ft_strncmp(split[0], res[i], ft_strlen(split[0])))
 			{
 					// printf("update mark\n");
-				res[i] = ft_strdup(add_vars[j]);
+				res[i] = add_vars[j]; //ft_strdup(add_vars[j]);
 					// printf("%d: %s\n", i, res[i]);
 				add_vars[j] = ft_strdup(" ");
 				free(tmp);
@@ -111,13 +111,13 @@ char	**add_new_key(char **res, char **add_vars, int size, int new_size)
 	{
 		if (!ft_strcmp(add_vars[j], " "))
 			j++;
-		// else
-		// {
-		res[i] = ft_strdup(add_vars[j]);
-			printf("%d: %s added\n", i, res[i]);
-		j++;
-		i++;
-		// }
+		else if (ft_strcmp(add_vars[j], " "))
+		{
+			res[i] = ft_strdup(add_vars[j]);
+				printf("%d: %s added\n", i, res[i]);
+			j++;
+			i++;
+		}
 	}
 	return (res);
 }
@@ -142,13 +142,16 @@ void	add_to_env(t_env *env, char **add_vars)
 	total_size = env->key_count + new_size;
 	printf("add_to_env: current env key count: %d\n", env->key_count);
 	res = copy_env(env, total_size);
+
 		/*replacing matching keys with new value*/
-		printf("add_to_env before update existing key\n");
 		// for (int k = 0; k <= total_size; k++)
 		// 	printf("%d: %s\n", k, res[k]);
+
+	printf("add_to_env before update existing key\n");
 		for (int k = 0; k < 4; k++)
 			printf("%d: %s\n", k, add_vars[k]);
 	res = update_exist_key(env, res, add_vars, 0);
+
 	printf("add_to_env after update existing key\n");
 		for (int k = 0; k < 4; k++)
 			printf("%d: %s\n", k, add_vars[k]);
@@ -160,9 +163,9 @@ void	add_to_env(t_env *env, char **add_vars)
 		// for (int k = 0; k <= total_size; k++)
 		// 	printf("%d: %s\n", k, res[k]);
 	free_2d_arr(env->env_vars);
-	env->env_vars = (char **)malloc((total_size + 1) * sizeof(char *));
+	// env->env_vars = (char **)malloc((total_size + 1) * sizeof(char *));
 	env->env_vars = res;
-	env->key_count = total_size + 1;
+	env->key_count = total_size;
 	printf("add_to_env: updated env key count: %d\n", env->key_count);
 }
 	// int i = -1;

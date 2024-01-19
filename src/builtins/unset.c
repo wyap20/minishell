@@ -48,7 +48,7 @@ char	**copy_unset_env(t_env *env, int count)
 
 	i = 0;
 	j = 0;
-	res = (char **)malloc((count) * sizeof(char *)); //+1 ?
+	res = (char **)malloc((count + 1) * sizeof(char *)); //+1 ?
 	if (!res)
 		printf("export: copy_env() malloc failed");
 	while (env->env_vars[i] && i < env->key_count)
@@ -96,6 +96,7 @@ void	ft_unset(t_env *env, char *del)
 	// res[env->key_count] = NULL;
 	// print_sys_env(env);
 	// free_2d_arr(env->env_vars);
+
 		// int i = 0;
 		// while (env->env_vars[i] && i < env->key_count)
 		// {
@@ -103,6 +104,7 @@ void	ft_unset(t_env *env, char *del)
 		// 	i++;
 		// }
 		// free(env->env_vars[i]);
-	env->env_vars = (char **)malloc((env->key_count) * sizeof(char *));
+
+	// env->env_vars = (char **)malloc((env->key_count) * sizeof(char *));
 	env->env_vars = res;
 }

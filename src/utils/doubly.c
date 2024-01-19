@@ -29,7 +29,7 @@ t_node	*ft_dlstnew(char *data)
 	if (!new)
 		return (NULL);
 	new->content = data;
-	new->index = -1;
+	// new->index = -1;
 	new->quote_type = NULL; //{(null), single (s), double (d)} 
 	new->attr = NULL; //{(null), builtin (b), external (e), operator (o)} 
 	new->prev = NULL;
