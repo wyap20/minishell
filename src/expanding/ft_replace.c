@@ -186,7 +186,7 @@ char	*get_val(t_env *env, char *key)
 	len = (int)ft_strlen(key);
 	// printf("get_val key:%s\nlen:%i\n", key, len);
 	val = NULL;
-	while (env->env_vars[i][0])
+	while (env->env_vars[i])//[0])
 	{
 		if (!ft_strncmp(env->env_vars[i], key, len))
 			val = ft_substr(env->env_vars[i], len, (int)ft_strlen(env->env_vars[i]) - len);
