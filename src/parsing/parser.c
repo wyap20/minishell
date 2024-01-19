@@ -82,6 +82,12 @@ void	assign_attr(t_node **lst_cmd)
 		ptr = ptr->next;
 	}
 }
+		/*if else clause: for further classification for pipe + rdr*/
+		// if (!ft_strcmp(ptr->content, "<<") || !ft_strcmp(ptr->content, ">>")
+		// 	|| !ft_strcmp(ptr->content, "<") || !ft_strcmp(ptr->content, ">"))
+		// 	ptr->attr = "rdr";
+		// else if (!ft_strcmp(ptr->content, "|"))
+		// 	ptr->attr = "pipe"
 
 bool	check_operator(t_node **lst_cmd)
 {

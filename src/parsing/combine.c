@@ -51,7 +51,10 @@ t_node	*combine_w_next(t_node *ptr)
 	return (ptr);
 }
 
-
+/*
+* combine nodes that is not operator or commands
+* !!: DIRECT LEAK DETECTED IN WSL
+*/
 void	combine_nodes(t_node **lst_cmd)
 {
 	t_node	*ptr;
@@ -61,7 +64,7 @@ void	combine_nodes(t_node **lst_cmd)
 	{
 		if (!ft_strcmp(ptr->attr, "none") || !ft_strcmp(ptr->attr, "space"))
 			ptr = combine_w_prev(ptr);
-		else if (!ft_strcmp(ptr->attr, "builtin") || (!ft_strcmp(ptr->attr, "operator") && ft_strcmp(ptr->next->attr, "none")))
+		else if (!ft_strcmp(ptr->attr, "builtin") || (!ft_strcmp(ptr->attr, "operator") && ptr->next && ft_strcmp(ptr->next->attr, "none")))
 			ptr = combine_w_next(ptr);
 		if (ptr && ptr->next)
 			ptr = ptr->next;
@@ -69,6 +72,9 @@ void	combine_nodes(t_node **lst_cmd)
 			break ;
 	}
 }
+
+/*code if further attr classification is implemented*/
+	// else if (!ft_strcmp(ptr->attr, "builtin") || (!ft_strcmp(ptr->attr, "rdr") && ptr->next && ft_strcmp(ptr->next->attr, "none")))
 
 /*
 * combine nodes that is not operator or commands
