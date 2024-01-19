@@ -227,19 +227,25 @@ void	ft_expand(t_node **lst_cmd, t_env *env)
 		if (!ft_strcmp(ptr->quote_type, "double") || !ft_strcmp(ptr->quote_type, "none")) //if is double or open quote
 		{
 			key = get_key(ptr);
-			if (key != NULL)// && ft_strcmp(key, "$")) //if not null and key is not "$"
+			// printf("key0:%d\nkey1:%d\n", key[0], key[1]);
+			// printf("%d\n", ft_not_alpha(key[1]));
+			//handle standalone '$'
+			if (key != NULL && key[0] == '$' && (ft_not_alpha(key[1]) || !key[1]))
+				ptr = ptr->next;
+			else if (key != NULL)// && ft_strcmp(key, "$")) //if not null and key is not "$"
 			{
 				key = ft_strtrim(key, "\"\'");
-				// printf("trim:%s\n", key);
+				printf("trim:%s\n", key);
 				val = get_val(env, key);
-				// printf("val:%s\n", val);
+				printf("val:%s\n", val);
 				ptr->content = ft_replace(ptr->content, key, val);
 			}
 		}
 		//if is single quote or there's no more $ to replace
 		// if (!ft_strcmp(ptr->quote_type, "single") || !(check_dollar(ptr->content) == false))
-		if (!ft_strcmp(ptr->quote_type, "single") || !ft_strchr(ptr->content, '$')) 
-			ptr = ptr->next;
+		if (ptr)
+			if (!ft_strcmp(ptr->quote_type, "single") || !ft_strchr(ptr->content, '$')) 
+				ptr = ptr->next;
 		// printf("expandmark\n");
 	}
 }
