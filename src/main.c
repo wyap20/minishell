@@ -65,29 +65,6 @@ t_node **init_lst(t_node **lst_cmd)
 	return (lst_cmd);
 }
 
-void	free_node(t_node *node)
-{
-	// free(node->attr);
-	free(node->content);
-	// free(node->next);
-	// free(node->prev);
-	// free(node->quote_type);
-	free(node);
-}
-
-void	free_list(t_node **lst_cmd)
-{
-	t_node *ptr = *lst_cmd;
-	t_node *tmp;
-
-	while (ptr)
-	{
-		tmp = ptr->next;
-		free_node(ptr);
-		ptr = tmp;
-	}
-}
-
 int	main(int ac, char **av, char **envp)
 {
 	char	*cmd_buf;

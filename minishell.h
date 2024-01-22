@@ -59,8 +59,8 @@ char	*ft_strdup(const char *s1);
 char	*ft_strchr(const char *s, int c);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	*ft_strtrim(char const *s1, char const *set);
-void	*ft_memmove(void *dest, const void *src, size_t n);
-char	*ft_strncpy(char *dest, const char *src, size_t n);
+// void	*ft_memmove(void *dest, const void *src, size_t n);
+// char	*ft_strncpy(char *dest, const char *src, size_t n);
 int	ft_isalpha(int c);
 
 /*RT's doubly list proto*/
@@ -96,6 +96,14 @@ void	ft_expand(t_node **lst_cmd, t_env *env);
 void	trim_quotes(t_node **lst_cmd);
 void	clear_empty_node(t_node **lst_cmd);
 void	combine_nodes(t_node **lst_cmd);
+
+/*expand utils*/
+char *ft_strcpy(char *dst, char *src);
+int ft_not_alpha(char c);
+char *ft_strstr(char *str, char*ss);
+void	*ft_memmove(void *dest, const void *src, size_t n);
+char	*ft_strncpy(char *dest, const char *src, size_t n);
+
 
 int	parse_pipe(char *cmd_str);
 

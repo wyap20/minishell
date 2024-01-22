@@ -76,3 +76,26 @@ void	free_2d_arr(char **arr)
 	free(arr[i]);
 	free(arr);
 }
+
+void	free_node(t_node *node)
+{
+	// free(node->attr);
+	free(node->content);
+	// free(node->next);
+	// free(node->prev);
+	// free(node->quote_type);
+	free(node);
+}
+
+void	free_list(t_node **lst_cmd)
+{
+	t_node *ptr = *lst_cmd;
+	t_node *tmp;
+
+	while (ptr)
+	{
+		tmp = ptr->next;
+		free_node(ptr);
+		ptr = tmp;
+	}
+}
