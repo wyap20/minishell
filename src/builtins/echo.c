@@ -12,15 +12,27 @@
 
 #include "../../minishell.h"
 
-/*builtin echo: INCOMPLETE
-
-prints out everything for now*/
+/*builtin echo: INCOMPLETE*/
 void	echo_print(const char *str)
 {
-	int	i;
+	int		i;
+	bool	flag;
 
+	flag = false;
 	i = 4;
+	if (!ft_strncmp(str, "echo -n ", 8))
+	{
+		flag = true;
+		i = 7;
+	}
+	// printf("%d, %d\n", i, flag);
 	while (str[++i])
 		printf("%c", str[i]);
-	printf("\n");
+	if (flag == false)
+		printf("\n");
 }
+
+/*when implementing node as input
+i = 0;
+if (!ft_strncmp(node->data, "-n ", 3))
+*/
