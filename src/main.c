@@ -119,6 +119,7 @@ int	main(int ac, char **av, char **envp)
 						free(cmd_buf); //readline malloc buffer
 						free_list(lst_cmd);
 						free(lst_cmd);
+						lst_cmd = NULL;
 						rl_clear_history(); //-I /usr/local/opt/readline/include -L /usr/local/opt/readline/lib
 						free_2d_arr(env.env_vars);
 						exit(1);
@@ -127,6 +128,7 @@ int	main(int ac, char **av, char **envp)
 				free(cmd_buf); //readline malloc buffer
 				free_list(lst_cmd);
 				free(lst_cmd);
+				lst_cmd = NULL;
 			// else  //if invalid command; create a 2d array of command keywords to match?
 			// 	printf("[minishell] %s: command not found\n", cmd_buf);
 			}

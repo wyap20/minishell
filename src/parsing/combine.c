@@ -15,12 +15,15 @@
 t_node	*combine_w_prev(t_node *ptr)
 {
 	t_node	*tmp;
+	char	*content_ptr;
 
 	// printf("\n\tcombine with prev mark\n");
 	//merge current node with previous node
 	if (ptr->prev && (!ft_strcmp(ptr->prev->attr, "none") || !ft_strcmp(ptr->prev->attr, "space")))
 	{
+			content_ptr = ptr->prev->content;
 			ptr->prev->content = ft_strjoin(ptr->prev->content, ptr->content);
+			free(content_ptr);
 			ptr->prev->next = ptr->next;
 			if (ptr->next)
 				ptr->next->prev = ptr->prev;
@@ -35,12 +38,15 @@ t_node	*combine_w_prev(t_node *ptr)
 t_node	*combine_w_next(t_node *ptr)
 {
 	t_node	*tmp;
+	char	*content_ptr;
 
 	// printf("\n\tcombine with next mark\n");
 	tmp = ptr->next;
 	if (tmp && (!ft_strcmp(tmp->attr, "none") || !ft_strcmp(tmp->attr, "space")))
 	{
+		content_ptr = ptr->content;
 		ptr->content = ft_strjoin(ptr->content, tmp->content);
+		free(content_ptr);
 		ptr->next = tmp->next;
 		if (tmp->next)
 			tmp->next->prev = ptr;
