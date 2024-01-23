@@ -79,11 +79,11 @@ void	free_2d_arr(char **arr)
 
 void	free_node(t_node *node)
 {
-	// free(node->attr);
+	// free(node->attr); //no malloc
 	free(node->content);
-	// free(node->next);
-	// free(node->prev);
-	// free(node->quote_type);
+	// free(node->next); //cannot free next node?
+	// free(node->prev); //cannot free prev node?
+	// free(node->quote_type); //no malloc
 	free(node);
 }
 

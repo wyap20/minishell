@@ -11,7 +11,10 @@
 /* ************************************************************************** */
 
 #include "../../minishell.h"
-/*tokenize: add node to list*/
+/*
+* tokenize: add node to list
+* WSL: direct leak (malloc for sub and malloc again for dlstnew)
+*/
 void	tokenize(t_node **lst_cmd, char *cmd_buf, int *int_array, int index)
 {
 	int		i;
@@ -37,8 +40,10 @@ void	tokenize(t_node **lst_cmd, char *cmd_buf, int *int_array, int index)
 				node->attr = "space";
 			ft_dlstadd_back(lst_cmd, node);
 			len = 0;
+			// sub = NULL;
 		}
 	}
+	// free(sub);
 }
 		// while (int_array[i] == 10)
 		// 	i++;

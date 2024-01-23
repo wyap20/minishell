@@ -54,13 +54,15 @@ t_node **init_lst(t_node **lst_cmd)
 		perror("lst_cmd not allocated");
 	else
 	{
-		*lst_cmd = (t_node *)malloc(sizeof(t_node));  // Allocate memory for a single node
-		if (!(*lst_cmd))
-		{
-			free(lst_cmd);
-			perror("lst_cmd head node not allocated");
-		}
-		*lst_cmd = NULL;
+		*lst_cmd = ft_dlstnew("");
+		// *lst_cmd = (t_node *)malloc(sizeof(t_node));  // Allocate memory for a single node
+		// if (!(*lst_cmd))
+		// {
+		// 	free(lst_cmd);
+		// 	perror("lst_cmd head node not allocated");
+		// 	return (NULL);
+		// }
+		// *lst_cmd = NULL;
 	}
 	return (lst_cmd);
 }
