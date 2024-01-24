@@ -72,6 +72,11 @@ int	ft_check_quote(char *str)
 /*check command: reject unclosed quote and more than triple arrow*/
 bool	check_cmd(char *cmd_str)
 {
+	if (!ft_strcmp(cmd_str, "<<") || !ft_strcmp(cmd_str, ">>") || !ft_strcmp(cmd_str, "<") || !ft_strcmp(cmd_str, ">"))
+	{
+		printf("Syntax error: standalone rdr \n");
+		return (false);
+	}
 	if (ft_check_quote(cmd_str) == -1)
 		return (false);
 	if (ft_check_arrow(cmd_str) == -1)

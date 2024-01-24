@@ -154,18 +154,22 @@ int *ft_index_left_arrow(int *out, char *str)
 	i = 0;
 	while (str[i] != 0x00)
 	{
-		if (str[i] == '<' && str[i + 1] == '<')
+		if (str[i] == '<' && str[i + 1] == '<')// && str[i+2] == '\0')
 		{
 			if (out[i] == 0)
 			{
 				out[i] = 7;
-				out[i + 1] = 7;
+				i++;
+				out[i] = 7;
 			}
-			i += 2;
+			if (out[i + 1] != -1)
+				i++;
 		}
 		if (str[i] == '<' && str[i + 1] != '<')
+		{
 			if (out[i] == 0)
 				out[i] = 5;
+		}
 		i++;
 	}
 	return (out);
@@ -183,9 +187,11 @@ int *ft_index_right_arrow(int *out, char *str)
 			if (out[i] == 0)
 			{
 				out[i] = 6;
-				out[i + 1] = 6;
+				i++;
+				out[i] = 6;
 			}
-			i += 2;
+			if (out[i + 1] != -1)
+				i++;
 		}
 		if (str[i] == '>' && str[i + 1] != '>')
 			if (out[i] == 0)
