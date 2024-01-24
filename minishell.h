@@ -43,6 +43,7 @@ typedef struct s_env{
 	char	*env_path; //$PATH variable, single string
 	char	**paths; //splitted paths
 	int		key_count;
+	size_t	pipe_count;
 	// char *cur_path;
 }t_env;
 
@@ -104,8 +105,9 @@ char *ft_strstr(char *str, char*ss);
 void	*ft_memmove(void *dest, const void *src, size_t n);
 char	*ft_strncpy(char *dest, const char *src, size_t n);
 
+void get_pipe_count(t_env *env, t_node **lst_cmd);
+// int	parse_pipe(char *cmd_str);
 
-int	parse_pipe(char *cmd_str);
 
 /*built in*/
 void	echo_print(const char *str);

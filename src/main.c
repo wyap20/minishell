@@ -52,19 +52,17 @@ t_node **init_lst(t_node **lst_cmd)
 	lst_cmd = (t_node **)malloc(sizeof(t_node *));
 	if (!lst_cmd)
 		perror("lst_cmd not allocated");
-	else
-	{
-		*lst_cmd = ft_dlstnew("");
-		// *lst_cmd = (t_node *)malloc(sizeof(t_node));  // Allocate memory for a single node
-		// if (!(*lst_cmd))
-		// {
-		// 	free(lst_cmd);
-		// 	perror("lst_cmd head node not allocated");
-		// 	return (NULL);
-		// }
-		// *lst_cmd = NULL;
-	}
+	*lst_cmd = NULL;
 	return (lst_cmd);
+}
+
+void	init_env(t_env *env, char **envp)
+{
+	env->key_count = 0;
+	env->pipe_count = 0;
+	store_env(env, envp);
+	store_path(env, envp);
+	// print_env_var(envp, "PATH"); //compare with splitted path
 }
 
 int	main(int ac, char **av, char **envp)
@@ -78,9 +76,7 @@ int	main(int ac, char **av, char **envp)
 	cmd_buf = NULL;
 	if (ac == 1)
 	{
-		store_env(&env, envp);
-		store_path(&env, envp);
-		// print_env_var(envp, "PATH"); //compare with splitted path
+		init_env(&env, envp);
 		while (1)
 		{
 			cmd_buf = get_cmd(cmd_buf);
@@ -92,6 +88,7 @@ int	main(int ac, char **av, char **envp)
 				printf("\tparse:\n"); print_list(lst_cmd);
 				assign_attr(lst_cmd); //whileloop to assign attribute and quote type in node
 				// printf("\tassign attr:\n"); print_list(lst_cmd);
+
 				if (check_operator(lst_cmd) == true)
 				{
 					ft_expand(lst_cmd, &env); //expand handle dollar sign (loop through list and replace env var)
@@ -103,6 +100,7 @@ int	main(int ac, char **av, char **envp)
 					combine_nodes(lst_cmd);
 					printf("\tcombine:\n"); print_list(lst_cmd);
 				/*execution*/
+					get_pipe_count(&env, lst_cmd);
 					// parse_pipe(cmd_buf);
 					// printf("cmd_buf: %s\n", cmd_buf);
 					// printf("%d\n", ft_strncmp(cmd_buf, "echo", 4) == 0);

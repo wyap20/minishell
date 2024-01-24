@@ -70,7 +70,8 @@ void	combine_nodes(t_node **lst_cmd)
 	{
 		if (!ft_strcmp(ptr->attr, "none") || !ft_strcmp(ptr->attr, "space"))
 			ptr = combine_w_prev(ptr);
-		else if (!ft_strcmp(ptr->attr, "builtin") || (!ft_strcmp(ptr->attr, "operator") && ptr->next && ft_strcmp(ptr->next->attr, "none")))
+		// else if (!ft_strcmp(ptr->attr, "builtin") || (!ft_strcmp(ptr->attr, "operator") && ptr->next && ft_strcmp(ptr->next->attr, "none")))
+		else if (!ft_strcmp(ptr->attr, "builtin") || ((!ft_strcmp(ptr->attr, "rdr") || !ft_strcmp(ptr->attr, "pipe")) && ptr->next && ft_strcmp(ptr->next->attr, "none")))
 			ptr = combine_w_next(ptr);
 		if (ptr && ptr->next)
 			ptr = ptr->next;

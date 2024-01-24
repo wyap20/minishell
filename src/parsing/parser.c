@@ -73,10 +73,15 @@ void	assign_attr(t_node **lst_cmd)
 			ptr->quote_type = "single";
 		if (ptr->content[0] != '\'' && ptr->content[0] != '\"')
 			ptr->quote_type = "none";
+		// if (!ft_strcmp(ptr->content, "<<") || !ft_strcmp(ptr->content, ">>")
+		// 	|| !ft_strcmp(ptr->content, "<") || !ft_strcmp(ptr->content, ">")
+		// 	|| !ft_strcmp(ptr->content, "|"))
+		// 	ptr->attr = "operator";
 		if (!ft_strcmp(ptr->content, "<<") || !ft_strcmp(ptr->content, ">>")
-			|| !ft_strcmp(ptr->content, "<") || !ft_strcmp(ptr->content, ">")
-			|| !ft_strcmp(ptr->content, "|"))
-			ptr->attr = "operator";
+			|| !ft_strcmp(ptr->content, "<") || !ft_strcmp(ptr->content, ">"))
+			ptr->attr = "rdr";
+		else if (!ft_strcmp(ptr->content, "|"))
+			ptr->attr = "pipe";
 		else if (!ft_strcmp(ptr->content, "echo") || !ft_strcmp(ptr->content, "cd")
 			|| !ft_strcmp(ptr->content, "pwd") || !ft_strcmp(ptr->content, "export")
 			|| !ft_strcmp(ptr->content, "unset") || !ft_strcmp(ptr->content, "env")
@@ -103,11 +108,12 @@ bool	check_operator(t_node **lst_cmd)
 		return true;
 	while (ptr)
 	{
-		if (ptr->next)
+		if (ptr->next && (!ft_strcmp(ptr->attr, "rdr") || !ft_strcmp(ptr->attr, "pipe")))
 		{
-			if (!ft_strcmp(ptr->attr, "operator") && !ft_strcmp(ptr->next->attr, "space") && !ft_strcmp(ptr->next->next->attr, "operator"))
+			if ((!ft_strcmp(ptr->next->attr, "space") && (!ft_strcmp(ptr->next->next->attr, "rdr") || !ft_strcmp(ptr->next->next->attr, "pipe")))
+					|| (!ft_strcmp(ptr->next->attr, "rdr") || !ft_strcmp(ptr->next->attr, "pipe")))
 			{
-				printf("Parse Error: consecutive operators\n");
+				printf("Syntax Error: consecutive operators\n");
 				return (false);
 			}
 		}
@@ -115,3 +121,12 @@ bool	check_operator(t_node **lst_cmd)
 	}
 	return (true);
 }
+
+		// if (ptr->next)
+		// {
+		// 	if (!ft_strcmp(ptr->attr, "operator") && !ft_strcmp(ptr->next->attr, "space") && !ft_strcmp(ptr->next->next->attr, "operator"))
+		// 	{
+		// 		printf("Parse Error: consecutive operators\n");
+		// 		return (false);
+		// 	}
+		// }
