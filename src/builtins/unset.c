@@ -97,14 +97,15 @@ void	ft_unset(t_env *env, char *del)
 	// print_sys_env(env);
 	// free_2d_arr(env->env_vars);
 
-		// int i = 0;
-		// while (env->env_vars[i] && i < env->key_count)
-		// {
-		// 	free(env->env_vars[i]);
-		// 	i++;
-		// }
-		// free(env->env_vars[i]);
+		//free the unchanged env->env_vars (env->key_count - count) that will replace by res**
+		int i = 0;
+		while (env->env_vars[i] && i < env->key_count - count + 1)
+		{
+			free(env->env_vars[i]);
+			i++;
+		}
 
 	// env->env_vars = (char **)malloc((env->key_count) * sizeof(char *));
+	// free_2d_arr(env->env_vars);
 	env->env_vars = res;
 }
