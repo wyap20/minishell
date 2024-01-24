@@ -46,7 +46,9 @@ void get_pipe_count(t_env *env, t_node **lst_cmd)
 	t_node	*ptr;
 
 	ptr = *lst_cmd;
-	if (!ft_strcmp(ptr->attr, "pipe"))
+	if (!(*lst_cmd))
+		return ;
+	if (!ft_strcmp((*lst_cmd)->attr, "pipe"))
 	{
 		printf("Syntax Error: cmd started with '|'\n");
 		return ;

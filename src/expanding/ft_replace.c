@@ -19,8 +19,8 @@ char	*ft_replace (char *str, char *key, char *val)
 		val = "\0";
 	// if slen val = 0 //when there is no such key
 	// if slen val <= slen key // when val is <= key len
-	int len = strlen(str)+strlen(val); // most lazy and efficient way
-	// int len = strlen(str)-strlen(key)+strlen(val);
+	int len = ft_strlen(str)+ft_strlen(val); // most lazy and efficient way
+	// int len = ft_strlen(str)-ft_strlen(key)+ft_strlen(val);
 	char *ns = malloc(sizeof(char) * (len + 1));
 	
 	ft_strcpy(ns, str);
@@ -34,8 +34,8 @@ char	*ft_replace (char *str, char *key, char *val)
 		//dst will be where the end of val is. src wiil be end of key. n will be wehre key/src end
 		// moving the raminder to the back remainder=anyhong after key)
 		// ft_strncpy (ns, str, i);
-		ft_memmove (ptr+strlen(val), ptr+strlen(key), strlen(ptr+strlen(key))+1);
-		ft_strncpy (ptr, val, strlen(val));
+		ft_memmove (ptr+ft_strlen(val), ptr+ft_strlen(key), ft_strlen(ptr+ft_strlen(key))+1);
+		ft_strncpy (ptr, val, ft_strlen(val));
 		// free(str);
 	}
 	return (ns);
@@ -68,7 +68,7 @@ char	*get_key(t_node *token)
 			}
 			printf("\n");
 			key = ft_substr(tmp, i - j, j);
-			if (strlen(key) > 0)
+			if (ft_strlen(key) > 0)
 				break ;
 		}
 		i++;
@@ -82,9 +82,12 @@ char	*get_val(t_env *env, char *key)
 	int		i;
 	int		len;
 	char	*val;
+	char	*trim;
 
 	i = 0;
-	key = ft_strjoin(ft_strtrim(key, "$"), "=");
+	trim = ft_strtrim(key, "$");
+	key = ft_strjoin(trim, "=");
+	free(trim);
 	len = (int)ft_strlen(key);
 	// printf("get_val key:%s\nlen:%i\n", key, len);
 	val = NULL;
@@ -94,6 +97,7 @@ char	*get_val(t_env *env, char *key)
 			val = ft_substr(env->env_vars[i], len, (int)ft_strlen(env->env_vars[i]) - len);
 		i++;
 	}
+	free(key);
 	return (val);
 }
 	// printf("**View stored env**\n");
@@ -141,6 +145,8 @@ void	ft_expand(t_node **lst_cmd, t_env *env)
 				val = get_val(env, key);
 				printf("val:%s\n", val);
 				ptr->content = ft_replace(ptr->content, key, val);
+				free(key);
+				free(val);
 			}
 		}
 		//if is single quote or there's no more $ to replace
