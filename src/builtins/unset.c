@@ -7,7 +7,7 @@
 */
 int	check_del(t_env *env, char **del)
 {
-	// char	*tmp;
+	char	*tmp;
 	int		i;
 	int		j;
 	int		count;
@@ -25,10 +25,10 @@ int	check_del(t_env *env, char **del)
 		{
 			if (del[i] && !ft_strncmp(del[i], env->env_vars[j], ft_strlen(del[i])))
 			{
-				// tmp = env->env_vars[j];
-				// env->env_vars[j] = ft_strdup(" ");
-				// free(tmp);
-				env->env_vars[j] = " ";
+				tmp = env->env_vars[j];
+				env->env_vars[j] = ft_strdup(" ");
+				free(tmp);
+				// env->env_vars[j] = " ";
 				count++;
 				// j++;
 			}
@@ -96,16 +96,18 @@ void	ft_unset(t_env *env, char *del)
 	// res[env->key_count] = NULL;
 	// print_sys_env(env);
 	// free_2d_arr(env->env_vars);
+	for (int k = 0; k <= env->key_count; k++)
+		printf("%d: %s\n", k, res[k]);
 
-		//free the unchanged env->env_vars (env->key_count - count) that will replace by res**
-		int i = 0;
-		while (env->env_vars[i] && i < env->key_count - count + 1)
-		{
-			free(env->env_vars[i]);
-			i++;
-		}
+		// free the unchanged env->env_vars (env->key_count - count) that will replace by res**
+		// int i = 0;
+		// while (env->env_vars[i] && i < env->key_count - count + 1)
+		// {
+		// 	free(env->env_vars[i]);
+		// 	i++;
+		// }
 
 	// env->env_vars = (char **)malloc((env->key_count) * sizeof(char *));
-	// free_2d_arr(env->env_vars);
+	free_2d_arr(env->env_vars);
 	env->env_vars = res;
 }

@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   check_export.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: wyap <wyap@student.42.fr>                  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/25 11:05:53 by wyap              #+#    #+#             */
+/*   Updated: 2024/01/25 13:01:28 by wyap             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../minishell.h"
 
 /*
 * executes when first character is alphabet or underscore
 * validate remaining characters of variable to be alphanumeric or underscore
-* if no '=', or remaining characters is invalid, return space
+* if no '=', or remaining characters is invalid, free str and return space
 * otherwise return str as it is
 */
 char	*check_remain_char1(char *str)
@@ -12,8 +24,6 @@ char	*check_remain_char1(char *str)
 	char	*buf;
 	int		j;
 
-	if (!ft_strchr(str, '='))
-		return (" ");
 	split = ft_split(str, '='); //split before first equal sign check if the rest is alphanumeric
 	buf = split[0];
 	if (buf)
@@ -25,7 +35,8 @@ char	*check_remain_char1(char *str)
 			{
 				printf("mark B: minishell -> export: invalid format: %s\n", buf);
 				free_2d_arr(split);
-				return (" ");
+				free(str);
+				return (ft_strdup(" "));
 			}
 			j++;
 		}
@@ -54,11 +65,12 @@ char	*check_remain_char2(char *str)
 		buf = str;
 	printf("mark A: minishell -> export: invalid format: %s\n", buf);
 	free_2d_arr(split);
-	return (" ");
+	free(str);
+	return (ft_strdup(" "));
 }
 
 /*returns a 2d array containing valid variable to update*/
-char **valid_vars(char **add, int size)
+char	**valid_vars(char **add, int size)
 {
 	char	**updated;
 	int		i;
@@ -74,7 +86,7 @@ char **valid_vars(char **add, int size)
 		if (ft_strcmp(add[i], " "))
 		{
 			updated[j] = ft_strdup(add[i]);
-			free(add[i]);
+			// free(add[i]);
 			j++;
 		}
 		i++;
@@ -120,25 +132,20 @@ char **check_export(char **add)
 	while (add[i])
 	{
 		if (ft_isalpha(add[i][0]) || add[i][0] == '_') //if first char is alpha or underscore
-			add[i] = check_remain_char1(add[i]);
+		{
+			if (!ft_strchr(add[i], '='))
+			{
+				free(add[i]);
+				add[i] = ft_strdup(" ");
+			}
+			else
+				add[i] = check_remain_char1(add[i]);
+		}
 		else if (!ft_isalpha(add[i][0])) //if first char is not alpha
 			add[i] = check_remain_char2(add[i]);
 		i++;
 	}
-	// printf("export: after checking\n");
-	// i = 0;
-	// while (add[i])
-	// {
-	// 	printf("%d: %s\n", i, add[i]);
-	// 	i++;
-	// }
 	size = new_arr_size(add);
-	// printf("new arr size:%d\n", size);
 	updated = valid_vars(add, size);
-	free(add);
-	printf("export: updated (new variables to add)\n");
-	i = 0;
-	while(updated[i])
-		printf("\t%s\n", updated[i++]);
 	return (updated);
 }
