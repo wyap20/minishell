@@ -6,7 +6,7 @@
 /*   By: wyap <wyap@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 01:12:54 by wyap              #+#    #+#             */
-/*   Updated: 2024/01/18 16:38:03 by wyap             ###   ########.fr       */
+/*   Updated: 2024/01/25 16:13:55 by wyap             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,4 +98,25 @@ void	free_list(t_node **lst_cmd)
 		free_node(ptr);
 		ptr = tmp;
 	}
+}
+
+bool	is_whitespace(char c)
+{
+	return (c == ' ' || c == '\t' || c == '\n' || c == '\r' || c == '\f' || c == '\v');
+}
+
+bool	str_not_empty(const char *str)
+{
+	int	i;
+
+	if (!str)
+		return (false);
+	i = 0;
+	while (str[i])
+	{
+		if (!is_whitespace(str[i]))
+			return (true);
+		i++;
+	}
+	return (false);
 }

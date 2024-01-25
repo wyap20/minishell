@@ -79,6 +79,8 @@ void	print_list(t_node **lst);
 void	free_node(t_node *node);
 void	free_list(t_node **lst_cmd);
 void	free_2d_arr(char **arr);
+bool	str_not_empty(const char *str);
+
 
 // parsing
 bool	check_cmd(char *cmd_str);

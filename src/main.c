@@ -6,7 +6,7 @@
 /*   By: wyap <wyap@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 18:28:19 by wyap              #+#    #+#             */
-/*   Updated: 2024/01/09 19:44:40 by wyap             ###   ########.fr       */
+/*   Updated: 2024/01/25 16:54:48 by wyap             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ char	*get_cmd(char *cmd_buf)
 {
 	char	*prompt;
 	char	*cur_path;
+	char	*tmp;
 
 	if ((cur_path = getcwd(NULL, 0)) == NULL)
 		perror("failed to get current working directory\n");
@@ -36,11 +37,12 @@ char	*get_cmd(char *cmd_buf)
 		cmd_buf = "exit";
 		printf("\nexit");
 	}
-	if (ft_strlen(cmd_buf) > 1){ //carriage return will not be added
-		if (cmd_buf[0] != ' ')
-			add_history(cmd_buf);
-			// continue;
+	if (str_not_empty(cmd_buf))//(ft_strlen(cmd_buf) > 0)
+	{
+		add_history(cmd_buf);
+		tmp = cmd_buf;
 		cmd_buf = ft_strtrim(cmd_buf, " "); //trim space
+		free(tmp);
 	}
 	free(prompt);
 	free(cur_path);
