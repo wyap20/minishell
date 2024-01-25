@@ -12,6 +12,30 @@
 
 #include "../../minishell.h"
 
+t_node	*make_rdr_group(t_node *ptr)
+{
+	t_node	*tmp;
+	t_node	*tmp2;
+	char	*content_ptr;
+
+	printf("\n\tcombine rdr mark\n");
+	tmp = ptr->next;
+	while (tmp && !ft_strcmp(tmp->attr, "rdr"))
+	{
+		content_ptr = ptr->content;
+		ptr->content = ft_strjoin(ptr->content, tmp->content);
+		free(content_ptr);
+		ptr->next = tmp->next;
+		if (tmp->next)
+			tmp->next->prev = ptr;
+		tmp2 = tmp;
+		tmp = tmp->next;
+		free_node(tmp2);
+	}
+	return (ptr);
+}
+
+
 t_node	*combine_w_prev(t_node *ptr)
 {
 	t_node	*tmp;
@@ -57,9 +81,36 @@ t_node	*combine_w_next(t_node *ptr)
 	return (ptr);
 }
 
+void	set_rdr_nodes(t_node **lst_cmd)
+{
+	t_node	*ptr;
+
+	ptr = *lst_cmd;
+	while (ptr)
+	{
+		if (!ft_strcmp(ptr->attr, "rdr") && ptr->next && ptr->next->next && !ft_strcmp(ptr->next->attr, "space") && !ft_strcmp(ptr->next->next->attr, "none"))
+		{
+			ptr->next->attr = "rdr";
+			ptr->next->next->attr = "rdr";
+			ptr = ptr->next->next->next;
+		}
+		else if ((!ft_strcmp(ptr->attr, "rdr") && ptr->next && !ft_strcmp(ptr->next->attr, "none"))) 
+		{
+			ptr->next->attr = "rdr";
+			ptr = ptr->next->next;
+		}
+		else
+			ptr = ptr->next;
+		if (ptr && !ft_strcmp(ptr->attr, "space") && !ft_strcmp(ptr->prev->attr, "rdr"))
+		{
+			ptr->attr = "rdr";
+			ptr = ptr->next;
+		}
+	}
+}
+
 /*
 * combine nodes that is not operator or commands
-* !!: DIRECT LEAK DETECTED IN WSL
 */
 void	combine_nodes(t_node **lst_cmd)
 {
@@ -68,7 +119,9 @@ void	combine_nodes(t_node **lst_cmd)
 	ptr = *lst_cmd;
 	while (ptr)
 	{
-		if (!ft_strcmp(ptr->attr, "none") || !ft_strcmp(ptr->attr, "space"))
+		if (!ft_strcmp(ptr->attr, "rdr") && ptr->next && !ft_strcmp(ptr->next->attr, "rdr"))
+			ptr = make_rdr_group(ptr);
+		else if (!ft_strcmp(ptr->attr, "none") || !ft_strcmp(ptr->attr, "space"))
 			ptr = combine_w_prev(ptr);
 		// else if (!ft_strcmp(ptr->attr, "builtin") || (!ft_strcmp(ptr->attr, "operator") && ptr->next && ft_strcmp(ptr->next->attr, "none")))
 		else if (!ft_strcmp(ptr->attr, "builtin") || ((!ft_strcmp(ptr->attr, "rdr") || !ft_strcmp(ptr->attr, "pipe")) && ptr->next && ft_strcmp(ptr->next->attr, "none")))
@@ -79,6 +132,7 @@ void	combine_nodes(t_node **lst_cmd)
 			break ;
 	}
 }
+
 
 /*code if further attr classification is implemented*/
 	// else if (!ft_strcmp(ptr->attr, "builtin") || (!ft_strcmp(ptr->attr, "rdr") && ptr->next && ft_strcmp(ptr->next->attr, "none")))

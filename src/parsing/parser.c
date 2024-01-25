@@ -105,7 +105,12 @@ bool	check_operator(t_node **lst_cmd)
 
 	ptr = *lst_cmd;
 	if (ft_dlstsize(ptr) < 2)
-		return true;
+		return (true);
+	if (!ft_strcmp(ft_dlstlast(ptr)->attr, "rdr"))
+	{
+		printf("Syntax Error: rdr at end of cmd\n");
+		return (false);
+	}
 	while (ptr)
 	{
 		if (ptr->next && (!ft_strcmp(ptr->attr, "rdr") || !ft_strcmp(ptr->attr, "pipe")))

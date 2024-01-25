@@ -98,7 +98,9 @@ int	main(int ac, char **av, char **envp)
 					trim_quotes(lst_cmd);
 					printf("\ttrim quotes:\n"); print_list(lst_cmd);
 					clear_empty_node(lst_cmd);
-					// printf("\tremove null node:\n"); print_list(lst_cmd);
+					printf("\tremove null node:\n"); print_list(lst_cmd);
+					set_rdr_nodes(lst_cmd);
+					printf("\tset rdr:\n"); print_list(lst_cmd);
 					combine_nodes(lst_cmd);
 					printf("\tcombine:\n"); print_list(lst_cmd);
 				/*execution*/
