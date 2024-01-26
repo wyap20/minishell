@@ -54,15 +54,12 @@ char	*get_key(t_node *token)
 	key = NULL;
 	while (tmp[i])
 	{
-		// if (tmp[i] == '$' && (tmp[i + 1] == '\"' || tmp[i + 1]))
-		// 	return (NULL);
 		if (tmp[i] == '$')
 		{
 			i++;
 			j++;
 			while (tmp[i] != ' ' && tmp[i] != '$' && tmp[i])
 			{
-				// printf("mark");
 				i++;
 				j++;
 			}
@@ -121,42 +118,86 @@ char	*get_val(t_env *env, char *key)
 // 	  return true;
 // }
 
+void	get_key_val_rplc(t_env *env, t_node *ptr)
+{
+	char	*key;
+	char	*val;
+	char	*tmp;
+
+	key = get_key(ptr);
+	if (key != NULL && key[0] == '$' && (ft_not_alpha(key[1]) || !key[1]))
+		ptr = ptr->next;
+	else if (key != NULL)
+	{
+		tmp = key;
+		key = ft_strtrim(key, "\"\'");
+		free(tmp);
+		// printf("trim:%s\n", key);
+		val = get_val(env, key);
+		// printf("val:%s\n", val);
+		tmp = ptr->content;
+		ptr->content = ft_replace(ptr->content, key, val);
+		free(tmp);
+		free(key);
+		free(val);
+	}
+}
+
 void	ft_expand(t_node **lst_cmd, t_env *env)
 {
 	t_node	*ptr;
-	char	*key;
-	char	*val;
 
 	ptr = *lst_cmd;
 	while (ptr)
 	{
 		if (!ft_strcmp(ptr->quote_type, "double") || !ft_strcmp(ptr->quote_type, "none")) //if is double or open quote
-		{
-			key = get_key(ptr);
-			// printf("key0:%d\nkey1:%d\n", key[0], key[1]);
-			// printf("%d\n", ft_not_alpha(key[1]));
-			//handle standalone '$'
-			if (key != NULL && key[0] == '$' && (ft_not_alpha(key[1]) || !key[1]))
-				ptr = ptr->next;
-			else if (key != NULL)// && ft_strcmp(key, "$")) //if not null and key is not "$"
-			{
-				key = ft_strtrim(key, "\"\'");
-				printf("trim:%s\n", key);
-				val = get_val(env, key);
-				printf("val:%s\n", val);
-				ptr->content = ft_replace(ptr->content, key, val);
-				free(key);
-				free(val);
-			}
-		}
-		//if is single quote or there's no more $ to replace
-		// if (!ft_strcmp(ptr->quote_type, "single") || !(check_dollar(ptr->content) == false))
+			get_key_val_rplr(env, ptr);
 		if (ptr)
 			if (!ft_strcmp(ptr->quote_type, "single") || !ft_strchr(ptr->content, '$')) 
 				ptr = ptr->next;
 		// printf("expandmark\n");
 	}
 }
+
+// void	ft_expand(t_node **lst_cmd, t_env *env)
+// {
+// 	t_node	*ptr;
+// 	char	*key;
+// 	char	*val;
+// 	char	*tmp;
+
+// 	ptr = *lst_cmd;
+// 	while (ptr)
+// 	{
+// 		if (!ft_strcmp(ptr->quote_type, "double") || !ft_strcmp(ptr->quote_type, "none")) //if is double or open quote
+// 		{
+// 			key = get_key(ptr);
+// 			// printf("key0:%d\nkey1:%d\n", key[0], key[1]);
+// 			// printf("%d\n", ft_not_alpha(key[1]));
+// 			//handle standalone '$'
+// 			if (key != NULL && key[0] == '$' && (ft_not_alpha(key[1]) || !key[1]))
+// 				ptr = ptr->next;
+// 			else if (key != NULL)
+// 			{
+// 				tmp = key;
+// 				key = ft_strtrim(key, "\"\'");
+// 				free(tmp);
+// 				printf("trim:%s\n", key);
+// 				val = get_val(env, key);
+// 				printf("val:%s\n", val);
+// 				tmp = ptr->content;
+// 				ptr->content = ft_replace(ptr->content, key, val);
+// 				free(tmp);
+// 				free(key);
+// 				free(val);
+// 			}
+// 		}
+// 		if (ptr)
+// 			if (!ft_strcmp(ptr->quote_type, "single") || !ft_strchr(ptr->content, '$')) 
+// 				ptr = ptr->next;
+// 		// printf("expandmark\n");
+// 	}
+// }
 
 // int main(void)
 // {
