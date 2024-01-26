@@ -99,6 +99,17 @@ void	assign_attr(t_node **lst_cmd)
 		// else if (!ft_strcmp(ptr->content, "|"))
 		// 	ptr->attr = "pipe"
 
+bool	check_oprator_syntax(t_node *ptr)
+{
+	if (!ft_strcmp(ptr->content, "<<") || !ft_strcmp(ptr->content, "<"))
+		if (!ft_strcmp(ptr->next->attr, "pipe") || (!ft_strcmp(ptr->next->attr, "space") && !ft_strcmp(ptr->next->next->attr, "pipe")))
+			return (false);
+	if (!ft_strcmp(ptr->attr, "pipe"))
+		if ((!ft_strcmp(ptr->next->content, ">>") || !ft_strcmp(ptr->next->content, ">")) || (!ft_strcmp(ptr->next->attr, "space") && (!ft_strcmp(ptr->next->next->content, ">>") || !ft_strcmp(ptr->next->next->content, ">"))))
+			return (false);
+	return (true);
+}
+
 bool	check_operator(t_node **lst_cmd)
 {
 	t_node	*ptr;
@@ -113,20 +124,44 @@ bool	check_operator(t_node **lst_cmd)
 	}
 	while (ptr)
 	{
-		if (ptr->next && (!ft_strcmp(ptr->attr, "rdr") || !ft_strcmp(ptr->attr, "pipe")))
-		{
-			if ((!ft_strcmp(ptr->next->attr, "space") && (!ft_strcmp(ptr->next->next->attr, "rdr") || !ft_strcmp(ptr->next->next->attr, "pipe")))
-					|| (!ft_strcmp(ptr->next->attr, "rdr") || !ft_strcmp(ptr->next->attr, "pipe")))
+		if (ptr->next)
+		{ 
+			if (check_oprator_syntax(ptr) == false)
 			{
-				printf("Syntax Error: consecutive operators\n");
+				printf("Syntax Error: invalid rdr-pipe syntax\n");
 				return (false);
 			}
-		}
+		}		
 		ptr = ptr->next;
 	}
 	return (true);
 }
+		// if (ptr->next && (!ft_strcmp(ptr->attr, "rdr") || !ft_strcmp(ptr->attr, "pipe")))
+		// {
+		// 	if ((!ft_strcmp(ptr->next->attr, "space") && (!ft_strcmp(ptr->next->next->attr, "rdr") || !ft_strcmp(ptr->next->next->attr, "pipe")))
+		// 			|| (!ft_strcmp(ptr->next->attr, "rdr") || !ft_strcmp(ptr->next->attr, "pipe")))
+			// {
+			// 	printf("Syntax Error: consecutive operators\n");
+			// 	return (false);
+			// }
+		// }
 
+		// if (ptr->next)
+		// { 
+		// 	if ((!ft_strcmp(ptr->content, "<<") || !ft_strcmp(ptr->content, "<")) && !ft_strcmp(ptr->next->attr, "pipe"))
+		// 	{
+		// 		printf("Syntax Error: consecutive operators\n");
+		// 		return (false);
+		// 	}
+		// 	if (!ft_strcmp(ptr->attr, "pipe") && (!ft_strcmp(ptr->next->content, ">>") || !ft_strcmp(ptr->next->content, ">")))
+		// 	{
+		// 		printf("Syntax Error: consecutive operators\n");
+		// 		return (false);
+		// 	}
+		// }
+
+	// if ((!ft_strcmp(ptr->content, "<<") || !ft_strcmp(ptr->content, "<")) && !ft_strcmp(ptr->next->attr, "pipe"))
+	// if (!ft_strcmp(ptr->attr, "pipe") && (!ft_strcmp(ptr->next->content, ">>") || !ft_strcmp(ptr->next->content, ">")))
 		// if (ptr->next)
 		// {
 		// 	if (!ft_strcmp(ptr->attr, "operator") && !ft_strcmp(ptr->next->attr, "space") && !ft_strcmp(ptr->next->next->attr, "operator"))
