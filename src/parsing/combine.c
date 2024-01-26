@@ -20,7 +20,7 @@ t_node	*make_rdr_group(t_node *ptr)
 
 	printf("\n\tcombine rdr mark\n");
 	tmp = ptr->next;
-	while (tmp && !ft_strcmp(tmp->attr, "rdr"))
+	while (tmp && !ft_strcmp(tmp->attr, "rdr_sub"))
 	{
 		content_ptr = ptr->content;
 		ptr->content = ft_strjoin(ptr->content, tmp->content);
@@ -90,20 +90,20 @@ void	set_rdr_nodes(t_node **lst_cmd)
 	{
 		if (!ft_strcmp(ptr->attr, "rdr") && ptr->next && ptr->next->next && !ft_strcmp(ptr->next->attr, "space") && !ft_strcmp(ptr->next->next->attr, "none"))
 		{
-			ptr->next->attr = "rdr";
-			ptr->next->next->attr = "rdr";
+			ptr->next->attr = "rdr_sub";
+			ptr->next->next->attr = "rdr_sub";
 			ptr = ptr->next->next->next;
 		}
 		else if ((!ft_strcmp(ptr->attr, "rdr") && ptr->next && !ft_strcmp(ptr->next->attr, "none"))) 
 		{
-			ptr->next->attr = "rdr";
+			ptr->next->attr = "rdr_sub";
 			ptr = ptr->next->next;
 		}
 		else
 			ptr = ptr->next;
-		if (ptr && !ft_strcmp(ptr->attr, "space") && !ft_strcmp(ptr->prev->attr, "rdr"))
+		if (ptr && !ft_strcmp(ptr->attr, "space") && !ft_strcmp(ptr->prev->attr, "rdr_sub"))
 		{
-			ptr->attr = "rdr";
+			ptr->attr = "rdr_sub";
 			ptr = ptr->next;
 		}
 	}
@@ -119,7 +119,7 @@ void	combine_nodes(t_node **lst_cmd)
 	ptr = *lst_cmd;
 	while (ptr)
 	{
-		if (!ft_strcmp(ptr->attr, "rdr") && ptr->next && !ft_strcmp(ptr->next->attr, "rdr"))
+		if (!ft_strcmp(ptr->attr, "rdr") && ptr->next && !ft_strcmp(ptr->next->attr, "rdr_sub"))
 			ptr = make_rdr_group(ptr);
 		else if (!ft_strcmp(ptr->attr, "none") || !ft_strcmp(ptr->attr, "space"))
 			ptr = combine_w_prev(ptr);
