@@ -10,8 +10,10 @@
 #include <stdbool.h>
 #include <unistd.h>
 #include <signal.h>
-#include <string.h> //tmp header, to replace with libft functions
+#include <string.h> //tmp header, to replace with libft functions // need for strerror()
 #include <stdlib.h>
+#include <sys/wait.h>
+#include <errno.h>
 // #include "/usr/local/opt/readline/include" //(rl_clear_history)
 // /usr/local/opt/readline/lib
 
