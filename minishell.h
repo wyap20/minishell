@@ -2,6 +2,7 @@
 # define MINISHELL
 
 // #include "libreadline.a"
+#include <fcntl.h>
 #include <stdio.h>
 #include <readline/readline.h>
 #include <readline/history.h>
@@ -31,6 +32,7 @@ typedef	struct s_node{
 	char	*content;
 	char	*quote_type;
 	char	*attr;
+	char	**cmds;
 	struct	s_node	*next;
 	struct	s_node	*prev;
 }t_node;
@@ -45,9 +47,21 @@ typedef struct s_env{
 	char	*env_path; //$PATH variable, single string
 	char	**paths; //splitted paths
 	int		key_count;
-	size_t	pipe_count;
+	// size_t	pipe_count;
 	// char *cur_path;
 }t_env;
+
+typedef struct s_exe
+{
+	int		num_pipes;
+	int		num_cmds;
+	int		(*pipes)[2];
+	int		z;
+	int		redir[2];
+	int		status;
+	int		err_num;
+	pid_t	*pid;
+}	t_exe;
 
 /*libft + basic utils*/
 char	*ft_strjoin(char const *s1, char const *s2);
@@ -110,15 +124,20 @@ char *ft_strstr(char *str, char*ss);
 void	*ft_memmove(void *dest, const void *src, size_t n);
 char	*ft_strncpy(char *dest, const char *src, size_t n);
 
-void get_pipe_count(t_env *env, t_node **lst_cmd);
 // int	parse_pipe(char *cmd_str);
+
+/*execute*/
+void	create_cmd_group(t_env *env, t_node *lst_cmd);
+// void	get_pipe_count(t_env *env, t_node **lst_cmd);
+void	get_pipe_count(t_exe *exe, t_node **lst_cmd);
+void	execute_cmd(t_env *env, t_node **lst);
 
 
 /*built in*/
 void	echo_print(const char *str);
 void	print_env_var(char **envp, char *s); //pwd
 void	ft_export(t_env *env, char *add);
-char **check_export(char **add);
+char	**check_export(char **add);
 void	add_to_env(t_env *env, char **updated);
 void	ft_unset(t_env *env, char *del);
 void	print_sys_env(t_env *env);

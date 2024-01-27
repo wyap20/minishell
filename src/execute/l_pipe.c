@@ -10,44 +10,46 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <fcntl.h>
-#include <stdio.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <sys/wait.h>
-#include <errno.h>
-#include <string.h> 
+#include "../../minishell.h"
 
-typedef	struct s_node{
-	char	**cmds;
-	int		num;
-	struct	s_node	*next;
-	struct	s_node	*prev;
-}t_node;
+// #include <fcntl.h>
+// #include <stdio.h>
+// #include <unistd.h>
+// #include <stdlib.h>
+// #include <sys/wait.h>
+// #include <errno.h>
+// #include <string.h> 
 
-typedef struct s_exe
-{
-	int		num_pipes;
-	int		num_cmds;
-	int		(*pipes)[2];
-	int		z;
-	int		redir[2];
-	int		status;
-	int		err_num;
-	pid_t	*pid;
-}	t_exe;
+// typedef	struct s_node{
+// 	char	**cmds;
+// 	int		num;
+// 	struct	s_node	*next;
+// 	struct	s_node	*prev;
+// }t_node;
 
-int	ft_strcmp(char *s1, char *s2)
-{
-	int	i;
+// typedef struct s_exe
+// {
+// 	int		num_pipes;
+// 	int		num_cmds;
+// 	int		(*pipes)[2];
+// 	int		z;
+// 	int		redir[2];
+// 	int		status;
+// 	int		err_num;
+// 	pid_t	*pid;
+// }	t_exe;
 
-	i = 0;
-	while (s1[i] && s2[i] && s1[i] == s2[i])
-		i++;
-	if (s1[i] != s2[i])
-		return (s1[i] - s2[i]);
-	return (0);
-}
+// int	ft_strcmp(char *s1, char *s2)
+// {
+// 	int	i;
+
+// 	i = 0;
+// 	while (s1[i] && s2[i] && s1[i] == s2[i])
+// 		i++;
+// 	if (s1[i] != s2[i])
+// 		return (s1[i] - s2[i]);
+// 	return (0);
+// }
 
 int	here_doc(char *str)
 {
@@ -65,116 +67,118 @@ int	here_doc(char *str)
 
 void	sig_nl(int sig_num)
 {
-	// if(sig_num != SIGINT)
-	// 	return;
+	if(sig_num != SIGINT)
+		return;
 	write(1, "\n", 1);
 }
 
-size_t	ft_strlen(const char *str)
-{
-	size_t	len;
+// size_t	ft_strlen(const char *str)
+// {
+// 	size_t	len;
 
-	len = 0;
-	while (str[len] != 0x00)
-		len++;
-	return (len);
-}
+// 	len = 0;
+// 	while (str[len] != 0x00)
+// 		len++;
+// 	return (len);
+// }
 
-t_node **init_lst(t_node **lst)
-{
-	lst = (t_node **)malloc(sizeof(t_node *));
-	if (!lst)
-		perror("lst not allocated");
-	*lst = NULL;
-	return (lst);
-}
+// t_node **init_lst(t_node **lst)
+// {
+// 	lst = (t_node **)malloc(sizeof(t_node *));
+// 	if (!lst)
+// 		perror("lst not allocated");
+// 	*lst = NULL;
+// 	return (lst);
+// }
 
-t_node *create_node(int num)
-{
-	t_node *new_node = (t_node *)malloc(sizeof(t_node));
-	if (!new_node) {
-		perror("Memory allocation failed");
-		exit(EXIT_FAILURE);
-	}
-	new_node->cmds = NULL;
-	new_node->num = num;
-	new_node->next = NULL;
-	new_node->prev = NULL;
-	return new_node;
-}
-//=============================================================================
-void ft_gen_node(t_node **lst)
-{
-	int i = 0;
-	t_node *current = NULL;
+// t_node *create_node(int num)
+// {
+// 	t_node *new_node = (t_node *)malloc(sizeof(t_node));
+// 	if (!new_node) {
+// 		perror("Memory allocation failed");
+// 		exit(EXIT_FAILURE);
+// 	}
+// 	new_node->cmds = NULL;
+// 	new_node->num = num;
+// 	new_node->next = NULL;
+// 	new_node->prev = NULL;
+// 	return new_node;
+// }
+// //=============================================================================
+// void ft_gen_node(t_node **lst)
+// {
+// 	int i = 0;
+// 	t_node *current = NULL;
 
-	while (i < 5) // <<
-	{
-		t_node *new_node = create_node(i);
-		if (*lst == NULL) 
-		{
-			*lst = new_node;
-		} else 
-		{
-			current->next = new_node;
-			new_node->prev = current;
-		}
-		current = new_node;
-		i++;
-	}
-}
-//=============================================================================
-void ft_input_node(t_node **lst)
-{
-	t_node *x = *lst;
+// 	while (i < 5) // <<
+// 	{
+// 		t_node *new_node = create_node(i);
+// 		if (*lst == NULL) 
+// 		{
+// 			*lst = new_node;
+// 		} else 
+// 		{
+// 			current->next = new_node;
+// 			new_node->prev = current;
+// 		}
+// 		current = new_node;
+// 		i++;
+// 	}
+// }
+// //=============================================================================
+// void ft_input_node(t_node **lst)
+// {
+// 	t_node *x = *lst;
 	
-	x->cmds = malloc(2 * sizeof(char*));
-	x->cmds[0] = "/bin/cat";
-	x->cmds[1] = NULL;
-	x = x->next;
+// 	x->cmds = malloc(2 * sizeof(char*));
+// 	x->cmds[0] = "/bin/cat";
+// 	x->cmds[1] = NULL;
+// 	x = x->next;
 	
-	x->cmds = malloc(2 * sizeof(char*));
-	x->cmds[0] = "|";
-	x->cmds[1] = NULL;
-	x = x->next;
+// 	x->cmds = malloc(2 * sizeof(char*));
+// 	x->cmds[0] = "|";
+// 	x->cmds[1] = NULL;
+// 	x = x->next;
 	
-	x->cmds = malloc(2 * sizeof(char*));
-	x->cmds[0] = "/bin/cat";
-	x->cmds[1] = NULL;
-	x = x->next;
+// 	x->cmds = malloc(2 * sizeof(char*));
+// 	x->cmds[0] = "/bin/cat";
+// 	x->cmds[1] = NULL;
+// 	x = x->next;
 	
-	x->cmds = malloc(2 * sizeof(char*));
-	x->cmds[0] = "|";
-	x->cmds[1] = NULL;
-	x = x->next;
+// 	x->cmds = malloc(2 * sizeof(char*));
+// 	x->cmds[0] = "|";
+// 	x->cmds[1] = NULL;
+// 	x = x->next;
 	
-	x->cmds = malloc(2 * sizeof(char*));
-	x->cmds[0] = "/bin/ls";
-	x->cmds[1] = NULL;
+// 	x->cmds = malloc(2 * sizeof(char*));
+// 	x->cmds[0] = "/bin/ls";
+// 	x->cmds[1] = NULL;
 
-	// x->cmds = malloc(3 * sizeof(char*));
-	// x->cmds[0] = "<";
-	// x->cmds[1] = "zz";
-	// x->cmds[2] = NULL;
-	// x = x->next;
+// 	// x->cmds = malloc(3 * sizeof(char*));
+// 	// x->cmds[0] = "<";
+// 	// x->cmds[1] = "zz";
+// 	// x->cmds[2] = NULL;
+// 	// x = x->next;
 
-	// x->cmds = malloc(3 * sizeof(char*));
-	// x->cmds[0] = ">>";
-	// x->cmds[1] = "zzz";
-	// x->cmds[2] = NULL;
-	// x = x->next;
+// 	// x->cmds = malloc(3 * sizeof(char*));
+// 	// x->cmds[0] = ">>";
+// 	// x->cmds[1] = "zzz";
+// 	// x->cmds[2] = NULL;
+// 	// x = x->next;
 
-	// x->cmds = malloc(2 * sizeof(char*));
-	// x->cmds[0] = "/bin/ls";
-	// x->cmds[1] = NULL;
+// 	// x->cmds = malloc(2 * sizeof(char*));
+// 	// x->cmds[0] = "/bin/ls";
+// 	// x->cmds[1] = NULL;
 
-}
+// }
 //============================================================================
-void	ft_initialize_exe_vars(t_exe *exe)
+void	ft_initialize_exe_vars(t_exe *exe, t_node **lst)
 {
-	exe->num_pipes = 2; //<<
-	exe->num_cmds = 5; //<<
-	// exe->i = 0;w
+	exe->num_pipes = 0; //<<
+	exe->num_cmds = 0; //<<
+	get_pipe_count(exe, lst);
+	exe->num_cmds = ft_dlstsize(*lst);
+	// exe->i = 0;
 	// exe->j = 0;
 	exe->z = 0;
 	exe->err_num = 0;
@@ -247,6 +251,7 @@ void ft_no_pipe(t_exe *exe, t_node *lst, char **envp)
 {
 	while(lst != NULL)
 	{
+		printf("cmd[0]: %s\n",lst->cmds[0]);
 		if(lst->cmds[0][0] == '<' || lst->cmds[0][0] == '>')
 		{
 			ft_redir_left(exe, lst);
@@ -372,7 +377,7 @@ void ft_multi_pipe(t_exe *exe, t_node *lst, char **envp)
 	while (i < exe->num_pipes + 1)
 	{
 		lst = ft_get_group(lst,i);
-		printf("%d\n",lst->num);
+		// printf("%d\n",lst->num);
 		printf("%s\n",lst->cmds[0]);
 		// list not iteratin to next one stuck on 1st group
 		exe->pid[i] = fork();
@@ -388,45 +393,64 @@ void ft_multi_pipe(t_exe *exe, t_node *lst, char **envp)
 	}
 }
 
-int	main(int ac, char **av, char **envp)
+void	execute_cmd(t_env *env, t_node **lst)
 {
 	t_exe	exe;
-	t_node **lst;
 
-	lst = init_lst(lst);
-	ft_gen_node(lst);
-	ft_input_node(lst);
 
-	// t_node *x = *lst;
-	// while(x != NULL)
-	// {
-	// 	printf("%d\n",x->num);
-	// 	printf("%s\n",x->cmds[0]);
-	// 	x = x->next;
-	// }
-	
-	ft_initialize_exe_vars(&exe);
+	ft_initialize_exe_vars(&exe, lst);
+	// get_pipe_count(&exe, lst);
+	// exe.num_cmds = ft_dlstsize(*lst);
 	signal(SIGINT,sig_nl);
 	if (exe.num_pipes == 0)
-		ft_no_pipe(&exe, *lst, envp);
+		ft_no_pipe(&exe, *lst, env->env_vars);
 	else
-		ft_multi_pipe(&exe,*lst, envp);
+		ft_multi_pipe(&exe,*lst, env->env_vars);
 	ft_close_all_pipes(&exe);
 	ft_wait_pid(&exe);
 	ft_free_pp(&exe);
-
-	t_node *current = *lst; //head node
-	while(current != NULL)
-	{
-		t_node *tmp = current; // preserve current node
-		current = current->next; // move to next node
-		free(tmp->cmds); // free current cmds array
-		// int i = 0
-		// while tmp->cmds[i] != 0x00
-		// 	free(tmp->cmds[i++]);
-		free(tmp); // free current node itself
-	}
-	free(lst);
-	// *lst = NULL;
-	return 0;
 }
+
+// int	main(int ac, char **av, char **envp)
+// {
+// 	t_exe	exe;
+// 	t_node **lst;
+
+// 	lst = init_lst(lst);
+// 	ft_gen_node(lst);
+// 	ft_input_node(lst);
+
+// 	// t_node *x = *lst;
+// 	// while(x != NULL)
+// 	// {
+// 	// 	printf("%d\n",x->num);
+// 	// 	printf("%s\n",x->cmds[0]);
+// 	// 	x = x->next;
+// 	// }
+	
+// 	ft_initialize_exe_vars(&exe);
+// 	get_pipe_count(&exe, lst);
+// 	signal(SIGINT,sig_nl);
+// 	if (exe.num_pipes == 0)
+// 		ft_no_pipe(&exe, *lst, envp);
+// 	else
+// 		ft_multi_pipe(&exe,*lst, envp);
+// 	ft_close_all_pipes(&exe);
+// 	ft_wait_pid(&exe);
+// 	ft_free_pp(&exe);
+
+// 	t_node *current = *lst; //head node
+// 	while(current != NULL)
+// 	{
+// 		t_node *tmp = current; // preserve current node
+// 		current = current->next; // move to next node
+// 		free(tmp->cmds); // free current cmds array
+// 		// int i = 0
+// 		// while tmp->cmds[i] != 0x00
+// 		// 	free(tmp->cmds[i++]);
+// 		free(tmp); // free current node itself
+// 	}
+// 	free(lst);
+// 	// *lst = NULL;
+// 	return 0;
+// }

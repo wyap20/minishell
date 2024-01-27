@@ -12,6 +12,7 @@ int main()
 	DIR *dir;
 	struct dirent *dp;
 
+	buffer = NULL;
 	printf("%s\n",(getcwd(buffer,__INT_MAX__)));
 	
 	dir = opendir(".");

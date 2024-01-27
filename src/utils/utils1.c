@@ -6,7 +6,7 @@
 /*   By: wyap <wyap@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 01:12:54 by wyap              #+#    #+#             */
-/*   Updated: 2024/01/25 16:13:55 by wyap             ###   ########.fr       */
+/*   Updated: 2024/01/27 14:43:47 by wyap             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ void	free_node(t_node *node)
 {
 	// free(node->attr); //no malloc
 	free(node->content);
+	free_2d_arr(node->cmds);
 	// free(node->next); //cannot free next node?
 	// free(node->prev); //cannot free prev node?
 	// free(node->quote_type); //no malloc

@@ -6,7 +6,7 @@
 /*   By: wyap <wyap@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 15:10:17 by wyap              #+#    #+#             */
-/*   Updated: 2023/11/21 17:24:11 by wyap             ###   ########.fr       */
+/*   Updated: 2024/01/27 15:16:19 by wyap             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@
 // 	return (count);
 // }
 
-void get_pipe_count(t_env *env, t_node **lst_cmd)
+void get_pipe_count(t_exe *exe, t_node **lst_cmd)
 {
 	t_node	*ptr;
 
@@ -53,28 +53,34 @@ void get_pipe_count(t_env *env, t_node **lst_cmd)
 		printf("Syntax Error: cmd started with '|'\n");
 		return ;
 	}
-	env->pipe_count = 0;
+	exe->num_pipes = 0;
 	while (ptr)
 	{
 		if (!ft_strcmp(ptr->attr, "pipe"))
-			env->pipe_count++;
+			exe->num_pipes++;
 		ptr = ptr->next;
 	}
-	printf("get_pipe_count: %zu\n", env->pipe_count);
+	printf("exe->num_pipes: %d\n", exe->num_pipes);
 }
 
-// size_t	get_pipe_count(t_node **lst_cmd)
+// void get_pipe_count(t_env *env, t_node **lst_cmd)
 // {
 // 	t_node	*ptr;
-// 	size_t	pipe_count;
-	
-// 	pipe_count = 0;
+
 // 	ptr = *lst_cmd;
+// 	if (!(*lst_cmd))
+// 		return ;
+// 	if (!ft_strcmp((*lst_cmd)->attr, "pipe"))
+// 	{
+// 		printf("Syntax Error: cmd started with '|'\n");
+// 		return ;
+// 	}
+// 	env->pipe_count = 0;
 // 	while (ptr)
 // 	{
 // 		if (!ft_strcmp(ptr->attr, "pipe"))
-// 			pipe_count++;
+// 			env->pipe_count++;
 // 		ptr = ptr->next;
 // 	}
-// 	return (pipe_count);
+// 	printf("get_pipe_count: %zu\n", env->pipe_count);
 // }

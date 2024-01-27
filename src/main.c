@@ -6,7 +6,7 @@
 /*   By: wyap <wyap@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 18:28:19 by wyap              #+#    #+#             */
-/*   Updated: 2024/01/25 16:54:48 by wyap             ###   ########.fr       */
+/*   Updated: 2024/01/27 15:42:00 by wyap             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ t_node **init_lst(t_node **lst_cmd)
 void	init_env(t_env *env, char **envp)
 {
 	env->key_count = 0;
-	env->pipe_count = 0;
+	// env->pipe_count = 0;
 	store_env(env, envp);
 	store_path(env, envp);
 	// print_env_var(envp, "PATH"); //compare with splitted path
@@ -104,7 +104,11 @@ int	main(int ac, char **av, char **envp)
 					combine_nodes(lst_cmd);
 					printf("\tcombine:\n"); print_list(lst_cmd);
 				/*execution*/
-					get_pipe_count(&env, lst_cmd);
+					create_cmd_group(&env, *lst_cmd);
+					printf("created cmd group\n");
+					execute_cmd(&env, lst_cmd);
+					// printf("\tcreate_cmd_group:\n"); print_list(lst_cmd);
+					// get_pipe_count(&env, lst_cmd);
 					// parse_pipe(cmd_buf);
 					// printf("cmd_buf: %s\n", cmd_buf);
 					// printf("%d\n", ft_strncmp(cmd_buf, "echo", 4) == 0);
