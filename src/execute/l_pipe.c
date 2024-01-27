@@ -235,8 +235,8 @@ void ft_execute(t_exe *exe, t_node *lst, char **envp)
 				break;
 			exe->z--;
 		}
-		printf("bash: %s: command not found\n", 
-		lst->cmds[0] + exe->z + 1);
+		printf("minishell> %s: command not found\n", 
+		lst->cmds[0] + exe->z);
 		exe->err_num = 127;
 		return ;
 	}
@@ -251,7 +251,7 @@ void ft_no_pipe(t_exe *exe, t_node *lst, char **envp)
 {
 	while(lst != NULL)
 	{
-		printf("cmd[0]: %s\n",lst->cmds[0]);
+		// printf("cmd[0]: %s\n",lst->cmds[0]);
 		if(lst->cmds[0][0] == '<' || lst->cmds[0][0] == '>')
 		{
 			ft_redir_left(exe, lst);
@@ -407,7 +407,8 @@ void	execute_cmd(t_env *env, t_node **lst)
 	else
 		ft_multi_pipe(&exe,*lst, env->env_vars);
 	ft_close_all_pipes(&exe);
-	ft_wait_pid(&exe);
+	if (exe.num_pipes > 0)
+		ft_wait_pid(&exe);
 	ft_free_pp(&exe);
 }
 

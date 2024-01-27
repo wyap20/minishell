@@ -83,6 +83,13 @@ int	main(int ac, char **av, char **envp)
 		{
 			cmd_buf = get_cmd(cmd_buf);
 			printf("cmd_buf input:%s\n", cmd_buf);
+			if (!ft_strcmp(cmd_buf, "exit"))
+			{
+				free(cmd_buf); //readline malloc buffer
+				rl_clear_history();
+				free_2d_arr(env.env_vars);
+				exit(1);
+			}
 			if (check_cmd(cmd_buf) == true)
 			{
 				lst_cmd = init_lst(lst_cmd);
@@ -104,15 +111,16 @@ int	main(int ac, char **av, char **envp)
 					combine_nodes(lst_cmd);
 					printf("\tcombine:\n"); print_list(lst_cmd);
 				/*execution*/
+					// *lst_cmd = create_cmd_group(&env, *lst_cmd);
 					create_cmd_group(&env, *lst_cmd);
 					printf("created cmd group\n");
+					printf("\tcreate_cmd_group:\n"); print_list(lst_cmd);
 					execute_cmd(&env, lst_cmd);
-					// printf("\tcreate_cmd_group:\n"); print_list(lst_cmd);
 					// get_pipe_count(&env, lst_cmd);
 					// parse_pipe(cmd_buf);
 					// printf("cmd_buf: %s\n", cmd_buf);
 					// printf("%d\n", ft_strncmp(cmd_buf, "echo", 4) == 0);
-					if (!ft_strncmp(cmd_buf, "echo", 4)) //works but incorrect implementation
+					if (!ft_strncmp(cmd_buf, "echo", 4))
 						echo_print(cmd_buf);
 					else if (!ft_strcmp(cmd_buf, "pwd"))
 						print_env_var(envp, "PWD");
@@ -122,16 +130,16 @@ int	main(int ac, char **av, char **envp)
 						ft_export(&env, "AAAAA=\'aaaaaa\' _b=\"xaxaxax\" __c=0812734917 @_d=\"xaxaxax\" _e6=\"xaxaxax\" f^=\"xaxaxax\" 3g=\"xaxaxax\"");
 					else if (!ft_strcmp(cmd_buf, "unset"))
 						ft_unset(&env, "AAAAA _b __c");
-					else if (!ft_strcmp(cmd_buf, "exit"))
-					{
-						free(cmd_buf); //readline malloc buffer
-						free_list(lst_cmd);
-						free(lst_cmd);
-						lst_cmd = NULL;
-						rl_clear_history(); //-I /usr/local/opt/readline/include -L /usr/local/opt/readline/lib
-						free_2d_arr(env.env_vars);
-						exit(1);
-					}
+					// else if (!ft_strcmp(cmd_buf, "exit"))
+					// {
+					// 	free(cmd_buf); //readline malloc buffer
+					// 	free_list(lst_cmd);
+					// 	free(lst_cmd);
+					// 	lst_cmd = NULL;
+					// 	rl_clear_history(); //-I /usr/local/opt/readline/include -L /usr/local/opt/readline/lib
+					// 	free_2d_arr(env.env_vars);
+					// 	exit(1);
+					// }
 				}
 				free(cmd_buf); //readline malloc buffer
 				free_list(lst_cmd);
