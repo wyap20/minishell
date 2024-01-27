@@ -151,7 +151,7 @@ void	ft_expand(t_node **lst_cmd, t_env *env)
 	while (ptr)
 	{
 		if (!ft_strcmp(ptr->quote_type, "double") || !ft_strcmp(ptr->quote_type, "none")) //if is double or open quote
-			get_key_val_rplr(env, ptr);
+			get_key_val_rplc(env, ptr);
 		if (ptr)
 			if (!ft_strcmp(ptr->quote_type, "single") || !ft_strchr(ptr->content, '$')) 
 				ptr = ptr->next;

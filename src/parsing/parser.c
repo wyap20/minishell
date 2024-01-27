@@ -6,7 +6,7 @@
 /*   By: wyap <wyap@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 15:27:27 by wyap              #+#    #+#             */
-/*   Updated: 2024/01/25 16:54:23 by wyap             ###   ########.fr       */
+/*   Updated: 2024/01/27 11:21:02 by wyap             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,8 @@ bool	check_operator_syntax(t_node *ptr)
 	if (!ft_strcmp(ptr->content, "<<") || !ft_strcmp(ptr->content, "<") || !ft_strcmp(ptr->content, ">>"))
 		if (!ft_strcmp(ptr->next->attr, "pipe") || (!ft_strcmp(ptr->next->attr, "space") && !ft_strcmp(ptr->next->next->attr, "pipe")))
 			return (false);
+	if (!ft_strcmp(ptr->attr, "rdr") && (!ft_strcmp(ptr->next->attr, "rdr") || (!ft_strcmp(ptr->next->attr, "space") && !ft_strcmp(ptr->next->next->attr, "rdr"))))
+		return (false);
 	// if (!ft_strcmp(ptr->attr, "pipe"))
 	// 	if ((!ft_strcmp(ptr->next->content, ">>") || !ft_strcmp(ptr->next->content, ">")) || (!ft_strcmp(ptr->next->attr, "space") && (!ft_strcmp(ptr->next->next->content, ">>") || !ft_strcmp(ptr->next->next->content, ">"))))
 	// 		return (false);
