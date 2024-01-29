@@ -243,25 +243,28 @@ void ft_execute(t_exe *exe, t_node *lst, char **envp)
 	else
 	{	
 		exe->err_num = 0;
-		return;
+		return ;
 	}
 }
 
-void ft_no_pipe(t_exe *exe, t_node *lst, char **envp)
+void ft_set_pipe(t_exe *exe, int i)
 {
-	while(lst != NULL)
+	if (exe->num_pipes == 0)
 	{
-		// printf("cmd[0]: %s\n",lst->cmds[0]);
-		if(lst->cmds[0][0] == '<' || lst->cmds[0][0] == '>')
-		{
-			ft_redir_left(exe, lst);
-			ft_redir_right(exe, lst);
-		}
-		else 
-		{
-			ft_execute(exe, lst, envp);
-		}
-		lst = lst->next;
+		return;
+	}
+	else
+	if (i > 0) // end, mid1; if not first
+	{
+		dup2(exe->pipes[i - 1][0], STDIN_FILENO);
+		close(exe->pipes[i - 1][0]);
+		close(exe->pipes[i - 1][1]);
+	}
+	if (i < exe->num_pipes) // start, mid2; if not last
+	{
+		dup2(exe->pipes[i][1], STDOUT_FILENO);
+		close(exe->pipes[i][0]);
+		close(exe->pipes[i][1]);
 	}
 }
 
@@ -277,6 +280,49 @@ void ft_close_all_pipes (t_exe *exe)
 		i++;
 	}
 }
+
+void ft_swap_info(t_node *a, t_node *b)
+{
+	char	**cmds;
+	char	*attr;
+	char	*content;
+	char	*quote_type;
+
+	cmds = a->cmds;
+	a->cmds = b->cmds;
+	b->cmds = cmds;
+
+	attr = a->attr;
+	a->attr = b->attr;
+	b->attr = attr;
+
+	content = a->content;
+	a->content = b->content;
+	b->content = content;
+
+	quote_type = a->quote_type;
+	a->quote_type = b->quote_type;
+	b->quote_type = quote_type;
+}
+
+// void ft_no_pipe(t_exe *exe, t_node *lst, char **envp)
+// {
+// 	exe->pid[0] = fork();
+// 	while(lst != NULL)
+// 	{
+// 		// printf("cmd[0]: %s\n",lst->cmds[0]);
+// 		if(lst->cmds[0][0] == '<' || lst->cmds[0][0] == '>')
+// 		{
+// 			ft_redir_left(exe, lst);
+// 			ft_redir_right(exe, lst);
+// 		}
+// 		else 
+// 		{
+// 			ft_execute(exe, lst, envp);
+// 		}
+// 		lst = lst->next;
+// 	}
+// }
 
 void ft_wait_pid (t_exe *exe)
 {
@@ -309,22 +355,6 @@ void ft_free_pp (t_exe *exe)
 		free(exe->pipes);
 }
 
-void ft_set_pipe(t_exe *exe, int i)
-{
-	if (i > 0) // end, mid1; if not first
-	{
-		dup2(exe->pipes[i - 1][0], STDIN_FILENO);
-		close(exe->pipes[i - 1][0]);
-		close(exe->pipes[i - 1][1]);
-	}
-	if (i < exe->num_pipes) // start, mid2; if not last
-	{
-		dup2(exe->pipes[i][1], STDOUT_FILENO);
-		close(exe->pipes[i][0]);
-		close(exe->pipes[i][1]);
-	}
-}
-
 void ft_exe_pipe(t_exe *exe)
 {
 	int i;
@@ -349,7 +379,10 @@ void ft_run_cmds(t_exe *exe, t_node *lst, char **envp)
 		}
 		else 
 		{
-			ft_execute(exe, lst, envp);
+			//if build in
+				//run build in
+			//else
+				ft_execute(exe, lst, envp);
 		}
 		lst = lst->next;
 	}
@@ -386,7 +419,7 @@ void ft_multi_pipe(t_exe *exe, t_node *lst, char **envp)
 			ft_set_pipe(exe,i);
 			ft_close_all_pipes(exe);
 			ft_run_cmds(exe,lst,envp);
-			printf("%s\n",strerror(errno));
+			// printf("%s\n",strerror(errno));
 			exit(EXIT_FAILURE);
 		}
 		i++;
@@ -402,12 +435,12 @@ void	execute_cmd(t_env *env, t_node **lst)
 	// get_pipe_count(&exe, lst);
 	// exe.num_cmds = ft_dlstsize(*lst);
 	signal(SIGINT,sig_nl);
-	if (exe.num_pipes == 0)
-		ft_no_pipe(&exe, *lst, env->env_vars);
-	else
+	// if (exe.num_pipes == 0)
+	// 	ft_no_pipe(&exe, *lst, env->env_vars);
+	// else
 		ft_multi_pipe(&exe,*lst, env->env_vars);
 	ft_close_all_pipes(&exe);
-	if (exe.num_pipes > 0)
+	// if (exe.num_pipes > 0)
 		ft_wait_pid(&exe);
 	ft_free_pp(&exe);
 }
