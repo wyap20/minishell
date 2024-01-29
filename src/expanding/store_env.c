@@ -6,7 +6,7 @@
 /*   By: wyap <wyap@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/26 01:50:06 by wyap              #+#    #+#             */
-/*   Updated: 2023/12/28 18:42:56 by wyap             ###   ########.fr       */
+/*   Updated: 2024/01/29 15:29:28 by wyap             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,18 @@ void	store_path(t_env *env, char **envp)
 			env->env_path = ft_substr(envp[i], 5, (int)ft_strlen(envp[i]) - 5);
 	}
 	split_path(env);
+}
+
+/*store $HOME path for cd ~ */
+void	store_tilda(t_env *env, char **envp)
+{
+	int	i;
+
+	i = -1;
+	while (envp[++i]) //find HOME variable in envp
+	{
+		if (!ft_strncmp(envp[i], "HOME=", 5))
+			env->home_tilda = ft_substr(envp[i], 5, (int)ft_strlen(envp[i]) - 5);
+	}
+	// printf("tilda: %s\n", env->home_tilda);
 }

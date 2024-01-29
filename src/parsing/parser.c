@@ -6,7 +6,7 @@
 /*   By: wyap <wyap@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 15:27:27 by wyap              #+#    #+#             */
-/*   Updated: 2024/01/27 11:21:02 by wyap             ###   ########.fr       */
+/*   Updated: 2024/01/29 16:05:37 by wyap             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,15 +73,13 @@ void	assign_attr(t_node **lst_cmd)
 			ptr->quote_type = "single";
 		if (ptr->content[0] != '\'' && ptr->content[0] != '\"')
 			ptr->quote_type = "none";
-		// if (!ft_strcmp(ptr->content, "<<") || !ft_strcmp(ptr->content, ">>")
-		// 	|| !ft_strcmp(ptr->content, "<") || !ft_strcmp(ptr->content, ">")
-		// 	|| !ft_strcmp(ptr->content, "|"))
-		// 	ptr->attr = "operator";
 		if (!ft_strcmp(ptr->content, "<<") || !ft_strcmp(ptr->content, ">>")
 			|| !ft_strcmp(ptr->content, "<") || !ft_strcmp(ptr->content, ">"))
 			ptr->attr = "rdr";
 		else if (!ft_strcmp(ptr->content, "|"))
 			ptr->attr = "pipe";
+		// else if (!ft_strcmp(ptr->content, "~"))
+		// 	ptr->attr = "tilda";		
 		else if (!ft_strcmp(ptr->content, "echo") || !ft_strcmp(ptr->content, "cd")
 			|| !ft_strcmp(ptr->content, "pwd") || !ft_strcmp(ptr->content, "export")
 			|| !ft_strcmp(ptr->content, "unset") || !ft_strcmp(ptr->content, "env")

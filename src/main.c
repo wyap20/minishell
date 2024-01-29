@@ -6,7 +6,7 @@
 /*   By: wyap <wyap@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 18:28:19 by wyap              #+#    #+#             */
-/*   Updated: 2024/01/27 15:42:00 by wyap             ###   ########.fr       */
+/*   Updated: 2024/01/29 16:11:00 by wyap             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ void	init_env(t_env *env, char **envp)
 	// env->pipe_count = 0;
 	store_env(env, envp);
 	store_path(env, envp);
+	store_tilda(env, envp);
 	// print_env_var(envp, "PATH"); //compare with splitted path
 }
 
@@ -84,12 +85,7 @@ int	main(int ac, char **av, char **envp)
 			cmd_buf = get_cmd(cmd_buf);
 			printf("cmd_buf input:%s\n", cmd_buf);
 			if (!ft_strcmp(cmd_buf, "exit"))
-			{
-				free(cmd_buf); //readline malloc buffer
-				rl_clear_history();
-				free_2d_arr(env.env_vars);
-				exit(1);
-			}
+				ft_exit(&env, cmd_buf);
 			if (check_cmd(cmd_buf) == true)
 			{
 				lst_cmd = init_lst(lst_cmd);
@@ -97,7 +93,6 @@ int	main(int ac, char **av, char **envp)
 				printf("\tparse:\n"); print_list(lst_cmd);
 				assign_attr(lst_cmd); //whileloop to assign attribute and quote type in node
 				// printf("\tassign attr:\n"); print_list(lst_cmd);
-
 				if (check_operator(lst_cmd) == true)
 				{
 					ft_expand(lst_cmd, &env); //expand handle dollar sign (loop through list and replace env var)
@@ -116,10 +111,6 @@ int	main(int ac, char **av, char **envp)
 					printf("created cmd group\n");
 					printf("\tcreate_cmd_group:\n"); print_list(lst_cmd);
 					execute_cmd(&env, lst_cmd);
-					// get_pipe_count(&env, lst_cmd);
-					// parse_pipe(cmd_buf);
-					// printf("cmd_buf: %s\n", cmd_buf);
-					// printf("%d\n", ft_strncmp(cmd_buf, "echo", 4) == 0);
 					if (!ft_strncmp(cmd_buf, "echo", 4))
 						echo_print(cmd_buf);
 					else if (!ft_strcmp(cmd_buf, "pwd"))
@@ -130,23 +121,11 @@ int	main(int ac, char **av, char **envp)
 						ft_export(&env, "AAAAA=\'aaaaaa\' _b=\"xaxaxax\" __c=0812734917 @_d=\"xaxaxax\" _e6=\"xaxaxax\" f^=\"xaxaxax\" 3g=\"xaxaxax\"");
 					else if (!ft_strcmp(cmd_buf, "unset"))
 						ft_unset(&env, "AAAAA _b __c");
-					// else if (!ft_strcmp(cmd_buf, "exit"))
-					// {
-					// 	free(cmd_buf); //readline malloc buffer
-					// 	free_list(lst_cmd);
-					// 	free(lst_cmd);
-					// 	lst_cmd = NULL;
-					// 	rl_clear_history(); //-I /usr/local/opt/readline/include -L /usr/local/opt/readline/lib
-					// 	free_2d_arr(env.env_vars);
-					// 	exit(1);
-					// }
 				}
 				free(cmd_buf); //readline malloc buffer
 				free_list(lst_cmd);
 				free(lst_cmd);
 				lst_cmd = NULL;
-			// else  //if invalid command; create a 2d array of command keywords to match?
-			// 	printf("[minishell] %s: command not found\n", cmd_buf);
 			}
 		}
 	}

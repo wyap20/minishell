@@ -6,7 +6,7 @@
 /*   By: wyap <wyap@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 17:31:01 by wyap              #+#    #+#             */
-/*   Updated: 2024/01/25 13:36:10 by wyap             ###   ########.fr       */
+/*   Updated: 2024/01/29 13:25:43 by wyap             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,11 @@ void	ft_export(t_env *env, char *add)
 	char	**add_vars;
 	char	**updated;
 
+	printf("entered ft_export\n");
 	add_vars = ft_split(add, ' ');
 	updated = check_export(add_vars); //in check_export.c
 	free_2d_arr(add_vars);
 	add_to_env(env, updated); //in update_env.c
 	free_2d_arr(updated);
+	printf("exited ft_export\n");
 }

@@ -46,6 +46,7 @@ typedef struct s_env{
 	char	**env_vars; //all env variable
 	char	*env_path; //$PATH variable, single string
 	char	**paths; //splitted paths
+	char	*home_tilda;
 	int		key_count;
 	// size_t	pipe_count;
 	// char *cur_path;
@@ -111,6 +112,7 @@ bool	check_operator(t_node **lst_cmd);
 // expanding
 void	store_env(t_env *env, char **envp);
 void	store_path(t_env *env, char **envp);
+void	store_tilda(t_env *env, char **envp);
 void	ft_expand(t_node **lst_cmd, t_env *env);
 void	trim_quotes(t_node **lst_cmd);
 void	clear_empty_node(t_node **lst_cmd);
@@ -142,6 +144,8 @@ char	**check_export(char **add);
 void	add_to_env(t_env *env, char **updated);
 void	ft_unset(t_env *env, char *del);
 void	print_sys_env(t_env *env);
+void	ft_exit(t_env *env, char *cmd_buf);
+
 
 /*built in utils*/
 int	get_array_count(char **array);
