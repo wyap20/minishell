@@ -6,7 +6,7 @@
 /*   By: wyap <wyap@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:44:59 by wyap              #+#    #+#             */
-/*   Updated: 2024/01/29 16:03:29 by wyap             ###   ########.fr       */
+/*   Updated: 2024/01/30 16:08:22 by wyap             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,40 @@ char	*get_env_home(t_env *env)
 			ret = ft_substr(env->env_vars[i], 5, (int)ft_strlen(env->env_vars[i]) - 5);
 	}
 	return (ret);
+}
+
+/*have not handle cases if PWD OLDPWD is unset*/
+void	update_pwd_oldpwd(t_env *env, char **pwd)
+{
+	int		i;
+	char	*tmp;
+
+	tmp = NULL;
+	i = -1;
+	while (env->env_vars[++i])
+	{
+		if (!ft_strncmp(env->env_vars[i], "PWD=", 4))
+		{
+			tmp = env->env_vars[i];
+			env->env_vars[i] = pwd;
+		}
+	}
+	if (!tmp) //if no PWD
+	{
+		tmp = ft_strjoin("PWD=", pwd);
+		ft_export(env, tmp);
+		free(tmp);
+	}
+	i = -1;
+	while (env->env_vars[++i])
+	{
+		if (!ft_strncmp(env->env_vars[i], "OLDPWD=", 4))
+		{
+			tmp = env->env_vars[i];
+			env->env_vars[i] = pwd;
+		}
+	}
+
 }
 
 // [cd] [~] or [cd] [NULL]
