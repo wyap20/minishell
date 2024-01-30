@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wyap <wyap@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: atok <atok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 18:28:19 by wyap              #+#    #+#             */
-/*   Updated: 2024/01/29 16:11:00 by wyap             ###   ########.fr       */
+/*   Updated: 2024/01/30 19:20:32 by atok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,15 @@ char	*get_cmd(char *cmd_buf)
 	if (cmd_buf == NULL)
 	{
 		cmd_buf = "exit";
-		printf("\nexit");
+		// printf("\nexit");
 	}
 	if (str_not_empty(cmd_buf))//(ft_strlen(cmd_buf) > 0)
 	{
 		add_history(cmd_buf);
 		tmp = cmd_buf;
 		cmd_buf = ft_strtrim(cmd_buf, " "); //trim space
-		free(tmp);
+		if(cmd_buf == NULL)
+			free(tmp);
 	}
 	free(prompt);
 	free(cur_path);
