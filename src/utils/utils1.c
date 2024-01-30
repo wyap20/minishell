@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils1.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wyap <wyap@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: atok <atok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 01:12:54 by wyap              #+#    #+#             */
-/*   Updated: 2024/01/27 14:43:47 by wyap             ###   ########.fr       */
+/*   Updated: 2024/01/30 20:54:46 by atok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ bool	str_not_empty(const char *str)
 	i = 0;
 	while (str[i])
 	{
-		if (!is_whitespace(str[i]))
+		if (is_whitespace(str[i]))
 			return (true);
 		i++;
 	}
