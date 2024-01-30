@@ -6,7 +6,7 @@
 /*   By: atok <atok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 18:28:19 by wyap              #+#    #+#             */
-/*   Updated: 2024/01/30 19:20:32 by atok             ###   ########.fr       */
+/*   Updated: 2024/01/30 19:28:03 by atok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,9 @@ char	*get_cmd(char *cmd_buf)
 	char	*cur_path;
 	char	*tmp;
 
-	if ((cur_path = getcwd(NULL, 0)) == NULL)
-		perror("failed to get current working directory\n");
+	cur_path = ft_strdup("minishell");
+	// if ((cur_path = getcwd(NULL, 0)) == NULL)
+		// perror("failed to get current working directory\n");
 	prompt = ft_strjoin(cur_path, "> ");
 	cmd_buf = readline(prompt);
 	if (cmd_buf == NULL)
