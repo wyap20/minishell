@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   combine.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wyap <wyap@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: atok <atok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 14:05:50 by wyap              #+#    #+#             */
-/*   Updated: 2024/01/09 15:23:25 by wyap             ###   ########.fr       */
+/*   Updated: 2024/01/30 19:25:09 by atok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ t_node	*make_rdr_group(t_node *ptr)
 	while (tmp && !ft_strcmp(tmp->attr, "rdr_sub"))
 	{
 		content_ptr = ptr->content;
+		ptr->content = ft_strjoin(ptr->content, " ");
 		ptr->content = ft_strjoin(ptr->content, tmp->content);
 		free(content_ptr);
 		ptr->next = tmp->next;
