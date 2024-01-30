@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_checker.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wyap <wyap@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: atok <atok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 17:33:43 by atok              #+#    #+#             */
-/*   Updated: 2023/12/27 18:14:35 by wyap             ###   ########.fr       */
+/*   Updated: 2024/01/30 23:11:49 by atok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ bool	check_cmd(char *cmd_str)
 		printf("Arrow Parse Error\n");
 		return (false);
 	}
-	if (cmd_str[0] == 0)
+	if (cmd_str[0] == 0 && str_not_empty(cmd_str))
 		return (false);
 	// printf("\t**Quote and arrow OK!**\n");
 	return (true);

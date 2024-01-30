@@ -6,7 +6,7 @@
 /*   By: atok <atok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 14:05:50 by wyap              #+#    #+#             */
-/*   Updated: 2024/01/30 19:25:09 by atok             ###   ########.fr       */
+/*   Updated: 2024/01/30 22:12:26 by atok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ t_node	*make_rdr_group(t_node *ptr)
 	{
 		content_ptr = ptr->content;
 		ptr->content = ft_strjoin(ptr->content, " ");
+		free(content_ptr);
+		content_ptr = ptr->content;
 		ptr->content = ft_strjoin(ptr->content, tmp->content);
 		free(content_ptr);
 		ptr->next = tmp->next;
@@ -85,8 +87,10 @@ t_node	*combine_w_next(t_node *ptr)
 void	set_rdr_nodes(t_node **lst_cmd)
 {
 	t_node	*ptr;
+	char	*tmp;
 
 	ptr = *lst_cmd;
+	tmp = NULL;
 	while (ptr)
 	{
 		if (!ft_strcmp(ptr->attr, "rdr") && ptr->next && ptr->next->next && !ft_strcmp(ptr->next->attr, "space") && !ft_strcmp(ptr->next->next->attr, "none"))
@@ -97,6 +101,9 @@ void	set_rdr_nodes(t_node **lst_cmd)
 		}
 		else if ((!ft_strcmp(ptr->attr, "rdr") && ptr->next && !ft_strcmp(ptr->next->attr, "none"))) 
 		{
+			tmp = ptr->next->content;
+			ptr->next->content = ft_strjoin(ptr->next->content, " ");
+			free(tmp);
 			ptr->next->attr = "rdr_sub";
 			ptr = ptr->next->next;
 		}

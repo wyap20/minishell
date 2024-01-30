@@ -6,7 +6,7 @@
 /*   By: atok <atok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 01:12:54 by wyap              #+#    #+#             */
-/*   Updated: 2024/01/30 20:54:46 by atok             ###   ########.fr       */
+/*   Updated: 2024/01/30 21:21:20 by atok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,16 +109,25 @@ bool	is_whitespace(char c)
 
 bool	str_not_empty(const char *str)
 {
-	int	i;
+	// int	i;
 
-	if (!str)
-		return (false);
-	i = 0;
-	while (str[i])
+	// if (!str)
+	// 	return (false);
+	// i = 0;
+	// while (str[i])
+	// {
+	// 	if (!is_whitespace(str[i]))
+	// 		return (true);
+	// 	i++;
+	// }
+	// return (false);
+	int i = 0;
+	while(str[i])
 	{
-		if (is_whitespace(str[i]))
-			return (true);
-		i++;
+		if(is_whitespace(str[i]))
+			i++;
+		else
+			return(false);
 	}
-	return (false);
+	return(true);
 }

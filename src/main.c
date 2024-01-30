@@ -6,7 +6,7 @@
 /*   By: atok <atok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 18:28:19 by wyap              #+#    #+#             */
-/*   Updated: 2024/01/30 20:24:49 by atok             ###   ########.fr       */
+/*   Updated: 2024/01/30 23:14:19 by atok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,18 @@ char	*get_cmd(char *cmd_buf)
 	if (str_not_empty(cmd_buf))//(ft_strlen(cmd_buf) > 0)
 	{
 		add_history(cmd_buf);
+		printf("jisotry - %s\n", cmd_buf);
 		tmp = cmd_buf;
 		cmd_buf = ft_strtrim(cmd_buf, " "); //trim space
-		if(cmd_buf == NULL)
-			free(tmp);
+		free(tmp);
+	}
+	else if (!str_not_empty(cmd_buf) && (ft_strlen(cmd_buf) > 0))
+	{
+		add_history(cmd_buf);
+		printf("&& - %s\n", cmd_buf);
+		tmp = cmd_buf;
+		cmd_buf = ft_strtrim(cmd_buf, " "); //trim space
+		free(tmp);
 	}
 	free(prompt);
 	free(cur_path);
@@ -129,6 +137,8 @@ int	main(int ac, char **av, char **envp)
 				free(lst_cmd);
 				lst_cmd = NULL;
 			}
+			else
+				free(cmd_buf); //readline malloc buffer
 		}
 	}
 }

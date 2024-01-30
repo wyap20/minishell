@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wyap <wyap@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: atok <atok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:44:59 by wyap              #+#    #+#             */
-/*   Updated: 2024/01/30 16:08:22 by wyap             ###   ########.fr       */
+/*   Updated: 2024/01/30 21:34:28 by atok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,12 @@ void	update_pwd_oldpwd(t_env *env, char **pwd)
 		if (!ft_strncmp(env->env_vars[i], "PWD=", 4))
 		{
 			tmp = env->env_vars[i];
-			env->env_vars[i] = pwd;
+			env->env_vars[i] = pwd[0];
 		}
 	}
 	if (!tmp) //if no PWD
 	{
-		tmp = ft_strjoin("PWD=", pwd);
+		tmp = ft_strjoin("PWD=", pwd[0]);
 		ft_export(env, tmp);
 		free(tmp);
 	}
@@ -54,7 +54,7 @@ void	update_pwd_oldpwd(t_env *env, char **pwd)
 		if (!ft_strncmp(env->env_vars[i], "OLDPWD=", 4))
 		{
 			tmp = env->env_vars[i];
-			env->env_vars[i] = pwd;
+			env->env_vars[i] = pwd[0];
 		}
 	}
 
@@ -64,7 +64,7 @@ void	update_pwd_oldpwd(t_env *env, char **pwd)
 void ft_cd(t_env *env, t_exe *exe, char **input)
 {
 	char	*home_path;
-	char	**split;
+	// char	**split;
 
 	home_path = get_env_home(env);
 
@@ -79,7 +79,7 @@ void ft_cd(t_env *env, t_exe *exe, char **input)
 			return ;
 		}
 	}
-	else if (input[1] == '~')
+	else if (input[1][0] == '~')
 		exe->err_num = chdir(env->home_tilda);
 	else
 		exe->err_num = chdir(input[1]);
