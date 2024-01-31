@@ -73,14 +73,14 @@ char	**copy_unset_env(t_env *env, int count)
 	return (res);
 }
 
-void	ft_unset(t_env *env, char *del)
+void	ft_unset(t_env *env, char **cmds)
 {
 	char	**del_vars;
 	char	**res;
 	int		count;
 
 	count = 0;
-	del_vars = ft_split(del, ' ');
+	del_vars = cmds;
 	for (int k = 0; del_vars[k]; k++)
 		printf("%d: %s\n", k, del_vars[k]);
 
@@ -111,3 +111,42 @@ void	ft_unset(t_env *env, char *del)
 	free_2d_arr(env->env_vars);
 	env->env_vars = res;
 }
+
+// void	ft_unset(t_env *env, char *del)
+// {
+// 	char	**del_vars;
+// 	char	**res;
+// 	int		count;
+
+// 	count = 0;
+// 	del_vars = ft_split(del, ' ');
+// 	for (int k = 0; del_vars[k]; k++)
+// 		printf("%d: %s\n", k, del_vars[k]);
+
+// 	printf("ft_unset: current env key count: %d\n", env->key_count);
+// 	count = check_del(env, del_vars);
+// 	printf("unset count:%d\n", count);
+// 	free_2d_arr(del_vars);
+// 	// print_sys_env(env);
+// 	if (!count)
+// 		return ;
+// 	res = copy_unset_env(env, env->key_count - count);
+// 	printf("ft_unset: updated env key count: %d\n", env->key_count);
+// 	// res[env->key_count] = NULL;
+// 	// print_sys_env(env);
+// 	// free_2d_arr(env->env_vars);
+// 	for (int k = 0; k <= env->key_count; k++)
+// 		printf("%d: %s\n", k, res[k]);
+
+// 		// free the unchanged env->env_vars (env->key_count - count) that will replace by res**
+// 		// int i = 0;
+// 		// while (env->env_vars[i] && i < env->key_count - count + 1)
+// 		// {
+// 		// 	free(env->env_vars[i]);
+// 		// 	i++;
+// 		// }
+
+// 	// env->env_vars = (char **)malloc((env->key_count) * sizeof(char *));
+// 	free_2d_arr(env->env_vars);
+// 	env->env_vars = res;
+// }

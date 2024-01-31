@@ -384,9 +384,15 @@ void run_builtin(t_env *env, t_node *ptr, t_exe *exe)
 		print_sys_env(env);
 	}
 	else if (!ft_strcmp(cmd, "export")) //WSL: export is successful but when run env as next cmd it's not found
+	{
 		ft_export(env, ptr->cmds);
-	// else if (!ft_strcmp(cmd, "unset"))
-	// 	ft_unset();
+		// print_sys_env(env);
+	}
+	else if (!ft_strcmp(cmd, "unset"))
+	{
+		ft_unset(env, ptr->cmds);
+		print_sys_env(env);
+	}
 	// else if (!ft_strcmp(cmd, "cd"))
 	// 	ft_cd();
 }

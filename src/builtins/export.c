@@ -30,7 +30,7 @@ void	ft_export(t_env *env, char **cmds)
 	// free_2d_arr(add_vars);
 	add_to_env(env, updated); //in update_env.c
 	free_2d_arr(updated);
-	print_sys_env(env);
+	// print_sys_env(env);
 	printf("exited ft_export\n");
 }
 
