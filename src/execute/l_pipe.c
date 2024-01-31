@@ -384,9 +384,9 @@ void ft_run_cmds(t_exe *exe, t_node *lst, t_env *env)
 		}
 		else 
 		{
-			if (!ft_strcmp(lst->attr, "builtin"))
-				run_builtin(env, lst, exe);
-			else
+			// if (!ft_strcmp(lst->attr, "builtin"))
+			// 	run_builtin(env, lst, exe);
+			// else
 				ft_execute(exe, lst, env->env_vars);
 		}
 		lst = lst->next;
@@ -436,7 +436,7 @@ void ft_multi_pipe(t_exe *exe, t_node *lst, t_env *env)
 	{
 		lst = ft_get_group(lst,i);
 		// printf("%d\n",lst->num);
-		printf("%s\n",lst->cmds[0]);
+		// printf("%s\n",lst->cmds[0]);
 		// list not iteratin to next one stuck on 1st group
 		exe->pid[i] = fork();
 		if (exe->pid[i] == 0)
@@ -527,7 +527,7 @@ void ft_if_no_pipes(t_exe *exe, t_node *lst, t_env *env)
 	(void) env;
 	if(exe->pipes == 0)
 	{
-		printf("HERE\n");
+		printf("if_no_pipes: HERE\n");
 		while(lst != NULL)// && ft_strcmp(lst->attr, "builtin"))
 		{
 			// printf("%s\n",lst->attr);

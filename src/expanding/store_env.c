@@ -59,16 +59,16 @@ void	store_path(t_env *env, char **envp)
 	split_path(env);
 }
 
-/*store $HOME path for cd ~ */
-void	store_tilda(t_env *env, char **envp)
-{
-	int	i;
+// /*store $HOME path for cd ~ */
+// void	store_tilda(t_env *env, char **envp)
+// {
+// 	int	i;
 
-	i = -1;
-	while (envp[++i]) //find HOME variable in envp
-	{
-		if (!ft_strncmp(envp[i], "HOME=", 5))
-			env->home_tilda = ft_substr(envp[i], 5, (int)ft_strlen(envp[i]) - 5);
-	}
-	// printf("tilda: %s\n", env->home_tilda);
-}
+// 	i = -1;
+// 	while (envp[++i]) //find HOME variable in envp
+// 	{
+// 		if (!ft_strncmp(envp[i], "HOME=", 5))
+// 			env->home_tilda = ft_substr(envp[i], 5, (int)ft_strlen(envp[i]) - 5);
+// 	}
+// 	// printf("tilda: %s\n", env->home_tilda);
+// }

@@ -79,8 +79,6 @@ void ft_cd(t_env *env, t_exe *exe, char **input)
 			return ;
 		}
 	}
-	else if (input[1][0] == '~')
-		exe->err_num = chdir(env->home_tilda);
 	else
 		exe->err_num = chdir(input[1]);
 	if (exe->err_num == 0)

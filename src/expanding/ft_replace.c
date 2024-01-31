@@ -146,10 +146,18 @@ void	get_key_val_rplc(t_env *env, t_node *ptr)
 void	ft_expand(t_node **lst_cmd, t_env *env)
 {
 	t_node	*ptr;
+	char	*tmp;
 
 	ptr = *lst_cmd;
+	tmp = NULL;
 	while (ptr)
 	{
+		if (!ft_strcmp(ptr->content, "~") && !ft_strcmp(ptr->quote_type, "none"))
+		{
+			tmp = ptr->content;
+			ptr->content = ft_strdup("$HOME");
+			free(tmp);
+		}
 		if (!ft_strcmp(ptr->quote_type, "double") || !ft_strcmp(ptr->quote_type, "none")) //if is double or open quote
 			get_key_val_rplc(env, ptr);
 		if (ptr)

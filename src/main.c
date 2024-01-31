@@ -74,7 +74,7 @@ void	init_env(t_env *env, char **envp)
 	// env->pipe_count = 0;
 	store_env(env, envp);
 	store_path(env, envp);
-	store_tilda(env, envp);
+	// store_tilda(env, envp);
 	// print_env_var(envp, "PATH"); //compare with splitted path
 }
 
