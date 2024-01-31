@@ -43,8 +43,10 @@ void	trim_quotes(t_node **lst_cmd)
 {
 	t_node	*ptr;
 	char	*quote;
+	char	*tmp;
 
 	ptr = *lst_cmd;
+	tmp = NULL;
 	while (ptr)
 	{
 		while (!ft_strcmp(ptr->quote_type, "none") && ptr->next)
@@ -55,7 +57,9 @@ void	trim_quotes(t_node **lst_cmd)
 			quote = "\"";
 		else if (!ft_strcmp(ptr->quote_type, "single"))
 			quote = "\'";
+		tmp = ptr->content;
 		ptr->content = ft_strtrim(ptr->content, quote);
+		free (tmp);
 		if (ft_strlen(ptr->content) == 3 && ptr->content[0] == quote[0]
 			&& ptr->content[2] == quote[0]) //parse string with 1 char;
 				ptr->content = ft_substr(ptr->content, 1, 1);
@@ -103,7 +107,7 @@ void	clear_empty_node(t_node **lst_cmd)
 				*lst_cmd = ptr->next;
 			if (ptr->next)
 				ptr->next->prev = ptr->prev;
-			free(ptr);
+			free_node(ptr);
 		}
 		ptr = tmp;
 	}

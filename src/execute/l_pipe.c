@@ -384,9 +384,9 @@ void ft_run_cmds(t_exe *exe, t_node *lst, t_env *env)
 		}
 		else 
 		{
-			// if (!ft_strcmp(lst->attr, "builtin"))
-			// 	run_builtin(env, lst, exe);
-			// else
+			if (!ft_strcmp(lst->attr, "builtin"))
+				return ;// run_builtin(env, lst, exe);
+			else
 				ft_execute(exe, lst, env->env_vars);
 		}
 		lst = lst->next;
