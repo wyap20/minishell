@@ -545,7 +545,8 @@ void	execute_cmd(t_env *env, t_node **lst)
 {
 	t_exe	exe;
 
-
+	if (!(*lst)->cmds[0])
+		return ;
 	ft_initialize_exe_vars(&exe, lst);
 	// get_pipe_count(&exe, lst);
 	// exe.num_cmds = ft_dlstsize(*lst);

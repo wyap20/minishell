@@ -47,6 +47,8 @@ void	create_cmd_group(t_env *env, t_node *lst_cmd)
 	{
 		tmp = NULL;
 		ptr->cmds = ft_split(ptr->content, ' ');
+		if (!ptr->cmds[0])
+			return ;
 		tmp = ptr->cmds[0];
 		if (ft_strcmp(ptr->attr, "builtin"))
 		{

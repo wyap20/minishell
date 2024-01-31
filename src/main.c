@@ -114,11 +114,12 @@ int	main(int ac, char **av, char **envp)
 					set_rdr_nodes(lst_cmd);
 					// printf("\n\tset rdr:\n"); print_list(lst_cmd);
 					combine_nodes(lst_cmd);
-					// printf("\n\tcombine:\n"); print_list(lst_cmd);
+					printf("\n\tcombine:\n"); print_list(lst_cmd);
 					set_builtin_nodes(lst_cmd);
 					// printf("\n\tset builtin:\n"); print_list(lst_cmd);
 					combine_nodes(lst_cmd);
-					// printf("\n\tcombine 2:\n"); print_list(lst_cmd);				/*execution*/
+					// printf("\n\tcombine 2:\n"); print_list(lst_cmd);
+					/*execution*/
 					create_cmd_group(&env, *lst_cmd);
 					printf("created cmd group\n");
 					printf("\n\tcreate_cmd_group:\n"); print_list(lst_cmd); print_cmd_group(lst_cmd);

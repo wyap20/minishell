@@ -126,7 +126,11 @@ void	get_key_val_rplc(t_env *env, t_node *ptr)
 
 	key = get_key(ptr);
 	if (key != NULL && key[0] == '$' && (ft_not_alpha(key[1]) || !key[1]))
+	{
+		// ptr->quote_type = "single";
 		ptr = ptr->next;
+		return (free(key));
+	}
 	else if (key != NULL)
 	{
 		tmp = key;
@@ -160,10 +164,10 @@ void	ft_expand(t_node **lst_cmd, t_env *env)
 		}
 		if (!ft_strcmp(ptr->quote_type, "double") || !ft_strcmp(ptr->quote_type, "none")) //if is double or open quote
 			get_key_val_rplc(env, ptr);
-		if (ptr)
-			if (!ft_strcmp(ptr->quote_type, "single") || !ft_strchr(ptr->content, '$')) 
-				ptr = ptr->next;
-		// printf("expandmark\n");
+		// if (ptr)
+			// if (!ft_strcmp(ptr->quote_type, "single") || !ft_strchr(ptr->content, '$')) 
+		ptr = ptr->next;
+		printf("expandmark\n");
 	}
 }
 

@@ -59,10 +59,14 @@ void	trim_quotes(t_node **lst_cmd)
 			quote = "\'";
 		tmp = ptr->content;
 		ptr->content = ft_strtrim(ptr->content, quote);
-		free (tmp);
+		free(tmp);
 		if (ft_strlen(ptr->content) == 3 && ptr->content[0] == quote[0]
 			&& ptr->content[2] == quote[0]) //parse string with 1 char;
-				ptr->content = ft_substr(ptr->content, 1, 1);
+		{
+			tmp = ptr->content;
+			ptr->content = ft_substr(ptr->content, 1, 1);
+			free(tmp);
+		}
 		// printf("%lu\n", ft_strlen(ptr->content));
 		trim_inner_quotes(ptr);
 		ptr = ptr->next;
