@@ -281,30 +281,6 @@ void ft_close_all_pipes (t_exe *exe)
 	}
 }
 
-void ft_swap_info(t_node *a, t_node *b)
-{
-	char	**cmds;
-	char	*attr;
-	char	*content;
-	char	*quote_type;
-
-	cmds = a->cmds;
-	a->cmds = b->cmds;
-	b->cmds = cmds;
-
-	attr = a->attr;
-	a->attr = b->attr;
-	b->attr = attr;
-
-	content = a->content;
-	a->content = b->content;
-	b->content = content;
-
-	quote_type = a->quote_type;
-	a->quote_type = b->quote_type;
-	b->quote_type = quote_type;
-}
-
 // void ft_no_pipe(t_exe *exe, t_node *lst, char **envp)
 // {
 // 	exe->pid[0] = fork();
@@ -500,6 +476,52 @@ void ft_multi_pipe(t_exe *exe, t_node *lst, t_env *env)
 // 	}
 // }
 
+void ft_swap_info(t_node *a, t_node *b)
+{
+	char	**cmds;
+	char	*attr;
+	char	*content;
+	char	*quote_type;
+
+	cmds = a->cmds;
+	a->cmds = b->cmds;
+	b->cmds = cmds;
+
+	attr = a->attr;
+	a->attr = b->attr;
+	b->attr = attr;
+
+	content = a->content;
+	a->content = b->content;
+	b->content = content;
+
+	quote_type = a->quote_type;
+	a->quote_type = b->quote_type;
+	b->quote_type = quote_type;
+}
+
+void ft_sort(t_node *lst)
+{
+	t_node *x = lst;
+	t_node *dst;
+
+	while (x != NULL)
+	{
+		dst = x;
+		while(x != NULL && x->cmds[0][0] != '|')
+		{
+			if(x->cmds[0][0] == '<' || x->cmds[0][0] =='>')
+			{
+				ft_swap_info(dst,x);
+				dst = dst->next;
+			}
+			x = x->next;
+		}
+		if (x != NULL)
+			x = x->next;
+	}
+}
+
 void	execute_cmd(t_env *env, t_node **lst)
 {
 	t_exe	exe;
@@ -510,6 +532,7 @@ void	execute_cmd(t_env *env, t_node **lst)
 	// exe.num_cmds = ft_dlstsize(*lst);
 	signal(SIGINT,sig_nl);
 	// if (exe.num_pipes == 0)
+	ft_sort(*lst);
 	// 	ft_no_pipe(&exe, *lst, env->env_vars);
 	// else
 		ft_multi_pipe(&exe,*lst, env);
