@@ -6,7 +6,7 @@
 /*   By: atok <atok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 18:28:19 by wyap              #+#    #+#             */
-/*   Updated: 2024/01/30 23:14:19 by atok             ###   ########.fr       */
+/*   Updated: 2024/01/31 18:24:19 by atok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,12 @@ char	*get_cmd(char *cmd_buf)
 		// perror("failed to get current working directory\n");
 	prompt = ft_strjoin(cur_path, "> ");
 	cmd_buf = readline(prompt);
-	if (cmd_buf == NULL)
+	if (!cmd_buf)
 	{
 		cmd_buf = "exit";
 		// printf("\nexit");
 	}
-	if (str_not_empty(cmd_buf))//(ft_strlen(cmd_buf) > 0)
+	else if (str_not_empty(cmd_buf))//(ft_strlen(cmd_buf) > 0)
 	{
 		add_history(cmd_buf);
 		printf("jisotry - %s\n", cmd_buf);

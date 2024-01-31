@@ -178,8 +178,8 @@ void	ft_initialize_exe_vars(t_exe *exe, t_node **lst)
 	exe->num_cmds = 0; //<<
 	get_pipe_count(exe, lst);
 	exe->num_cmds = ft_dlstsize(*lst);
-	// exe->i = 0;
-	// exe->j = 0;
+	exe->redir[0] = -2;
+	exe->redir[1] = -2;
 	exe->z = 0;
 	exe->err_num = 0;
 	exe->pid = malloc((exe->num_pipes + 1) * sizeof(pid_t));
