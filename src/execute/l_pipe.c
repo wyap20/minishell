@@ -368,9 +368,10 @@ void ft_exe_pipe(t_exe *exe)
 	}
 }
 
-void run_builtin(t_env *env, t_node *ptr)
+void run_builtin(t_env *env, t_node *ptr, t_exe *exe)
 {
 	char	*cmd;
+	(void)	exe;
 
 	cmd = ptr->cmds[0];
 	if (!ft_strcmp(cmd, "echo"))
@@ -387,7 +388,7 @@ void run_builtin(t_env *env, t_node *ptr)
 	// 	ft_cd();
 }
 
-void ft_run_cmds(t_exe *exe, t_node *lst, char **envp)
+void ft_run_cmds(t_exe *exe, t_node *lst, t_env *env)
 {
 	while (lst != NULL && lst->cmds[0][0] != '|')
 	{
@@ -399,13 +400,33 @@ void ft_run_cmds(t_exe *exe, t_node *lst, char **envp)
 		else 
 		{
 			if (!ft_strcmp(lst->attr, "builtin"))
-				run_builtin();
+				run_builtin(env, lst, exe);
 			else
-				ft_execute(exe, lst, envp);
+				ft_execute(exe, lst, env->env_vars);
 		}
 		lst = lst->next;
 	}
 }
+
+// void ft_run_cmds(t_exe *exe, t_node *lst, char **envp)
+// {
+// 	while (lst != NULL && lst->cmds[0][0] != '|')
+// 	{
+// 		if(lst->cmds[0][0] == '<' || lst->cmds[0][0] == '>')
+// 		{
+// 			ft_redir_left(exe, lst);
+// 			ft_redir_right(exe, lst);
+// 		}
+// 		else 
+// 		{
+// 			if (!ft_strcmp(lst->attr, "builtin"))
+// 				run_builtin();
+// 			else
+// 				ft_execute(exe, lst, envp);
+// 		}
+// 		lst = lst->next;
+// 	}
+// }
 
 t_node *ft_get_group(t_node *lst, int i)
 {
@@ -420,7 +441,7 @@ t_node *ft_get_group(t_node *lst, int i)
 	return(lst);
 }
 
-void ft_multi_pipe(t_exe *exe, t_node *lst, char **envp)
+void ft_multi_pipe(t_exe *exe, t_node *lst, t_env *env)
 {
 	int	i;
 
@@ -437,13 +458,38 @@ void ft_multi_pipe(t_exe *exe, t_node *lst, char **envp)
 		{
 			ft_set_pipe(exe,i);
 			ft_close_all_pipes(exe);
-			ft_run_cmds(exe,lst,envp);
+			ft_run_cmds(exe, lst, env);
 			// printf("%s\n",strerror(errno));
 			exit(EXIT_FAILURE);
 		}
 		i++;
 	}
 }
+
+// void ft_multi_pipe(t_exe *exe, t_node *lst, char **envp)
+// {
+// 	int	i;
+
+// 	i = 0;
+// 	ft_exe_pipe(exe);
+// 	while (i < exe->num_pipes + 1)
+// 	{
+// 		lst = ft_get_group(lst,i);
+// 		// printf("%d\n",lst->num);
+// 		printf("%s\n",lst->cmds[0]);
+// 		// list not iteratin to next one stuck on 1st group
+// 		exe->pid[i] = fork();
+// 		if (exe->pid[i] == 0)
+// 		{
+// 			ft_set_pipe(exe,i);
+// 			ft_close_all_pipes(exe);
+// 			ft_run_cmds(exe,lst,envp);
+// 			// printf("%s\n",strerror(errno));
+// 			exit(EXIT_FAILURE);
+// 		}
+// 		i++;
+// 	}
+// }
 
 void	execute_cmd(t_env *env, t_node **lst)
 {
@@ -457,7 +503,7 @@ void	execute_cmd(t_env *env, t_node **lst)
 	// if (exe.num_pipes == 0)
 	// 	ft_no_pipe(&exe, *lst, env->env_vars);
 	// else
-		ft_multi_pipe(&exe,*lst, env->env_vars);
+		ft_multi_pipe(&exe,*lst, env);
 	ft_close_all_pipes(&exe);
 	// if (exe.num_pipes > 0)
 		ft_wait_pid(&exe);

@@ -68,14 +68,14 @@ void	print_cmd_group(t_node **lst)
 
 	ptr = *lst;
 
-	printf("***PRINT CMD GROUP***");
+	printf("\n\t***PRINT CMD GROUP***");
 	while (ptr)
 	{
 		printf("\n\tCurr Node Addr		:%p", ptr);
 		if (ptr->cmds)
 			for (int i = 0; ptr->cmds[i]; i++)
 				printf("\n\tcmd[%d]:%s", i, ptr->cmds[i]);
-		printf("\n");
+		printf("\n\n");
 		ptr = ptr->next;
 	}
 }

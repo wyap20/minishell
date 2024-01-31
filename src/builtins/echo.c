@@ -31,19 +31,30 @@
 // 		printf("\n");
 // }
 
-void	echo_print(const char **cmds)
+void	echo_print(char **cmds)
 {
 	int		i;
+	int		j;
 	bool	flag;
 
 	flag = false;
-	i = 0;
+	i = 1;
 	if (!ft_strcmp(cmds[1], "-n"))
-		flag = true;
-	// printf("%d, %d\n", i, flag);
-	while (cmds[2][i])
 	{
-		printf("%c", cmds[2][i]);
+		flag = true;
+		i = 2;
+	}
+	// printf("%d, %d\n", i, flag);
+	while (cmds[i])
+	{
+		j = 0;
+		while (cmds[i][j])
+		{
+			printf("%c", cmds[i][j]);
+			j++;
+		}
+		if (cmds[i + 1])
+			printf(" ");
 		i++;
 	}
 	if (flag == false)
