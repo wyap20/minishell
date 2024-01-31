@@ -45,7 +45,7 @@ void	update_pwd_oldpwd(t_env *env, char **pwd)
 	if (!tmp) //if no PWD
 	{
 		tmp = ft_strjoin("PWD=", pwd[0]);
-		ft_export(env, tmp);
+		// ft_export(env, tmp);
 		free(tmp);
 	}
 	i = -1;

@@ -142,9 +142,9 @@ void	execute_cmd(t_env *env, t_node **lst);
 /*built in*/
 // void	echo_print(const char *str);
 void	echo_print(char **cmds);
-
 void	print_env_var(char **envp, char *s); //pwd
-void	ft_export(t_env *env, char *add);
+// void	ft_export(t_env *env, char *add);
+void	ft_export(t_env *env, char **cmds);
 char	**check_export(char **add);
 void	add_to_env(t_env *env, char **updated);
 void	ft_unset(t_env *env, char *del);

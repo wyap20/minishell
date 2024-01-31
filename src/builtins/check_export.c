@@ -106,17 +106,20 @@ int	new_arr_size(char **add)
 	int	j;
 
 	i = 0;
-	j = 1;
+	j = 0;
 	while (add[i])
 	{
 		if (add[i][0] == ' ')
 		{
 			i++;
+			// printf("line %d is blank\n", i);
 			j++;
 		}
-		i++;
+		else
+			i++;
 	}
-	printf("i:%d\nj: %d\n", i,j);
+	// printf("total var count:%d\n", i);
+	// printf("invalid_var count:%d\n",j);
 	return (i - j);
 }
 
@@ -137,6 +140,7 @@ char **check_export(char **add)
 			{
 				free(add[i]);
 				add[i] = ft_strdup(" ");
+				// printf("line %d set to blank\n", i);
 			}
 			else
 				add[i] = check_remain_char1(add[i]);
@@ -145,6 +149,8 @@ char **check_export(char **add)
 			add[i] = check_remain_char2(add[i]);
 		i++;
 	}
+	for (int k = 0; add[k] ; k++)
+		printf("%d: %s\n", k, add[k]);
 	size = new_arr_size(add);
 	updated = valid_vars(add, size);
 	return (updated);
