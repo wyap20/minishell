@@ -87,7 +87,7 @@ void	ft_unset(t_env *env, char **cmds)
 	printf("ft_unset: current env key count: %d\n", env->key_count);
 	count = check_del(env, del_vars);
 	printf("unset count:%d\n", count);
-	free_2d_arr(del_vars);
+	// free_2d_arr(del_vars);
 	// print_sys_env(env);
 	if (!count)
 		return ;
@@ -96,8 +96,8 @@ void	ft_unset(t_env *env, char **cmds)
 	// res[env->key_count] = NULL;
 	// print_sys_env(env);
 	// free_2d_arr(env->env_vars);
-	for (int k = 0; k <= env->key_count; k++)
-		printf("%d: %s\n", k, res[k]);
+	// for (int k = 0; k <= env->key_count; k++)
+	// 	printf("%d: %s\n", k, res[k]);
 
 		// free the unchanged env->env_vars (env->key_count - count) that will replace by res**
 		// int i = 0;
