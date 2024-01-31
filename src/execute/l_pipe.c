@@ -522,6 +522,25 @@ void ft_sort(t_node *lst)
 	}
 }
 
+void ft_if_no_pipes(t_exe *exe, t_node *lst, t_env *env)
+{
+	(void) env;
+	if(exe->pipes == 0)
+	{
+		printf("HERE\n");
+		while(lst != NULL)// && ft_strcmp(lst->attr, "builtin"))
+		{
+			// printf("%s\n",lst->attr);
+			if(!ft_strcmp(lst->attr, "builtin"))
+			{	
+				run_builtin(env, lst, exe);
+				return;
+			}
+			lst = lst->next;
+		}
+	}
+}
+
 void	execute_cmd(t_env *env, t_node **lst)
 {
 	t_exe	exe;
@@ -540,6 +559,7 @@ void	execute_cmd(t_env *env, t_node **lst)
 	// if (exe.num_pipes > 0)
 		ft_wait_pid(&exe);
 	ft_free_pp(&exe);
+	ft_if_no_pipes(&exe, *lst, env);
 }
 
 // int	main(int ac, char **av, char **envp)
