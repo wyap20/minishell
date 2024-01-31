@@ -62,6 +62,24 @@ void	print_list(t_node **lst)
 	}
 }
 
+void	print_cmd_group(t_node **lst)
+{
+	t_node	*ptr;
+
+	ptr = *lst;
+
+	printf("***PRINT CMD GROUP***");
+	while (ptr)
+	{
+		printf("\n\tCurr Node Addr		:%p", ptr);
+		if (ptr->cmds)
+			for (int i = 0; ptr->cmds[i]; i++)
+				printf("\n\tcmd[%d]:%s", i, ptr->cmds[i]);
+		printf("\n");
+		ptr = ptr->next;
+	}
+}
+
 /*free malloc all strings then free malloc of 2D array
 * !!! INSPECT FURTHER, COULD BE CAUSE OF MEMORY LEAKS
 */

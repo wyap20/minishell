@@ -368,6 +368,25 @@ void ft_exe_pipe(t_exe *exe)
 	}
 }
 
+void run_builtin(t_env *env, t_node *ptr)
+{
+	char	*cmd;
+
+	cmd = ptr->cmds[0];
+	if (!ft_strcmp(cmd, "echo"))
+		echo_print(ptr->cmds);
+	else if (!ft_strcmp(cmd, "pwd"))
+		print_env_var(env->env_vars, "PWD");
+	else if (!ft_strcmp(cmd, "env"))
+		print_sys_env(env);
+	// else if (!ft_strcmp(cmd, "export"))
+	// 	ft_export();
+	// else if (!ft_strcmp(cmd, "unset"))
+	// 	ft_unset();
+	// else if (!ft_strcmp(cmd, "cd"))
+	// 	ft_cd();
+}
+
 void ft_run_cmds(t_exe *exe, t_node *lst, char **envp)
 {
 	while (lst != NULL && lst->cmds[0][0] != '|')
@@ -379,9 +398,9 @@ void ft_run_cmds(t_exe *exe, t_node *lst, char **envp)
 		}
 		else 
 		{
-			//if build in
-				//run build in
-			//else
+			if (!ft_strcmp(lst->attr, "builtin"))
+				run_builtin();
+			else
 				ft_execute(exe, lst, envp);
 		}
 		lst = lst->next;

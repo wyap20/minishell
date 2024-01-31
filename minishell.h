@@ -97,6 +97,7 @@ void	free_node(t_node *node);
 void	free_list(t_node **lst_cmd);
 void	free_2d_arr(char **arr);
 bool	str_not_empty(const char *str);
+void	print_cmd_group(t_node **lst);
 
 
 // parsing
@@ -118,6 +119,8 @@ void	trim_quotes(t_node **lst_cmd);
 void	clear_empty_node(t_node **lst_cmd);
 void	set_rdr_nodes(t_node **lst_cmd);
 void	combine_nodes(t_node **lst_cmd);
+void	set_builtin_nodes(t_node **lst_cmd);
+
 
 /*expand utils*/
 char *ft_strcpy(char *dst, char *src);
@@ -137,7 +140,9 @@ void	execute_cmd(t_env *env, t_node **lst);
 
 
 /*built in*/
-void	echo_print(const char *str);
+// void	echo_print(const char *str);
+void	echo_print(const char **cmds);
+
 void	print_env_var(char **envp, char *s); //pwd
 void	ft_export(t_env *env, char *add);
 char	**check_export(char **add);

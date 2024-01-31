@@ -38,6 +38,25 @@ t_node	*make_rdr_group(t_node *ptr)
 	return (ptr);
 }
 
+t_node	*make_builtin_grp(t_node *ptr)
+{
+	t_node	*tmp;
+	char	*content_ptr;
+
+	printf("\n\tcombine builtin mark\n");
+	tmp = ptr->next;
+	if (tmp && !ft_strcmp(tmp->attr, "builtin_sub"))
+	{
+		content_ptr = ptr->content;
+		ptr->content = ft_strjoin(ptr->content, tmp->content);
+		free(content_ptr);
+		ptr->next = tmp->next;
+		if (tmp->next)
+			tmp->next->prev = ptr;
+		free_node(tmp);
+	}
+	return (ptr);
+}
 
 t_node	*combine_w_prev(t_node *ptr)
 {
@@ -117,6 +136,23 @@ void	set_rdr_nodes(t_node **lst_cmd)
 	}
 }
 
+void	set_builtin_nodes(t_node **lst_cmd)
+{
+	t_node *ptr;
+
+	ptr = *lst_cmd;
+	while(ptr)
+	{
+		if (!ft_strcmp(ptr->attr, "builtin") && ptr->next && !ft_strcmp(ptr->next->attr, "none"))
+		{
+			ptr->next->attr = "builtin_sub";
+			ptr = ptr->next->next;
+		}
+		else
+			ptr = ptr->next;
+	}
+}
+
 /*
 * combine nodes that is not operator or commands
 */
@@ -129,6 +165,8 @@ void	combine_nodes(t_node **lst_cmd)
 	{
 		if (!ft_strcmp(ptr->attr, "rdr") && ptr->next && !ft_strcmp(ptr->next->attr, "rdr_sub"))
 			ptr = make_rdr_group(ptr);
+		else if (!ft_strcmp(ptr->attr, "builtin") && ptr->next && !ft_strcmp(ptr->next->attr, "builtin_sub"))
+			ptr = make_builtin_grp(ptr);
 		else if (!ft_strcmp(ptr->attr, "none") || !ft_strcmp(ptr->attr, "space"))
 			ptr = combine_w_prev(ptr);
 		// else if (!ft_strcmp(ptr->attr, "builtin") || (!ft_strcmp(ptr->attr, "operator") && ptr->next && ft_strcmp(ptr->next->attr, "none")))

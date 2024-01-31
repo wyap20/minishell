@@ -106,31 +106,34 @@ int	main(int ac, char **av, char **envp)
 				if (check_operator(lst_cmd) == true)
 				{
 					ft_expand(lst_cmd, &env); //expand handle dollar sign (loop through list and replace env var)
-					printf("\texpand:\n"); print_list(lst_cmd);
+					printf("\n\texpand:\n"); print_list(lst_cmd);
 					trim_quotes(lst_cmd);
-					printf("\ttrim quotes:\n"); print_list(lst_cmd);
+					printf("\n\ttrim quotes:\n"); print_list(lst_cmd);
 					clear_empty_node(lst_cmd);
-					printf("\tremove null node:\n"); print_list(lst_cmd);
+					printf("\n\tremove null node:\n"); print_list(lst_cmd);
 					set_rdr_nodes(lst_cmd);
-					printf("\tset rdr:\n"); print_list(lst_cmd);
+					printf("\n\tset rdr:\n"); print_list(lst_cmd);
 					combine_nodes(lst_cmd);
-					printf("\tcombine:\n"); print_list(lst_cmd);
-				/*execution*/
-					// *lst_cmd = create_cmd_group(&env, *lst_cmd);
+					printf("\n\tcombine:\n"); print_list(lst_cmd);
+					set_builtin_nodes(lst_cmd);
+					printf("\n\tset builtin:\n"); print_list(lst_cmd);
+					combine_nodes(lst_cmd);
+					printf("\n\tcombine 2:\n"); print_list(lst_cmd);				/*execution*/
 					create_cmd_group(&env, *lst_cmd);
 					printf("created cmd group\n");
-					printf("\tcreate_cmd_group:\n"); print_list(lst_cmd);
+					printf("\n\tcreate_cmd_group:\n"); print_list(lst_cmd); print_cmd_group(lst_cmd);
 					execute_cmd(&env, lst_cmd);
-					if (!ft_strncmp(cmd_buf, "echo", 4))
-						echo_print(cmd_buf);
-					else if (!ft_strcmp(cmd_buf, "pwd"))
-						print_env_var(envp, "PWD");
-					else if (!ft_strcmp(cmd_buf, "env"))
-						print_sys_env(&env);
-					else if (!ft_strcmp(cmd_buf, "export"))
-						ft_export(&env, "AAAAA=\'aaaaaa\' _b=\"xaxaxax\" __c=0812734917 @_d=\"xaxaxax\" _e6=\"xaxaxax\" f^=\"xaxaxax\" 3g=\"xaxaxax\"");
-					else if (!ft_strcmp(cmd_buf, "unset"))
-						ft_unset(&env, "AAAAA _b __c");
+
+					// if (!ft_strncmp(cmd_buf, "echo", 4))
+					// 	echo_print(cmd_buf);
+					// else if (!ft_strcmp(cmd_buf, "pwd"))
+						// print_env_var(envp, "PWD");
+					// else if (!ft_strcmp(cmd_buf, "env"))
+						// print_sys_env(&env);
+					// else if (!ft_strcmp(cmd_buf, "export"))
+					// 	ft_export(&env, "AAAAA=\'aaaaaa\' _b=\"xaxaxax\" __c=0812734917 @_d=\"xaxaxax\" _e6=\"xaxaxax\" f^=\"xaxaxax\" 3g=\"xaxaxax\"");
+					// else if (!ft_strcmp(cmd_buf, "unset"))
+					// 	ft_unset(&env, "AAAAA _b __c");
 				}
 				free(cmd_buf); //readline malloc buffer
 				free_list(lst_cmd);
