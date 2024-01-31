@@ -39,13 +39,13 @@ void	echo_print(char **cmds)
 
 	flag = false;
 	i = 1;
-	if (!ft_strcmp(cmds[1], "-n"))
+	if (cmds[1] && !ft_strcmp(cmds[1], "-n"))
 	{
 		flag = true;
 		i = 2;
 	}
 	// printf("%d, %d\n", i, flag);
-	while (cmds[i])
+	while (cmds && cmds[i])
 	{
 		j = 0;
 		while (cmds[i][j])
