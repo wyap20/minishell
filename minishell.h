@@ -98,6 +98,7 @@ void	free_list(t_node **lst_cmd);
 void	free_2d_arr(char **arr);
 bool	str_not_empty(const char *str);
 void	print_cmd_group(t_node **lst);
+void	print_sys_env(t_env *env);
 
 
 // parsing
@@ -151,10 +152,9 @@ char	**check_export(char **add);
 void	add_to_env(t_env *env, char **updated);
 void	ft_unset(t_env *env, char **cmds);
 // void	ft_unset(t_env *env, char *del);
-void	print_sys_env(t_env *env);
 void	ft_exit(t_env *env, char *cmd_buf);
 void	ft_cd(t_env *env, t_exe *exe, char **input);
-
+void	ft_pwd(void);
 
 /*built in utils*/
 int	get_array_count(char **array);

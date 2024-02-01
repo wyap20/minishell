@@ -352,22 +352,16 @@ void run_builtin(t_env *env, t_node *ptr, t_exe *exe)
 	if (!ft_strcmp(cmd, "echo"))
 		echo_print(ptr->cmds);
 	else if (!ft_strcmp(cmd, "pwd"))
-		print_env_var(env->env_vars, "PWD");
+		ft_pwd();
 	else if (!ft_strcmp(cmd, "env"))
 	{
 		printf("\n\t*RUNNING BUILTIN ENV*\n");
 		print_sys_env(env);
 	}
 	else if (!ft_strcmp(cmd, "export")) //WSL: export is successful but when run env as next cmd it's not found
-	{
 		ft_export(env, ptr->cmds);
-		// print_sys_env(env);
-	}
 	else if (!ft_strcmp(cmd, "unset"))
-	{
 		ft_unset(env, ptr->cmds);
-		// print_sys_env(env);
-	}
 	else if (!ft_strcmp(cmd, "cd"))
 		ft_cd(env, exe, ptr->cmds);
 }
