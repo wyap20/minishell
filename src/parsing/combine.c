@@ -106,10 +106,10 @@ t_node	*combine_w_next(t_node *ptr)
 void	set_rdr_nodes(t_node **lst_cmd)
 {
 	t_node	*ptr;
-	char	*tmp;
+	// char	*tmp;
 
 	ptr = *lst_cmd;
-	tmp = NULL;
+	// tmp = NULL;
 	while (ptr)
 	{
 		if (!ft_strcmp(ptr->attr, "rdr") && ptr->next && ptr->next->next && !ft_strcmp(ptr->next->attr, "space") && !ft_strcmp(ptr->next->next->attr, "none"))
@@ -120,9 +120,9 @@ void	set_rdr_nodes(t_node **lst_cmd)
 		}
 		else if ((!ft_strcmp(ptr->attr, "rdr") && ptr->next && !ft_strcmp(ptr->next->attr, "none"))) 
 		{
-			tmp = ptr->next->content;
-			ptr->next->content = ft_strjoin(ptr->next->content, " ");
-			free(tmp);
+			// tmp = ptr->next->content;
+			// ptr->next->content = ft_strjoin(ptr->next->content, " ");
+			// free(tmp);
 			ptr->next->attr = "rdr_sub";
 			ptr = ptr->next->next;
 		}

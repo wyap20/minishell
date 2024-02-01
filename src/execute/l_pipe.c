@@ -347,7 +347,7 @@ void ft_exe_pipe(t_exe *exe)
 void run_builtin(t_env *env, t_node *ptr, t_exe *exe)
 {
 	char	*cmd;
-	(void)	exe;
+	// (void)	exe;
 
 	cmd = ptr->cmds[0];
 	if (!ft_strcmp(cmd, "echo"))
@@ -369,8 +369,8 @@ void run_builtin(t_env *env, t_node *ptr, t_exe *exe)
 		ft_unset(env, ptr->cmds);
 		// print_sys_env(env);
 	}
-	// else if (!ft_strcmp(cmd, "cd"))
-	// 	ft_cd();
+	else if (!ft_strcmp(cmd, "cd"))
+		ft_cd(env, exe, ptr->cmds);
 }
 
 void ft_run_cmds(t_exe *exe, t_node *lst, t_env *env)
@@ -553,6 +553,7 @@ void	execute_cmd(t_env *env, t_node **lst)
 	signal(SIGINT,sig_nl);
 	// if (exe.num_pipes == 0)
 	ft_sort(*lst);
+	printf("\n\tft_sort:\n"); print_list(lst); print_cmd_group(lst);
 	// 	ft_no_pipe(&exe, *lst, env->env_vars);
 	// else
 		ft_multi_pipe(&exe,*lst, env);

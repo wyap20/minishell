@@ -151,6 +151,7 @@ void	ft_unset(t_env *env, char **cmds);
 // void	ft_unset(t_env *env, char *del);
 void	print_sys_env(t_env *env);
 void	ft_exit(t_env *env, char *cmd_buf);
+void	ft_cd(t_env *env, t_exe *exe, char **input);
 
 
 /*built in utils*/

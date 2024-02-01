@@ -59,4 +59,5 @@ void	print_env_var(char **envp, char *s)
 	}
 	printf("%s\n", pwd[1]);
 	free(s);
+	free_2d_arr(pwd);
 }
