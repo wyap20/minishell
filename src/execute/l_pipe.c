@@ -500,6 +500,20 @@ void ft_swap_info(t_node *a, t_node *b)
 	b->quote_type = quote_type;
 }
 
+void	ft_reorder(t_node *dst, t_node *x)
+{
+	if(dst == x)
+		return;
+	else
+	{
+		while(dst != x)
+		{
+			ft_swap_info(dst,x);
+			dst = dst->next;
+		}
+	}
+}
+
 void ft_sort(t_node *lst)
 {
 	t_node *x = lst;
@@ -514,6 +528,7 @@ void ft_sort(t_node *lst)
 			{
 				ft_swap_info(dst,x);
 				dst = dst->next;
+				ft_reorder(dst,x);
 			}
 			x = x->next;
 		}
