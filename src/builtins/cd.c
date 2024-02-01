@@ -31,16 +31,11 @@ void	update_oldpwd(t_env *env, char *oldpwd)
 {
 	int		i;
 	char	*oldpwd_ptr;
-	char	**split;
 	char	**export;
 
 	i = -1;
 	oldpwd_ptr = NULL;
 	export = NULL;
-	split = ft_split(oldpwd, '=');
-	free(oldpwd);
-	oldpwd = ft_strdup(split[1]);
-	free(split);
 	printf("entered update oldpwd\n");
 	while (env->env_vars[++i]) //if have OLDPWD
 	{
@@ -62,7 +57,6 @@ void	update_oldpwd(t_env *env, char *oldpwd)
 		free_2d_arr(export);
 		free(oldpwd);
 	}
-	// free(oldpwd);
 }
 
 void	export_pwd(t_env *env, char *pwd)
@@ -84,11 +78,11 @@ void	export_pwd(t_env *env, char *pwd)
 	free(pwd);
 }
 
-/*have not handle cases if PWD OLDPWD is unset*/
 void	update_pwd_oldpwd(t_env *env, char *pwd)
 {
 	int		i;
 	char	*pwd_ptr;
+	char	**split;
 
 	pwd_ptr = NULL;
 	i = -1;
@@ -100,52 +94,18 @@ void	update_pwd_oldpwd(t_env *env, char *pwd)
 			env->env_vars[i] = ft_strjoin("PWD=", pwd);
 			free(pwd);
 			printf("updated PWD\n");
-			// free(pwd_ptr);
 		}
 	}
 	if (!pwd_ptr) //if no PWD
 		export_pwd(env, pwd);
 	if (pwd_ptr)
-		update_oldpwd(env, pwd_ptr);
-	// free(pwd_ptr);
+	{
+		split = ft_split(pwd_ptr, '=');
+		update_oldpwd(env, ft_strdup(split[1]));
+		free_2d_arr(split);
+	}
+	free(pwd_ptr);
 }
-
-// void	update_pwd_oldpwd(t_env *env, char *pwd)
-// {
-// 	int		i;
-// 	char	*pwd_ptr;
-// 	char	**export;
-
-// 	pwd_ptr = NULL;
-// 	i = -1;
-// 	while (env->env_vars[++i]) //if have PWD
-// 	{
-// 		if (!ft_strncmp(env->env_vars[i], "PWD=", 4))
-// 		{
-// 			pwd_ptr = env->env_vars[i]; //to move to OLDPWD
-// 			env->env_vars[i] = ft_strjoin("PWD=", pwd);
-// 			free(pwd);
-// 			printf("updated PWD\n");
-// 			free(pwd_ptr);
-// 		}
-// 	}
-// 	if (!pwd_ptr) //if no PWD
-// 	{
-// 		printf("ft_cd: PWD not set\n");
-// 		pwd_ptr = ft_strjoin("PWD=", pwd);
-// 		export = (char **)malloc(2 * sizeof(char *)); //3 if pwd
-// 		export[0] = pwd_ptr;
-// 		export[1] = NULL;
-// 		// export[1] = ft_strdup("OLDPWD=");
-// 		// export[2] = NULL;
-// 		ft_export(env, export);
-// 		printf("ft_cd: exported PWD & OLDPWD (OLDPWD=[blank])\n");
-// 		free_2d_arr(export);
-// 	}
-// 	// if (pwd_ptr)
-// 	// 	update_oldpwd(env, pwd_ptr);
-// 	// free(pwd_ptr);
-// }
 
 // [cd] [~] or [cd] [NULL]
 void ft_cd(t_env *env, t_exe *exe, char **input)
