@@ -518,6 +518,8 @@ void ft_sort(t_node *lst)
 	t_node *x = lst;
 	t_node *dst;
 
+	if(x->next == NULL)
+		return;
 	while (x != NULL)
 	{
 		dst = x;
