@@ -347,7 +347,6 @@ void ft_exe_pipe(t_exe *exe)
 void run_builtin(t_env *env, t_node *ptr, t_exe *exe)
 {
 	char	*cmd;
-	// (void)	exe;
 
 	cmd = ptr->cmds[0];
 	if (!ft_strcmp(cmd, "echo"))
@@ -522,9 +521,9 @@ void ft_sort(t_node *lst)
 	while (x != NULL)
 	{
 		dst = x;
-		while(x != NULL && x->cmds[0][0] != '|')
+		while(x != NULL && ft_strcmp(x->attr, "pipe"))//x->cmds[0][0] != '|')
 		{
-			if(x->cmds[0][0] == '<' || x->cmds[0][0] =='>')
+			if (!ft_strcmp(x->attr, "rdr"))//(x->cmds[0][0] == '<' || x->cmds[0][0] =='>')
 			{
 				ft_swap_info(dst,x);
 				dst = dst->next;
@@ -567,8 +566,8 @@ void	execute_cmd(t_env *env, t_node **lst)
 	// exe.num_cmds = ft_dlstsize(*lst);
 	signal(SIGINT,sig_nl);
 	// if (exe.num_pipes == 0)
-	ft_sort(*lst);
-	printf("\n\tft_sort:\n"); print_list(lst); print_cmd_group(lst);
+	// ft_sort(*lst);
+	// printf("\n\tft_sort:\n"); print_list(lst); print_cmd_group(lst);
 	// 	ft_no_pipe(&exe, *lst, env->env_vars);
 	// else
 		ft_multi_pipe(&exe,*lst, env);

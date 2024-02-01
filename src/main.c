@@ -10,16 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-// #include <readline/readline.h>
-// #include <readline/history.h>
-// // #include <stdbool.h>
-// #include <stdio.h>
-// #include <unistd.h>
-// #include <signal.h>
-// #include <string.h> //tmp header, to replace with libft functions
-// #include <stdlib.h>
-// // #include "/usr/local/opt/readline/include" //(rl_clear_history)
-// // /usr/local/opt/readline/lib
 #include "../minishell.h"
 
 char	*get_cmd(char *cmd_buf)
@@ -106,35 +96,28 @@ int	main(int ac, char **av, char **envp)
 				if (check_operator(lst_cmd) == true)
 				{
 					ft_expand(lst_cmd, &env); //expand handle dollar sign (loop through list and replace env var)
-					printf("\n\texpand:\n"); print_list(lst_cmd);
+					// printf("\n\texpand:\n"); print_list(lst_cmd);
 					trim_quotes(lst_cmd);
-					printf("\n\ttrim quotes:\n"); print_list(lst_cmd);
+					// printf("\n\ttrim quotes:\n"); print_list(lst_cmd);
 					clear_empty_node(lst_cmd);
-					printf("\n\tremove null node:\n"); print_list(lst_cmd);
+					// printf("\n\tremove null node:\n"); print_list(lst_cmd);
 					set_rdr_nodes(lst_cmd);
 					// printf("\n\tset rdr:\n"); print_list(lst_cmd);
 					combine_nodes(lst_cmd);
 					printf("\n\tcombine:\n"); print_list(lst_cmd);
-					set_builtin_nodes(lst_cmd);
-					// printf("\n\tset builtin:\n"); print_list(lst_cmd);
+					ft_sort(*lst_cmd);
+					printf("\n\tft_sort:\n"); print_list(lst_cmd);
 					combine_nodes(lst_cmd);
-					// printf("\n\tcombine 2:\n"); print_list(lst_cmd);
+					printf("\n\tcombine 2:\n"); print_list(lst_cmd);
+					set_builtin_nodes(lst_cmd);
+					printf("\n\tset builtin:\n"); print_list(lst_cmd);
+					combine_nodes(lst_cmd);
+					printf("\n\tcombine 3:\n"); print_list(lst_cmd);
 					/*execution*/
 					create_cmd_group(&env, *lst_cmd);
 					printf("created cmd group\n");
 					printf("\n\tcreate_cmd_group:\n"); print_list(lst_cmd); print_cmd_group(lst_cmd);
 					execute_cmd(&env, lst_cmd);
-
-					// if (!ft_strncmp(cmd_buf, "echo", 4))
-					// 	echo_print(cmd_buf);
-					// else if (!ft_strcmp(cmd_buf, "pwd"))
-					// 	print_env_var(envp, "PWD");
-					// else if (!ft_strcmp(cmd_buf, "env"))
-					// 	print_sys_env(&env);
-					// else if (!ft_strcmp(cmd_buf, "export"))
-					// 	ft_export(&env, "AAAAA=\'aaaaaa\' _b=\"xaxaxax\" __c=0812734917 @_d=\"xaxaxax\" _e6=\"xaxaxax\" f^=\"xaxaxax\" 3g=\"xaxaxax\"");
-					// else if (!ft_strcmp(cmd_buf, "unset"))
-					// 	ft_unset(&env, "AAAAA _b __c");
 				}
 				free(cmd_buf); //readline malloc buffer
 				free_list(lst_cmd);
@@ -146,6 +129,17 @@ int	main(int ac, char **av, char **envp)
 		}
 	}
 }
+
+					// if (!ft_strncmp(cmd_buf, "echo", 4))
+					// 	echo_print(cmd_buf);
+					// else if (!ft_strcmp(cmd_buf, "pwd"))
+					// 	print_env_var(envp, "PWD");
+					// else if (!ft_strcmp(cmd_buf, "env"))
+					// 	print_sys_env(&env);
+					// else if (!ft_strcmp(cmd_buf, "export"))
+					// 	ft_export(&env, "AAAAA=\'aaaaaa\' _b=\"xaxaxax\" __c=0812734917 @_d=\"xaxaxax\" _e6=\"xaxaxax\" f^=\"xaxaxax\" 3g=\"xaxaxax\"");
+					// else if (!ft_strcmp(cmd_buf, "unset"))
+					// 	ft_unset(&env, "AAAAA _b __c");
 
 // gcc *.c -lreadline && ./a.out
 

@@ -120,6 +120,8 @@ void	clear_empty_node(t_node **lst_cmd);
 void	set_rdr_nodes(t_node **lst_cmd);
 void	combine_nodes(t_node **lst_cmd);
 void	set_builtin_nodes(t_node **lst_cmd);
+void ft_sort(t_node *lst);
+
 
 
 /*expand utils*/

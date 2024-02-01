@@ -155,13 +155,18 @@ void ft_cd(t_env *env, t_exe *exe, char **input)
 
 	home_path = get_env_home(env);
 	pwd = NULL;
+	if (input[2])
+	{
+		printf("minishell: cd: too many arguments\n");
+		return ;
+	}
 	if (input[1] == NULL)
 	{
 		if (home_path)
 			exe->err_num = chdir(home_path);
 		else
 		{
-			printf("minishell cd: HOME not set\n");
+			printf("minishell: cd: HOME not set\n");
 			return ;
 		}
 	}
@@ -175,7 +180,7 @@ void ft_cd(t_env *env, t_exe *exe, char **input)
 		update_pwd_oldpwd(env, pwd);
 	}
 	else
-		printf("minishell cd: %s: No such file or directory\n", input[1]);
+		printf("minishell: cd: %s: No such file or directory\n", input[1]);
 	free(home_path);
 }
 
