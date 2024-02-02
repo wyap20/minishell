@@ -36,7 +36,6 @@ char *ft_get_cmd_path(char **path, char *cmd)
 	return(ft_strdup(cmd));
 }
 
-// when use: create_cmd_group(&env, (*lst_cmd));
 void	create_cmd_group(t_env *env, t_node *lst_cmd)
 {
 	t_node	*ptr;
@@ -49,17 +48,22 @@ void	create_cmd_group(t_env *env, t_node *lst_cmd)
 		ptr->cmds = ft_split(ptr->content, ' ');
 		if (!ptr->cmds[0])
 			return ;
+		if (!ft_strcmp(ptr->cmds[0], "<<"))
+		{
+			tmp = ptr->cmds[1];
+			ptr->cmds[1] = get_multiline(ptr->cmds[1]);
+			free(tmp);
+		}
 		tmp = ptr->cmds[0];
 		if (ft_strcmp(ptr->attr, "builtin"))
 		{
 			ptr->cmds[0] = ft_get_cmd_path(env->paths, ptr->cmds[0]);
 			free(tmp);
 		}
-		// for (int i = 0; ptr->cmds[i]; i++) //in uncomment valgrind will have invalid read
-		// 	printf("ptr->cmd[%d]: %s\n", i, ptr->cmds[i]);
 		ptr = ptr->next;
 	}
 }
+
 // size_t	get_new_size(t_node *node, char **cmds)
 // {
 // 	size_t	node_size = sizeof(t_node);

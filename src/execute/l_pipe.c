@@ -51,18 +51,38 @@
 // 	return (0);
 // }
 
-int	here_doc(char *str)
-{
-	int	io[2];
-	int	len;
+// int	here_doc(char *str)
+// {
+// 	int	io[2];
+// 	int	len;
+// 	char	*multi;
 
-	len = 0;
-	while (str[len] != 0x00)
-		len++;
-	pipe(io);
-	write(io[1], str, len);
-	close(io[1]);
-	return (io[0]);
+// 	printf("entered heredoc\n");
+// 	len = 0;
+// 	multi = get_multiline(str);
+// 	len = ft_strlen(multi);
+// 	// printf("len:%d\n", len);
+// 	pipe(io);
+// 	write(io[1], multi, len);
+// 	add_history(multi);
+// 	free(multi);
+// 	close(io[1]);
+// 	printf("exited heredoc\n");
+// 	return (io[0]);
+// }
+
+int    here_doc(char *str)
+{
+    int    io[2];
+    int    len;
+
+    len = 0;
+    while (str[len] != 0x00)
+        len++;
+    pipe(io);
+    write(io[1], str, len);
+    close(io[1]);
+    return (io[0]);
 }
 
 void	sig_nl(int sig_num)

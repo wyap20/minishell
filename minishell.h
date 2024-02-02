@@ -122,8 +122,7 @@ void	set_rdr_nodes(t_node **lst_cmd);
 void	combine_nodes(t_node **lst_cmd);
 void	set_builtin_nodes(t_node **lst_cmd);
 void ft_sort(t_node *lst);
-
-
+char	*get_multiline(char	*delim);
 
 /*expand utils*/
 char *ft_strcpy(char *dst, char *src);
