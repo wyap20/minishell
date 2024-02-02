@@ -89,6 +89,7 @@ int	main(int ac, char **av, char **envp)
 			if (check_cmd(cmd_buf) == true)
 			{
 				lst_cmd = init_lst(lst_cmd);
+				// printf("\n\tHead Node Addr		:%p\n", *lst_cmd);
 				ft_parse(lst_cmd, cmd_buf, ft_index(cmd_buf)); //to optimize function
 				// printf("\tparse:\n"); print_list(lst_cmd);
 				assign_attr(lst_cmd); //whileloop to assign attribute and quote type in node

@@ -51,26 +51,6 @@
 // 	return (0);
 // }
 
-// int	here_doc(char *str)
-// {
-// 	int	io[2];
-// 	int	len;
-// 	char	*multi;
-
-// 	printf("entered heredoc\n");
-// 	len = 0;
-// 	multi = get_multiline(str);
-// 	len = ft_strlen(multi);
-// 	// printf("len:%d\n", len);
-// 	pipe(io);
-// 	write(io[1], multi, len);
-// 	add_history(multi);
-// 	free(multi);
-// 	close(io[1]);
-// 	printf("exited heredoc\n");
-// 	return (io[0]);
-// }
-
 int    here_doc(char *str)
 {
     int    io[2];

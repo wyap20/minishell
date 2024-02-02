@@ -12,6 +12,10 @@
 
 #include "../../minishell.h"
 
+/*
+* these functions handles syntax errors BEFORE lst_cmd is initiated
+*/
+
 void ft_loop_to_pair(char *str, int *i, char c)
 {
 	(*i)++;
@@ -72,9 +76,9 @@ int	ft_check_quote(char *str)
 /*check command: reject unclosed quote and more than triple arrow*/
 bool	check_cmd(char *cmd_str)
 {
-	if (!ft_strcmp(cmd_str, "<<") || !ft_strcmp(cmd_str, ">>") || !ft_strcmp(cmd_str, "<") || !ft_strcmp(cmd_str, ">"))
+	if (!ft_strcmp(cmd_str, "<<") || !ft_strcmp(cmd_str, ">>") || !ft_strcmp(cmd_str, "<") || !ft_strcmp(cmd_str, ">") || !ft_strcmp(cmd_str, "|"))
 	{
-		printf("Syntax error: standalone rdr \n");
+		printf("minishell: syntax error near unexpected token [check_cmd]\n");
 		return (false);
 	}
 	if (ft_check_quote(cmd_str) == -1)
