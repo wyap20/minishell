@@ -194,6 +194,11 @@ void	ft_redir_left(t_exe *exe, t_node *lst)
 	if (ft_strcmp(lst->cmds[0],"<") == 0)
 	{
 		exe->redir[0] = open(lst->cmds[1], O_RDONLY);
+		if (exe->redir[0] == -1)
+		{		
+			printf("minishell> %s: no such file or directory\n", lst->cmds[1]);
+			exe->err_num = 1;
+		}
 		dup2(exe->redir[0],STDIN_FILENO);
 		close(exe->redir[0]);
 	}
@@ -521,9 +526,12 @@ void ft_sort(t_node *lst)
 		{
 			if (!ft_strcmp(x->attr, "rdr"))//(x->cmds[0][0] == '<' || x->cmds[0][0] =='>')
 			{
-				ft_swap_info(dst,x);
-				dst = dst->next;
-				ft_reorder(dst,x);
+				if (dst != x)
+				{
+					ft_swap_info(dst,x);
+					dst = dst->next;
+					ft_reorder(dst,x);
+				}
 			}
 			x = x->next;
 		}
@@ -534,7 +542,7 @@ void ft_sort(t_node *lst)
 
 void ft_if_no_pipes(t_exe *exe, t_node *lst, t_env *env)
 {
-	(void) env;
+	// (void) env;
 	if(exe->pipes == 0)
 	{
 		printf("if_no_pipes: HERE\n");
@@ -543,7 +551,10 @@ void ft_if_no_pipes(t_exe *exe, t_node *lst, t_env *env)
 			// printf("%s\n",lst->attr);
 			if(!ft_strcmp(lst->attr, "builtin"))
 			{	
-				run_builtin(env, lst, exe);
+				if(!ft_strcmp(lst->cmds[0],"export") || 
+				 !ft_strcmp(lst->cmds[0],"unset") || 
+				 !ft_strcmp(lst->cmds[0],"cd"))
+					run_builtin(env, lst, exe);
 				return;
 			}
 			lst = lst->next;
@@ -571,7 +582,8 @@ void	execute_cmd(t_env *env, t_node **lst)
 	// if (exe.num_pipes > 0)
 		ft_wait_pid(&exe);
 	ft_free_pp(&exe);
-	ft_if_no_pipes(&exe, *lst, env);
+	if (exe.num_pipes == 0 && exe.err_num != 0)
+		ft_if_no_pipes(&exe, *lst, env);
 }
 
 // int	main(int ac, char **av, char **envp)
