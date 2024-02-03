@@ -61,6 +61,7 @@ t_node **init_lst(t_node **lst_cmd)
 void	init_env(t_env *env, char **envp)
 {
 	env->key_count = 0;
+	env->err_num = 0;
 	// env->pipe_count = 0;
 	store_env(env, envp);
 	store_path(env, envp);

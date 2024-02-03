@@ -46,7 +46,8 @@ typedef struct s_env{
 	char	**env_vars; //all env variable
 	char	*env_path; //$PATH variable, single string
 	char	**paths; //splitted paths
-	char	*home_tilda;
+	// char	*home_tilda;
+	int		err_num;
 	int		key_count;
 	// size_t	pipe_count;
 	// char *cur_path;
@@ -60,7 +61,7 @@ typedef struct s_exe
 	int		z;
 	int		redir[2];
 	int		status;
-	int		err_num;
+	// int		err_num;
 	pid_t	*pid;
 }	t_exe;
 
@@ -152,7 +153,8 @@ void	add_to_env(t_env *env, char **updated);
 void	ft_unset(t_env *env, char **cmds);
 // void	ft_unset(t_env *env, char *del);
 void	ft_exit(t_env *env, char *cmd_buf);
-void	ft_cd(t_env *env, t_exe *exe, char **input);
+// void	ft_cd(t_env *env, t_exe *exe, char **input);
+void ft_cd(t_env *env, char **input);
 void	ft_pwd(void);
 
 /*built in utils*/

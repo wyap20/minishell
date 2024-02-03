@@ -108,7 +108,8 @@ void	update_pwd_oldpwd(t_env *env, char *pwd)
 }
 
 // [cd] [~] or [cd] [NULL]
-void ft_cd(t_env *env, t_exe *exe, char **input)
+// void ft_cd(t_env *env, t_exe *exe, char **input)
+void ft_cd(t_env *env, char **input)
 {
 	char	*home_path;
 	char	*pwd;
@@ -123,7 +124,7 @@ void ft_cd(t_env *env, t_exe *exe, char **input)
 	if (input[1] == NULL)
 	{
 		if (home_path)
-			exe->err_num = chdir(home_path);
+			env->err_num = chdir(home_path);
 		else
 		{
 			printf("minishell: cd: HOME not set\n");
@@ -131,8 +132,8 @@ void ft_cd(t_env *env, t_exe *exe, char **input)
 		}
 	}
 	else
-		exe->err_num = chdir(input[1]);
-	if (exe->err_num == 0)
+		env->err_num = chdir(input[1]);
+	if (env->err_num == 0)
 	{
 		printf("ft_cd: chdir successful\n");
 		if ((pwd = getcwd(NULL, 0)) == NULL)

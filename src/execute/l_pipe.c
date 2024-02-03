@@ -181,7 +181,7 @@ void	ft_initialize_exe_vars(t_exe *exe, t_node **lst)
 	exe->redir[0] = -2;
 	exe->redir[1] = -2;
 	exe->z = 0;
-	exe->err_num = 0;
+	// exe->err_num = 0;
 	exe->pid = malloc((exe->num_pipes + 1) * sizeof(pid_t));
 	if (exe->num_pipes > 0)
 		exe->pipes = malloc(exe->num_pipes * sizeof(int[2]));
@@ -189,7 +189,7 @@ void	ft_initialize_exe_vars(t_exe *exe, t_node **lst)
 		exe->pipes = 0;
 }
 
-void	ft_redir_left(t_exe *exe, t_node *lst)
+void	ft_redir_left(t_exe *exe, t_node *lst, t_env *env)
 {
 	if (ft_strcmp(lst->cmds[0],"<") == 0)
 	{
@@ -197,7 +197,7 @@ void	ft_redir_left(t_exe *exe, t_node *lst)
 		if (exe->redir[0] == -1)
 		{		
 			printf("minishell> %s: no such file or directory\n", lst->cmds[1]);
-			exe->err_num = 1;
+			env->err_num = 1;
 		}
 		dup2(exe->redir[0],STDIN_FILENO);
 		close(exe->redir[0]);
@@ -228,26 +228,27 @@ void	ft_redir_right(t_exe *exe, t_node *lst)
 	}
 }
 
-void ft_execute(t_exe *exe, t_node *lst, char **envp)
+void ft_execute(t_exe *exe, t_node *lst, t_env *env)//char **envp)
 {
-	if(execve(lst->cmds[0], lst->cmds, envp) == -1)
+	// if (execve(lst->cmds[0], lst->cmds, envp) == -1)
+	if (execve(lst->cmds[0], lst->cmds, env->env_vars) == -1)
 	{
 		dup2(STDERR_FILENO,STDOUT_FILENO);
 		exe->z = ft_strlen(lst->cmds[0]);
-		while(exe->z > 0)
+		while (exe->z > 0)
 		{
-			if(lst->cmds[0][exe->z] == '/')
+			if (lst->cmds[0][exe->z] == '/')
 				break;
 			exe->z--;
 		}
 		printf("minishell> %s: command not found\n", 
 		lst->cmds[0] + exe->z);
-		exe->err_num = 127;
+		env->err_num = 127;
 		return ;
 	}
 	else
 	{	
-		exe->err_num = 0;
+		env->err_num = 0;
 		return ;
 	}
 }
@@ -305,7 +306,7 @@ void ft_close_all_pipes (t_exe *exe)
 // 	}
 // }
 
-void ft_wait_pid (t_exe *exe)
+void ft_wait_pid (t_exe *exe, t_env *env)
 {
 	int i;
 	int status;
@@ -316,11 +317,11 @@ void ft_wait_pid (t_exe *exe)
 		if(waitpid(exe->pid[i], &status, 0) > 0)
 		{
 			if(WIFEXITED(status)) // if child end normally
-				exe->err_num = WEXITSTATUS(status);
+				env->err_num = WEXITSTATUS(status);
 				// printf("err_num - %d\n",WEXITSTATUS(status));
 			else if (WIFSIGNALED(status)) // if child end by signal
 				if(WTERMSIG(status) != 0)
-					exe->err_num = 130;
+					env->err_num = 130;
 					// printf("err_num - 130\n"); // << store for $?
 				// printf("err_num - %d\n",WTERMSIG(status)); // retunrns 2
 
@@ -332,7 +333,7 @@ void ft_wait_pid (t_exe *exe)
 void ft_free_pp (t_exe *exe)
 {
 	free(exe->pid);
-	if(exe->num_pipes > 0)
+	if (exe->num_pipes > 0)
 		free(exe->pipes);
 }
 
@@ -349,7 +350,7 @@ void ft_exe_pipe(t_exe *exe)
 	}
 }
 
-void run_builtin(t_env *env, t_node *ptr, t_exe *exe)
+void run_builtin(t_env *env, t_node *ptr)//, t_exe *exe)
 {
 	char	*cmd;
 
@@ -368,7 +369,7 @@ void run_builtin(t_env *env, t_node *ptr, t_exe *exe)
 	else if (!ft_strcmp(cmd, "unset"))
 		ft_unset(env, ptr->cmds);
 	else if (!ft_strcmp(cmd, "cd"))
-		ft_cd(env, exe, ptr->cmds);
+		ft_cd(env, ptr->cmds);	//ft_cd(env, exe, ptr->cmds);
 }
 
 void ft_run_cmds(t_exe *exe, t_node *lst, t_env *env)
@@ -377,15 +378,15 @@ void ft_run_cmds(t_exe *exe, t_node *lst, t_env *env)
 	{
 		if(lst->cmds[0][0] == '<' || lst->cmds[0][0] == '>')
 		{
-			ft_redir_left(exe, lst);
+			ft_redir_left(exe, lst, env);
 			ft_redir_right(exe, lst);
 		}
 		else 
 		{
 			if (!ft_strcmp(lst->attr, "builtin"))
-				return ;// run_builtin(env, lst, exe);
+				run_builtin(env, lst);//, exe);
 			else
-				ft_execute(exe, lst, env->env_vars);
+				ft_execute(exe, lst, env);//env->env_vars);
 		}
 		lst = lst->next;
 	}
@@ -551,10 +552,10 @@ void ft_if_no_pipes(t_exe *exe, t_node *lst, t_env *env)
 			// printf("%s\n",lst->attr);
 			if(!ft_strcmp(lst->attr, "builtin"))
 			{	
-				// if(!ft_strcmp(lst->cmds[0],"export") || 
-				//  !ft_strcmp(lst->cmds[0],"unset") || 
-				//  !ft_strcmp(lst->cmds[0],"cd"))
-					run_builtin(env, lst, exe);
+				if (!ft_strcmp(lst->cmds[0],"export") || 
+				 !ft_strcmp(lst->cmds[0],"unset") || 
+				 !ft_strcmp(lst->cmds[0],"cd"))
+					run_builtin(env, lst);//, exe);
 				return;
 			}
 			lst = lst->next;
@@ -580,10 +581,11 @@ void	execute_cmd(t_env *env, t_node **lst)
 		ft_multi_pipe(&exe,*lst, env);
 	ft_close_all_pipes(&exe);
 	// if (exe.num_pipes > 0)
-		ft_wait_pid(&exe);
+		ft_wait_pid(&exe, env);
 	ft_free_pp(&exe);
-	if (exe.num_pipes == 0 && exe.err_num != 0)
+	if (exe.num_pipes == 0 && env->err_num != 0)
 		ft_if_no_pipes(&exe, *lst, env);
+	printf("\n[debug] err_num:%d\n", env->err_num);
 }
 
 // int	main(int ac, char **av, char **envp)
