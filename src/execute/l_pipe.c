@@ -583,9 +583,10 @@ void	execute_cmd(t_env *env, t_node **lst)
 	// if (exe.num_pipes > 0)
 		ft_wait_pid(&exe, env);
 	ft_free_pp(&exe);
-	if (exe.num_pipes == 0 && env->err_num != 0)
+	printf("\n[debug]\nafter multi: err_num:%d\n", env->err_num);
+	if (exe.num_pipes == 0 && env->err_num == 0)
 		ft_if_no_pipes(&exe, *lst, env);
-	printf("\n[debug] err_num:%d\n", env->err_num);
+	printf("\n[debug]\nafter no pipe: err_num:%d\n", env->err_num);
 }
 
 // int	main(int ac, char **av, char **envp)
