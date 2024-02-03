@@ -137,7 +137,7 @@ void	add_to_env(t_env *env, char **updated)
 	int		total_size;
 
 	new_size = new_key_count(env, updated);
-	printf("new_size:%d\n", new_size);
+	printf("add_to_env: new_size:%d\n", new_size);
 	if (!new_size)
 		return ;
 	total_size = env->key_count + new_size;

@@ -316,9 +316,11 @@ void ft_wait_pid (t_exe *exe, t_env *env)
 	{
 		if(waitpid(exe->pid[i], &status, 0) > 0)
 		{
-			if(WIFEXITED(status)) // if child end normally
+			if (WIFEXITED(status)){ // if child end normally
 				env->err_num = WEXITSTATUS(status);
-				// printf("err_num - %d\n",WEXITSTATUS(status));
+				// env->err_num = 0;//WEXITSTATUS(status);
+				// printf("waitpid: err_num:%d\n",env->err_num);//WEXITSTATUS(status));
+			}
 			else if (WIFSIGNALED(status)) // if child end by signal
 				if(WTERMSIG(status) != 0)
 					env->err_num = 130;
@@ -433,6 +435,7 @@ void ft_multi_pipe(t_exe *exe, t_node *lst, t_env *env)
 	ft_exe_pipe(exe);
 	while (i < exe->num_pipes + 1)
 	{
+		printf("*******[ENTERED: ft_multi_pipe]*******\n\n");
 		lst = ft_get_group(lst,i);
 		// printf("%d\n",lst->num);
 		// printf("%s\n",lst->cmds[0]);
@@ -546,7 +549,7 @@ void ft_if_no_pipes(t_exe *exe, t_node *lst, t_env *env)
 	// (void) env;
 	if(exe->pipes == 0)
 	{
-		printf("if_no_pipes: HERE\n");
+		printf("*******[ENTERED: if_no_pipes]*******\n\n");
 		while(lst != NULL)// && ft_strcmp(lst->attr, "builtin"))
 		{
 			// printf("%s\n",lst->attr);
@@ -566,9 +569,9 @@ void ft_if_no_pipes(t_exe *exe, t_node *lst, t_env *env)
 void	execute_cmd(t_env *env, t_node **lst)
 {
 	t_exe	exe;
-
-	if (!(*lst)->cmds[0])
-		return ;
+	printf("\n[debug]\nentered execute: err_num:%d\n\n", env->err_num);
+	// if (!(*lst)->cmds[0])
+	// 	return ;
 	ft_initialize_exe_vars(&exe, lst);
 	// get_pipe_count(&exe, lst);
 	// exe.num_cmds = ft_dlstsize(*lst);
@@ -579,14 +582,15 @@ void	execute_cmd(t_env *env, t_node **lst)
 	// 	ft_no_pipe(&exe, *lst, env->env_vars);
 	// else
 		ft_multi_pipe(&exe,*lst, env);
+	printf("\n[debug]\nafter multi: err_num:%d\n\n", env->err_num);
 	ft_close_all_pipes(&exe);
 	// if (exe.num_pipes > 0)
 		ft_wait_pid(&exe, env);
+	printf("\n[debug]\nafter waitpid: err_num:%d\n\n", env->err_num);
 	ft_free_pp(&exe);
-	printf("\n[debug]\nafter multi: err_num:%d\n", env->err_num);
 	if (exe.num_pipes == 0 && env->err_num == 0)
 		ft_if_no_pipes(&exe, *lst, env);
-	printf("\n[debug]\nafter no pipe: err_num:%d\n", env->err_num);
+	printf("\n[debug]\nafter no pipe: err_num:%d\n\n", env->err_num);
 }
 
 // int	main(int ac, char **av, char **envp)

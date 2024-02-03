@@ -23,14 +23,17 @@ void	ft_export(t_env *env, char **cmds)
 	char	**updated;
 
 	printf("entered ft_export\n");
+	// printf("export: err_num:%d\n", env->err_num);
 	add_vars = cmds;
-	for (int k = 0; add_vars[k] ; k++)
-		printf("%d: %s\n", k, add_vars[k]);
-	updated = check_export(add_vars); //in check_export.c
+	// for (int k = 0; add_vars[k] ; k++)
+	// 	printf("%d: %s\n", k, add_vars[k]);
+	updated = check_export(add_vars, env);
+	// updated = check_export(add_vars);
 	// free_2d_arr(add_vars);
-	add_to_env(env, updated); //in update_env.c
+	add_to_env(env, updated);
 	free_2d_arr(updated);
 	// print_sys_env(env);
+	printf("export: err_num:%d\n", env->err_num);
 	printf("exited ft_export\n");
 }
 

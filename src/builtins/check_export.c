@@ -33,7 +33,7 @@ char	*check_remain_char1(char *str)
 		{
 			if (!ft_isalnum(buf[j]) && buf[j] != '_') //if remaining char is not alnum or underscore
 			{
-				printf("mark B: minishell -> export: invalid format: %s\n", buf);
+				printf("mark A: minishell: export: '%s':not a valid identifier\n", buf);
 				free_2d_arr(split);
 				free(str);
 				return (ft_strdup(" "));
@@ -63,7 +63,7 @@ char	*check_remain_char2(char *str)
 	}
 	else
 		buf = str;
-	printf("mark A: minishell -> export: invalid format: %s\n", buf);
+	printf("mark B: minishell: export: '%s':not a valid identifier\n", buf);
 	free_2d_arr(split);
 	free(str);
 	return (ft_strdup(" "));
@@ -100,7 +100,7 @@ char	**valid_vars(char **add, int size)
 * to malloc the right size in updated 2D array with valid key/value pair
 * used in check_export()
 */
-int	new_arr_size(char **add)
+int	new_arr_size(char **add, t_env *env)
 {
 	int	i;
 	int	j;
@@ -111,6 +111,8 @@ int	new_arr_size(char **add)
 	{
 		if (add[i][0] == ' ')
 		{
+			if (i != 0)
+				env->err_num = 1;
 			i++;
 			// printf("line %d is blank\n", i);
 			j++;
@@ -120,18 +122,20 @@ int	new_arr_size(char **add)
 	}
 	// printf("total var count:%d\n", i);
 	// printf("invalid_var count:%d\n",j);
+	// printf("valid_var count:%d\n", i-j);
+	// printf("export: err_num:%d\n", env->err_num);
 	return (i - j);
 }
 
 /*validate eligible new key/value to be added in the environment*/
-char **check_export(char **add)
+char **check_export(char **add, t_env *env)
 {
 	char	**updated;
 	int		i;
 	int		size;
 
 	i = 0;
-	size = 0;
+	// size = 0;
 	while (add[i])
 	{
 		if (ft_isalpha(add[i][0]) || add[i][0] == '_') //if first char is alpha or underscore
@@ -149,9 +153,9 @@ char **check_export(char **add)
 			add[i] = check_remain_char2(add[i]);
 		i++;
 	}
-	for (int k = 0; add[k] ; k++)
-		printf("%d: %s\n", k, add[k]);
-	size = new_arr_size(add);
+	// for (int k = 0; add[k] ; k++)
+	// 	printf("%d: %s\n", k, add[k]);
+	size = new_arr_size(add, env);
 	updated = valid_vars(add, size);
 	return (updated);
 }
