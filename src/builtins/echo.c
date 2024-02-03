@@ -12,24 +12,18 @@
 
 #include "../../minishell.h"
 
-// void	echo_print(const char *str)
-// {
-// 	int		i;
-// 	bool	flag;
+bool	check_flag(char *str)
+{
+	int	i;
 
-// 	flag = false;
-// 	i = 4;
-// 	if (!ft_strncmp(str, "echo -n ", 8))
-// 	{
-// 		flag = true;
-// 		i = 7;
-// 	}
-// 	// printf("%d, %d\n", i, flag);
-// 	while (str[++i])
-// 		printf("%c", str[i]);
-// 	if (flag == false)
-// 		printf("\n");
-// }
+	i = 1;
+	if (str[0] != '-')
+		return (false);
+	while (str[i])
+		if (str[i++] != 'n')
+			return (false);
+	return (true);
+}
 
 void	echo_print(char **cmds)
 {
@@ -39,20 +33,14 @@ void	echo_print(char **cmds)
 
 	flag = false;
 	i = 1;
-	if (cmds[1] && !ft_strcmp(cmds[1], "-n"))
-	{
-		flag = true;
-		i = 2;
-	}
-	// printf("%d, %d\n", i, flag);
+	if (cmds[1])
+		if ((flag = check_flag(cmds[1])) == true)
+			i = 2;
 	while (cmds && cmds[i])
 	{
 		j = 0;
 		while (cmds[i][j])
-		{
-			printf("%c", cmds[i][j]);
-			j++;
-		}
+			printf("%c", cmds[i][j++]);
 		if (cmds[i + 1])
 			printf(" ");
 		i++;
@@ -60,8 +48,4 @@ void	echo_print(char **cmds)
 	if (flag == false)
 		printf("\n");
 }
-
-/*when implementing node as input
-i = 0;
-if (!ft_strncmp(node->data, "-n ", 3))
-*/
+	// printf("%d, %d\n", i, flag);

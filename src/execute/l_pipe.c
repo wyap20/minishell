@@ -551,9 +551,9 @@ void ft_if_no_pipes(t_exe *exe, t_node *lst, t_env *env)
 			// printf("%s\n",lst->attr);
 			if(!ft_strcmp(lst->attr, "builtin"))
 			{	
-				if(!ft_strcmp(lst->cmds[0],"export") || 
-				 !ft_strcmp(lst->cmds[0],"unset") || 
-				 !ft_strcmp(lst->cmds[0],"cd"))
+				// if(!ft_strcmp(lst->cmds[0],"export") || 
+				//  !ft_strcmp(lst->cmds[0],"unset") || 
+				//  !ft_strcmp(lst->cmds[0],"cd"))
 					run_builtin(env, lst, exe);
 				return;
 			}
