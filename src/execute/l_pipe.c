@@ -195,9 +195,14 @@ void	ft_redir_left(t_exe *exe, t_node *lst, t_env *env)
 	{
 		exe->redir[0] = open(lst->cmds[1], O_RDONLY);
 		if (exe->redir[0] == -1)
-		{		
-			printf("minishell> %s: no such file or directory\n", lst->cmds[1]);
+		{
+			write(2,"minishell: ",12);
+			write(2,lst->cmds[1],ft_strlen(lst->cmds[1]));
+			write(2,": No such file or directory\n",29);
+			// perror("rdr <");
+			// printf("minishell> %s: no such file or directory\n", lst->cmds[1]);
 			env->err_num = 1;
+			exit(1);
 		}
 		dup2(exe->redir[0],STDIN_FILENO);
 		close(exe->redir[0]);
@@ -241,7 +246,7 @@ void ft_execute(t_exe *exe, t_node *lst, t_env *env)//char **envp)
 				break;
 			exe->z--;
 		}
-		printf("minishell> %s: command not found\n", 
+		printf("minishell: %s: command not found\n", 
 		lst->cmds[0] + exe->z);
 		env->err_num = 127;
 		return ;
@@ -529,7 +534,7 @@ void ft_sort(t_node *lst)
 		{
 			if (!ft_strcmp(x->attr, "rdr"))//(x->cmds[0][0] == '<' || x->cmds[0][0] =='>')
 			{
-				if (dst != x)
+				if (dst->attr != x->attr)
 				{
 					ft_swap_info(dst,x);
 					dst = dst->next;
