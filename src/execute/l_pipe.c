@@ -319,7 +319,7 @@ void ft_wait_pid (t_exe *exe, t_env *env)
 			if (WIFEXITED(status)){ // if child end normally
 				env->err_num = WEXITSTATUS(status); 
 				//err_num based on value return in exit() in child process
-				// printf("waitpid: err_num:%d\n",env->err_num);//WEXITSTATUS(status));
+				printf("waitpid: err_num:%d\n",env->err_num);//WEXITSTATUS(status));
 			}
 			else if (WIFSIGNALED(status)) // if child end by signal
 				if(WTERMSIG(status) != 0)
@@ -446,7 +446,7 @@ void ft_multi_pipe(t_exe *exe, t_node *lst, t_env *env)
 			ft_close_all_pipes(exe);
 			ft_run_cmds(exe, lst, env);
 			// printf("%s\n",strerror(errno));
-			exit(EXIT_FAILURE);
+			exit(0);
 		}
 		i++;
 	}

@@ -6,7 +6,7 @@
 /*   By: atok <atok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:44:59 by wyap              #+#    #+#             */
-/*   Updated: 2024/01/30 21:34:28 by atok             ###   ########.fr       */
+/*   Updated: 2024/02/04 04:10:19 by atok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,7 +147,7 @@ void ft_cd(t_env *env, char **input)
 		exit(1); // env->err_num = 1;
 	}
 	free(home_path);
-	exit(0);
+	// exit(0);
 }
 
 // if cd successfull chdir retunr 0 if not will return 1
