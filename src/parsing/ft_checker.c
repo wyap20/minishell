@@ -16,7 +16,8 @@
 * these functions handles syntax errors BEFORE lst_cmd is initiated
 */
 
-void ft_loop_to_pair(char *str, int *i, char c)
+/*skip quoted string*/
+void	ft_loop_to_pair(char *str, int *i, char c)
 {
 	(*i)++;
 	while (str[*i] != c && str[*i] != 0x00)
@@ -24,10 +25,13 @@ void ft_loop_to_pair(char *str, int *i, char c)
 	if (str[*i] == c)
 		c = 0x00;
 	if (str[*i] == 0x00)
-	return;	
+		return ;
 }
-
-int	ft_check_arrow(char *str)
+/*
+* check if more than two same arrow
+* return true/false for valid/invalid syntax
+*/
+bool	ft_check_arrow(char *str)
 {
 	int	i;
 
@@ -35,17 +39,18 @@ int	ft_check_arrow(char *str)
 	while (str[i] != 0x00)
 	{
 		if (str[i] == '\'' || str[i] == '\"')
-		{	
 			ft_loop_to_pair(str, &i, str[i]);
-		}
 		if (str[i] == '<' || str[i] == '>')
 			if (str[i + 1] == str[i] && str[i + 2] == str[i])
-				return (-1);
+				return (false);
 		i++;
 	}
-	return (0);
+	return (true);
 }
-
+/*
+* check for unclosed quotes
+* return 0/-1 if no/contains unclosed quotes
+*/
 int	ft_check_quote(char *str)
 {
 	int		i;
@@ -69,27 +74,38 @@ int	ft_check_quote(char *str)
 		i++;
 	}
 	if (c != 0x00)
-		return (printf("Error %c quote\n", c), -1);
+		return (printf("minishell: syntax error: unclosed %c quote\n", c), -1);
 	return (0);
 }
 
-/*check command: reject unclosed quote and more than triple arrow*/
-bool	check_cmd(char *cmd_str)
+/*
+* check command syntax
+* error handle:
+* standalone rdr w/out space (err_num:2);
+* more than double arrow (err_num:2);
+* unclosed quotes (err_num:42) [custom value]
+* return true/false for valid/invalid syntax
+*/
+bool	check_cmd(t_env *env, char *cmd_str)
 {
-	if (!ft_strcmp(cmd_str, "<<") || !ft_strcmp(cmd_str, ">>") || !ft_strcmp(cmd_str, "<") || !ft_strcmp(cmd_str, ">") || !ft_strcmp(cmd_str, "|"))
+	if (ft_check_quote(cmd_str) == -1)
 	{
-		printf("minishell: syntax error near unexpected token [check_cmd]\n");
+		env->err_num = 42;
 		return (false);
 	}
-	if (ft_check_quote(cmd_str) == -1)
-		return (false);
-	if (ft_check_arrow(cmd_str) == -1)
+	if (!ft_strcmp(cmd_str, "<<") || !ft_strcmp(cmd_str, ">>")
+		|| !ft_strcmp(cmd_str, "<") || !ft_strcmp(cmd_str, ">")
+		|| !ft_strcmp(cmd_str, "|") || ft_check_arrow(cmd_str) == false)
 	{
-		printf("Arrow Parse Error\n");
+		printf("minishell: syntax error near unexpected token\n");
+		env->err_num = 2;
 		return (false);
 	}
 	if (cmd_str[0] == 0 && str_not_empty(cmd_str))
+	{
+		env->err_num = 0;
 		return (false);
-	// printf("\t**Quote and arrow OK!**\n");
+	}
 	return (true);
 }
+//err_num = 42: [undefined bcs not project requirement] custom value

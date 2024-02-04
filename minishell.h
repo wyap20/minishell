@@ -104,14 +104,15 @@ void	print_sys_env(t_env *env);
 
 
 // parsing
-bool	check_cmd(char *cmd_str);
+bool	check_cmd(t_env *env, char *cmd_str);
+// bool	check_cmd(char *cmd_str);
 int	ft_check_quote(char *str);
-int	ft_check_arrow(char *str);
+bool	ft_check_arrow(char *str);
 // int loop_to_pair(char *str, int i, int qt);
 int	*ft_index(char *cmd_buf);
 void	ft_parse(t_node **lst_cmd ,char *cmd_buf, int *int_array);
 void	assign_attr(t_node **lst_cmd);
-bool	check_operator(t_node **lst_cmd);
+bool	check_operator(t_env *env, t_node **lst_cmd);
 
 // expanding
 void	store_env(t_env *env, char **envp);

@@ -87,15 +87,15 @@ int	main(int ac, char **av, char **envp)
 			printf("cmd_buf input:%s\n", cmd_buf);
 			if (!ft_strcmp(cmd_buf, "exit"))
 				ft_exit(&env, cmd_buf);
-			if (check_cmd(cmd_buf) == true)
+			if (check_cmd(&env, cmd_buf) == true)
 			{
 				lst_cmd = init_lst(lst_cmd);
 				// printf("\n\tHead Node Addr		:%p\n", *lst_cmd);
 				ft_parse(lst_cmd, cmd_buf, ft_index(cmd_buf)); //to optimize function
 				// printf("\tparse:\n"); print_list(lst_cmd);
 				assign_attr(lst_cmd); //whileloop to assign attribute and quote type in node
-				// printf("\tassign attr:\n"); print_list(lst_cmd);
-				if (check_operator(lst_cmd) == true)
+				printf("\tassign attr:\n"); print_list(lst_cmd);
+				if (check_operator(&env, lst_cmd) == true)
 				{
 					ft_expand(lst_cmd, &env); //expand handle dollar sign (loop through list and replace env var)
 					printf("\n\texpand:\n"); print_list(lst_cmd);

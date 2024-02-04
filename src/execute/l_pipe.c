@@ -248,15 +248,11 @@ void ft_execute(t_exe *exe, t_node *lst, t_env *env)//char **envp)
 		}
 		printf("minishell: %s: command not found\n", 
 		lst->cmds[0] + exe->z);
-		env->err_num = 127;
-		return ;
-	}
-	else
-	{	
-		env->err_num = 0;
-		return ;
+		exit(127);
 	}
 }
+	// else
+	// 	return ;
 
 void ft_set_pipe(t_exe *exe, int i)
 {
