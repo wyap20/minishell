@@ -81,6 +81,7 @@ char	*ft_strtrim(char const *s1, char const *set);
 // void	*ft_memmove(void *dest, const void *src, size_t n);
 // char	*ft_strncpy(char *dest, const char *src, size_t n);
 int	ft_isalpha(int c);
+char	*ft_itoa(int n);
 
 /*RT's doubly list proto*/
 t_node	*ft_dlstnew(char *data);

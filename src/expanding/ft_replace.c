@@ -74,6 +74,22 @@ char	*get_key(t_node *token)
 	return (key);
 }
 
+char	*expand_errno(t_env *env, char *key)
+{
+	char	*err_no;
+	char	*sub;
+	char	*val;
+
+	err_no = ft_itoa(env->err_num);
+	sub = ft_substr(key, 2, ft_strlen(key) - 1);
+	val = ft_strjoin(err_no, sub);
+	// printf("key:%s\n", key);
+	// printf("itoa errnum:%s\n", err_no);
+	// printf("sub:%s\n", sub);
+	// printf("expand errno val:%s\n", val);
+	return (free(sub), free(err_no), val);
+}
+
 char	*get_val(t_env *env, char *key)
 {
 	int		i;
@@ -82,11 +98,15 @@ char	*get_val(t_env *env, char *key)
 	char	*trim;
 
 	i = 0;
+	if (key[0] == '$' && key[1] == '?')
+	{
+		val = expand_errno(env, key);
+		return (val);
+	}
 	trim = ft_strtrim(key, "$");
 	key = ft_strjoin(trim, "=");
-	free(trim);
 	len = (int)ft_strlen(key);
-	// printf("get_val key:%s\nlen:%i\n", key, len);
+	printf("get_val key:%s\nlen:%i\n", key, len);
 	val = NULL;
 	while (env->env_vars[i])//[0])
 	{
@@ -94,8 +114,7 @@ char	*get_val(t_env *env, char *key)
 			val = ft_substr(env->env_vars[i], len, (int)ft_strlen(env->env_vars[i]) - len);
 		i++;
 	}
-	free(key);
-	return (val);
+	return (free(trim), free(key), val);
 }
 	// printf("**View stored env**\n");
 	// for (int j = 0; env->env_vars[j][0]; j++)
@@ -125,9 +144,8 @@ void	get_key_val_rplc(t_env *env, t_node *ptr)
 	char	*tmp;
 
 	key = get_key(ptr);
-	if (key != NULL && key[0] == '$' && (ft_not_alpha(key[1]) || !key[1]))
+	if (key != NULL && key[0] == '$' && ((ft_not_alpha(key[1]) && key[1] != '?') || !key[1]))
 	{
-		// ptr->quote_type = "single";
 		ptr = ptr->next;
 		return (free(key));
 	}
@@ -167,7 +185,7 @@ void	ft_expand(t_node **lst_cmd, t_env *env)
 		// if (ptr)
 			// if (!ft_strcmp(ptr->quote_type, "single") || !ft_strchr(ptr->content, '$')) 
 		ptr = ptr->next;
-		printf("expandmark\n");
+		// printf("expandmark\n");
 	}
 }
 

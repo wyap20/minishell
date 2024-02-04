@@ -577,8 +577,10 @@ void	execute_cmd(t_env *env, t_node **lst)
 	// if (!(*lst)->cmds[0])
 	// 	return ;
 	ft_initialize_exe_vars(&exe, lst);
-	env->err_num = 0;
-	printf("\n[debug]\nreset err_no: err_num:%d\n\n", env->err_num);
+
+	// env->err_num = 0;
+	// printf("\n[debug]\nreset err_no: err_num:%d\n\n", env->err_num);
+	
 	// get_pipe_count(&exe, lst);
 	// exe.num_cmds = ft_dlstsize(*lst);
 	signal(SIGINT,sig_nl);

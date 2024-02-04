@@ -98,7 +98,7 @@ int	main(int ac, char **av, char **envp)
 				if (check_operator(lst_cmd) == true)
 				{
 					ft_expand(lst_cmd, &env); //expand handle dollar sign (loop through list and replace env var)
-					// printf("\n\texpand:\n"); print_list(lst_cmd);
+					printf("\n\texpand:\n"); print_list(lst_cmd);
 					trim_quotes(lst_cmd);
 					// printf("\n\ttrim quotes:\n"); print_list(lst_cmd);
 					clear_empty_node(lst_cmd);
