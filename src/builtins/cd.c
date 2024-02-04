@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../../minishell.h"
+
 char	*get_env_home(t_env *env)
 {
 	char	*ret;
@@ -21,7 +22,8 @@ char	*get_env_home(t_env *env)
 	while (env->env_vars[++i])
 	{
 		if (!ft_strncmp(env->env_vars[i], "HOME=", 5))
-			ret = ft_substr(env->env_vars[i], 5, (int)ft_strlen(env->env_vars[i]) - 5);
+			ret = ft_substr(env->env_vars[i], 5,
+					(int)ft_strlen(env->env_vars[i]) - 5);
 	}
 	return (ret);
 }
@@ -34,9 +36,9 @@ void	update_oldpwd(t_env *env, char *oldpwd)
 
 	i = -1;
 	oldpwd_ptr = NULL;
-	export = NULL;
-	printf("entered update oldpwd\n");
-	while (env->env_vars[++i]) //if have OLDPWD
+	// export = NULL;
+	// printf("entered update oldpwd\n");
+	while (env->env_vars[++i])
 	{
 		if (!ft_strncmp(env->env_vars[i], "OLDPWD=", 7))
 		{
@@ -65,9 +67,9 @@ void	export_pwd(t_env *env, char *pwd)
 
 	pwd_ptr = NULL;
 	export = NULL;
-	printf("ft_cd: PWD not set\n");
+	// printf("ft_cd: PWD not set\n");
 	pwd_ptr = ft_strjoin("PWD=", pwd);
-	export = (char **)malloc(3 * sizeof(char *)); //3 if oldpwd
+	export = (char **)malloc(3 * sizeof(char *));
 	export[0] = pwd_ptr;
 	export[1] = ft_strdup("OLDPWD=");
 	export[2] = NULL;
@@ -106,19 +108,15 @@ void	update_pwd_oldpwd(t_env *env, char *pwd)
 	free(pwd_ptr);
 }
 
-// [cd] [~] or [cd] [NULL]
-// void ft_cd(t_env *env, t_exe *exe, char **input)
-void ft_cd(t_env *env, char **input)
+void	change_dir(t_env *env, char **input)
 {
 	char	*home_path;
-	char	*pwd;
 
 	home_path = get_env_home(env);
-	pwd = NULL;
 	if (input[1] && input[2])
 	{
 		printf("minishell: cd: too many arguments\n");
-		exit(1); //return ;
+		exit(1);
 	}
 	if (input[1] == NULL)
 	{
@@ -127,15 +125,23 @@ void ft_cd(t_env *env, char **input)
 		else
 		{
 			printf("minishell: cd: HOME not set\n");
-			exit(1);//return ;
+			exit(1);
 		}
 	}
 	else
 		env->err_num = chdir(input[1]);
+	free(home_path);
+}
+
+void	ft_cd(t_env *env, char **input)
+{
+	char	*pwd;
+
+	pwd = NULL;
+	change_dir(env, input);
 	if (env->err_num == 0)
 	{
-		printf("ft_cd: chdir successful\n");
-		// printf("pwd: %s\n", getcwd(NULL, 0)); //TEMPORARY, WILL LEAK CUZ NOT HANDLED
+		// printf("ft_cd: chdir successful\n");
 		if ((pwd = getcwd(NULL, 0)) == NULL)
 			perror("failed to get current working directory\n");
 		update_pwd_oldpwd(env, pwd);
@@ -143,12 +149,48 @@ void ft_cd(t_env *env, char **input)
 	else
 	{
 		printf("minishell: cd: %s: No such file or directory\n", input[1]);
-		free(home_path);
-		exit(1); // env->err_num = 1;
+		exit(1);
 	}
-	free(home_path);
-	// exit(0);
 }
+
+// void ft_cd(t_env *env, char **input)
+// {
+// 	char	*home_path;
+// 	char	*pwd;
+
+// 	home_path = get_env_home(env);
+// 	pwd = NULL;
+// 	if (input[1] && input[2])
+// 	{
+// 		printf("minishell: cd: too many arguments\n");
+// 		exit(1);
+// 	}
+// 	if (input[1] == NULL)
+// 	{
+// 		if (home_path)
+// 			env->err_num = chdir(home_path);
+// 		else
+// 		{
+// 			printf("minishell: cd: HOME not set\n");
+// 			exit(1);
+// 		}
+// 	}
+// 	else
+// 		env->err_num = chdir(input[1]);
+// 	free(home_path);
+// 	if (env->err_num == 0)
+// 	{
+// 		// printf("ft_cd: chdir successful\n");
+// 		if ((pwd = getcwd(NULL, 0)) == NULL)
+// 			perror("failed to get current working directory\n");
+// 		update_pwd_oldpwd(env, pwd);
+// 	}
+// 	else
+// 	{
+// 		printf("minishell: cd: %s: No such file or directory\n", input[1]);
+// 		exit(1);
+// 	}
+// }
 
 // if cd successfull chdir retunr 0 if not will return 1
 

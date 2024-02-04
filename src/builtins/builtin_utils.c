@@ -38,26 +38,25 @@ void	print_sys_env(t_env *env)
 }
 
 /*
-* used by minishell pwd command
 * prints out specified environment variable, s* is case sensitive
 */
-void	print_env_var(char **envp, char *s)
-{
-	int		i;
-	char	**pwd;
+// void	print_env_var(char **envp, char *s)
+// {
+// 	int		i;
+// 	char	**sys_var;
 
-	i = -1;
-	pwd = NULL;
-	s = ft_strjoin(s, "=");
-	while (envp[++i])
-	{
-		if (!ft_strncmp(envp[i], s, 4))
-		{
-			pwd = ft_split(envp[i], '=');
-			break ;
-		}
-	}
-	printf("%s\n", pwd[1]);
-	free(s);
-	free_2d_arr(pwd);
-}
+// 	i = -1;
+// 	sys_var = NULL;
+// 	s = ft_strjoin(s, "=");
+// 	while (envp[++i])
+// 	{
+// 		if (!ft_strncmp(envp[i], s, 4))
+// 		{
+// 			sys_var = ft_split(envp[i], '=');
+// 			break ;
+// 		}
+// 	}
+// 	printf("%s\n", sys_var[1]);
+// 	free(s);
+// 	free_2d_arr(sys_var);
+// }
