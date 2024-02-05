@@ -6,7 +6,7 @@
 /*   By: atok <atok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 18:28:19 by wyap              #+#    #+#             */
-/*   Updated: 2024/01/31 18:24:19 by atok             ###   ########.fr       */
+/*   Updated: 2024/02/05 20:50:20 by atok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,13 +76,14 @@ int	main(int ac, char **av, char **envp)
 	t_node	**lst_cmd; //list to store parsed cmd
 
 	(void) av;
-	signals();
+
 	cmd_buf = NULL;
 	if (ac == 1)
 	{
 		init_env(&env, envp);
 		while (1)
 		{
+			signals();
 			cmd_buf = get_cmd(cmd_buf);
 			printf("cmd_buf input:%s\n", cmd_buf);
 			if (!ft_strcmp(cmd_buf, "exit"))

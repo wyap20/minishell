@@ -65,12 +65,12 @@ int    here_doc(char *str)
     return (io[0]);
 }
 
-void	sig_nl(int sig_num)
-{
-	if(sig_num != SIGINT)
-		return;
-	write(1, "\n", 1);
-}
+// void	sig_nl(int sig_num) // looks likes not needed 
+// {
+// 	if(sig_num != SIGINT)
+// 		return;
+// 	write(1, "\n", 1);
+// }
 
 // size_t	ft_strlen(const char *str)
 // {
@@ -317,7 +317,8 @@ void ft_wait_pid (t_exe *exe, t_env *env)
 	{
 		if(waitpid(exe->pid[i], &status, 0) > 0)
 		{
-			if (WIFEXITED(status)){ // if child end normally
+			if (WIFEXITED(status))
+			{ // if child end normally
 				env->err_num = WEXITSTATUS(status); 
 				//err_num based on value return in exit() in child process
 				printf("waitpid: err_num:%d\n",env->err_num);//WEXITSTATUS(status));
@@ -579,7 +580,7 @@ void	execute_cmd(t_env *env, t_node **lst)
 	
 	// get_pipe_count(&exe, lst);
 	// exe.num_cmds = ft_dlstsize(*lst);
-	signal(SIGINT,sig_nl);
+	// signal(SIGINT,sig_nl); // looks like no need
 	// if (exe.num_pipes == 0)
 	// ft_sort(*lst);
 	// printf("\n\tft_sort:\n"); print_list(lst); print_cmd_group(lst);
