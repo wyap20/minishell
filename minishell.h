@@ -141,7 +141,7 @@ void	create_cmd_group(t_env *env, t_node *lst_cmd);
 // t_node	*create_cmd_group(t_env *env, t_node *lst_cmd);
 // void	get_pipe_count(t_env *env, t_node **lst_cmd);
 void	get_pipe_count(t_exe *exe, t_node **lst_cmd);
-void	execute_cmd(t_env *env, t_node **lst);
+void	ft_execute_cmd(t_env *env, t_node **lst);
 
 
 /*built in*/

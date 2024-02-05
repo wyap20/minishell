@@ -6,7 +6,7 @@
 /*   By: atok <atok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 18:28:19 by wyap              #+#    #+#             */
-/*   Updated: 2024/02/05 20:50:20 by atok             ###   ########.fr       */
+/*   Updated: 2024/02/06 02:41:31 by atok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ int	main(int ac, char **av, char **envp)
 						create_cmd_group(&env, *lst_cmd);
 						printf("created cmd group\n");
 						printf("\n\tcreate_cmd_group:\n"); print_list(lst_cmd); print_cmd_group(lst_cmd);
-						execute_cmd(&env, lst_cmd);
+						ft_execute_cmd(&env, lst_cmd);
 					}
 				}
 				free(cmd_buf); //readline malloc buffer
