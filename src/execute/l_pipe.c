@@ -336,6 +336,8 @@ void	ft_sort(t_node *lst)
 		return ;
 	while (x != NULL)
 	{
+		while(!ft_strcmp(x->attr,"rdr"))
+			x = x->next;
 		dst = x;
 		while (x != NULL && ft_strcmp(x->attr, "pipe"))
 		{
