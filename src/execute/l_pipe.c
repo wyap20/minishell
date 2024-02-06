@@ -129,8 +129,12 @@ void	ft_execute(t_exe *exe, t_node *lst, t_env *env) //WIP
 		// in bash ls: cannot access 'a': No such file or directory
 		// in ours /bin/ls: cannot access 'a': No such file or directory
 		// is auto print err msg by ls itself
-		printf("minishell: %s: no such file or directory\n",
-			lst->cmds[0] + exe->z);
+		if (env->env_path != NULL)
+			printf("minishell> %s: command not found\n", 
+				lst->cmds[0] + exe->z);
+		else if (env->env_path == NULL)
+			printf("minishell: %s: no such file or directory\n",
+				lst->cmds[0] + exe->z);
 		exit(127);
 	}
 }
