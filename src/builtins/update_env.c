@@ -14,9 +14,9 @@ int	new_key_count(t_env *env, char **updated)
 	while (updated[i])
 	{
 		j = 0;
-		// printf("%s\n", updated[i]);
+		printf("%s\n", updated[i]);
 		split = ft_split(updated[i], '=');
-		// printf("%s\n", split[0]);
+		printf("%s\n", split[0]);
 		while (cur_vars[j])
 		{
 			if (!ft_strncmp(split[0], cur_vars[j], ft_strlen(split[0])))
@@ -29,6 +29,8 @@ int	new_key_count(t_env *env, char **updated)
 		free_2d_arr(split);
 		i++;
 	}
+	// printf("update env: get_array_count(updated):%d\n", get_array_count(updated));
+	// printf("update env: count:%d\n", count);
 	return (get_array_count(updated) - count);
 }
 
@@ -78,7 +80,7 @@ char	**update_exist_key(t_env *env, char **res, char **updated, int i)
 			{
 					// printf("update mark\n");
 				res[i] = ft_strdup(updated[j]);
-					// printf("%d: %s\n", i, res[i]);
+					printf("%d: %s\n", i, res[i]);
 				free(updated[j]);
 				updated[j] = ft_strdup(" ");
 				free(tmp);
@@ -138,8 +140,8 @@ void	add_to_env(t_env *env, char **updated)
 
 	new_size = new_key_count(env, updated);
 	printf("add_to_env: new_size:%d\n", new_size);
-	if (!new_size)
-		return ;
+		// if (!new_size) //do not use: will not update existing key if return
+		// 	return ;
 	total_size = env->key_count + new_size;
 	printf("add_to_env: current env key count: %d\n", env->key_count);
 	res = copy_env(env, total_size);
