@@ -116,8 +116,8 @@ bool	check_operator(t_env *env, t_node **lst_cmd);
 
 // expanding
 void	store_env(t_env *env, char **envp);
-void	store_path(t_env *env, char **envp);
-// void	store_tilda(t_env *env, char **envp);
+// void	store_path(t_env *env, char **envp);
+void	store_path(t_env *env);
 void	ft_expand(t_node **lst_cmd, t_env *env);
 void	trim_quotes(t_node **lst_cmd);
 void	clear_empty_node(t_node **lst_cmd);

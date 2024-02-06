@@ -35,26 +35,37 @@ void	store_env(t_env *env, char **envp)
 
 void	split_path(t_env *env)
 {
+	char **tmp;
+
+	tmp = NULL;
 	if (!env->env_path)
 		perror("stored $PATH variable not found/not stored\n");
-	env->paths = ft_split(env->env_path, ':');
+	if (env->paths)
+	{
+		tmp = env->paths;
+		env->paths = ft_split(env->env_path, ':');
+		free_2d_arr(tmp);
+	}
+	else
+		env->paths = ft_split(env->env_path, ':');
 	//check splitted paths
 	// printf("\n**View splitted PATH**\n");
 	// for (int i = 0; env->paths[i]; i++)
 	// 	printf("%d: %s\n", i, env->paths[i]);
-	// printf("\n");
+	printf("\n");
 }
 
 /*store $PATH variable*/
-void	store_path(t_env *env, char **envp)
+// void	store_path(t_env *env, char **envp)
+void	store_path(t_env *env)//, char **envp)
 {
 	int	i;
 
 	i = -1;
-	while (envp[++i]) //find PATH variable in envp
+	while (env->env_vars[++i]) //find PATH variable in env->env_vars
 	{
-		if (!ft_strncmp(envp[i], "PATH=", 5))
-			env->env_path = ft_substr(envp[i], 5, (int)ft_strlen(envp[i]) - 5);
+		if (!ft_strncmp(env->env_vars[i], "PATH=", 5))
+			env->env_path = ft_substr(env->env_vars[i], 5, (int)ft_strlen(env->env_vars[i]) - 5);
 	}
 	split_path(env);
 }

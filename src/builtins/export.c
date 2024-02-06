@@ -12,6 +12,23 @@
 
 #include "../../minishell.h"
 
+/*updates env->env_path & env->paths after each export*/
+void	renew_path(t_env *env)
+{
+	char	*tmp;
+
+	tmp = NULL;
+	// printf("entered renew path\n");
+	if (env->env_path)
+	{
+		tmp = env->env_path;
+		store_path(env);
+		free(tmp);
+	}
+	else
+		store_path(env);
+}
+
 /*
 * minishell export command
 * updates env->env_var with valid key/value pairs
@@ -31,6 +48,7 @@ void	ft_export(t_env *env, char **cmds)
 	// updated = check_export(add_vars);
 	// free_2d_arr(add_vars);
 	add_to_env(env, updated);
+	renew_path(env);
 	free_2d_arr(updated);
 	// print_sys_env(env);
 	printf("export: err_num:%d\n", env->err_num);
