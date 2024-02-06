@@ -17,7 +17,7 @@ SRC = main.c utils/ft_split.c utils/ft_strlen.c utils/ft_strjoin.c\
 		utils/ft_strcmp.c utils/ft_strncmp.c utils/ft_isalnum.c\
 		utils/ft_strtrim.c utils/ft_strchr.c utils/ft_isalpha.c\
 		utils/ft_strdup.c utils/ft_substr.c parsing/parse_pipe.c\
-		utils/utils1.c utils/doubly.c parsing/ft_checker.c\
+		utils/utils1.c utils/doubly.c utils/ft_itoa.c parsing/ft_checker.c\
 		parsing/node_checker.c parsing/trim_quotes.c parsing/ft_indexing.c\
 		parsing/parser.c parsing/combine.c expanding/ft_replace.c\
 		expanding/store_env.c expanding/expand_utils.c expanding/get_multiline.c\

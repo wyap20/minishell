@@ -14,24 +14,15 @@
 
 char	*get_cmd(char *cmd_buf)
 {
-	char	*prompt;
-	char	*cur_path;
 	char	*tmp;
 
-	cur_path = ft_strdup("minishell");
-	// if ((cur_path = getcwd(NULL, 0)) == NULL)
-		// perror("failed to get current working directory\n");
-	prompt = ft_strjoin(cur_path, "> ");
-	cmd_buf = readline(prompt);
+	cmd_buf = readline("minishell> ");//(prompt);
 	if (!cmd_buf)
-	{
 		cmd_buf = "exit";
-		// printf("\nexit");
-	}
 	else if (str_not_empty(cmd_buf))//(ft_strlen(cmd_buf) > 0)
 	{
 		add_history(cmd_buf);
-		printf("jisotry - %s\n", cmd_buf);
+		// printf("jisotry - %s\n", cmd_buf);
 		tmp = cmd_buf;
 		cmd_buf = ft_strtrim(cmd_buf, " "); //trim space
 		free(tmp);
@@ -39,15 +30,22 @@ char	*get_cmd(char *cmd_buf)
 	else if (!str_not_empty(cmd_buf) && (ft_strlen(cmd_buf) > 0))
 	{
 		add_history(cmd_buf);
-		printf("&& - %s\n", cmd_buf);
+		// printf("&& - %s\n", cmd_buf);
 		tmp = cmd_buf;
 		cmd_buf = ft_strtrim(cmd_buf, " "); //trim space
 		free(tmp);
 	}
-	free(prompt);
-	free(cur_path);
 	return (cmd_buf);
 }
+
+	// cur_path = NULL;
+	// if ((cur_path = getcwd(NULL, 0)) == NULL)
+		// perror("failed to get current working directory\n");
+	// prompt = ft_strjoin(cur_path, "> ");
+	// cmd_buf = readline(prompt);
+	//...
+	// free(prompt);
+	// free(cur_path);
 
 t_node **init_lst(t_node **lst_cmd)
 {
@@ -62,19 +60,42 @@ void	init_env(t_env *env, char **envp)
 {
 	env->key_count = 0;
 	env->err_num = 0;
-	// env->pipe_count = 0;
 	store_env(env, envp);
 	store_path(env, envp);
-	// store_tilda(env, envp);
-	// print_env_var(envp, "PATH"); //compare with splitted path
+}
+
+void	lexer_seq(t_env *env, t_node **lst_cmd, char *cmd_buf)
+{
+	ft_parse(lst_cmd, cmd_buf, ft_index(cmd_buf));
+	assign_attr(lst_cmd);
+	if (check_operator(env, lst_cmd) == true)
+	{
+		ft_expand(lst_cmd, env);
+		trim_quotes(lst_cmd);
+		clear_empty_node(lst_cmd);
+		if (*lst_cmd)
+		{
+			set_rdr_nodes(lst_cmd);
+			combine_nodes(lst_cmd);
+			ft_sort(*lst_cmd);
+			combine_nodes(lst_cmd);
+			set_builtin_nodes(lst_cmd);
+			combine_nodes(lst_cmd);
+			create_cmd_group(env, *lst_cmd);
+			ft_execute_cmd(env, lst_cmd);
+		}
+	}
+	free(cmd_buf);
+	free_list(lst_cmd);
+	free(lst_cmd);
+	lst_cmd = NULL;
 }
 
 int	main(int ac, char **av, char **envp)
 {
 	char	*cmd_buf;
 	t_env	env;
-	t_node	**lst_cmd; //list to store parsed cmd
-
+	t_node	**lst_cmd;
 	(void) av;
 
 	cmd_buf = NULL;
@@ -85,67 +106,84 @@ int	main(int ac, char **av, char **envp)
 		{
 			signals();
 			cmd_buf = get_cmd(cmd_buf);
-			printf("cmd_buf input:%s\n", cmd_buf);
 			if (!ft_strcmp(cmd_buf, "exit"))
 				ft_exit(&env, cmd_buf);
 			if (check_cmd(&env, cmd_buf) == true)
 			{
 				lst_cmd = init_lst(lst_cmd);
-				// printf("\n\tHead Node Addr		:%p\n", *lst_cmd);
-				ft_parse(lst_cmd, cmd_buf, ft_index(cmd_buf)); //to optimize function
-				// printf("\tparse:\n"); print_list(lst_cmd);
-				assign_attr(lst_cmd); //whileloop to assign attribute and quote type in node
-				printf("\tassign attr:\n"); print_list(lst_cmd);
-				if (check_operator(&env, lst_cmd) == true)
-				{
-					ft_expand(lst_cmd, &env); //expand handle dollar sign (loop through list and replace env var)
-					printf("\n\texpand:\n"); print_list(lst_cmd);
-					trim_quotes(lst_cmd);
-					// printf("\n\ttrim quotes:\n"); print_list(lst_cmd);
-					clear_empty_node(lst_cmd);
-					// printf("\n\tremove null node:\n"); print_list(lst_cmd);
-					if (*lst_cmd)
-					{
-						set_rdr_nodes(lst_cmd);
-						// printf("\n\tset rdr:\n"); print_list(lst_cmd);
-						combine_nodes(lst_cmd);
-						printf("\n\tcombine:\n"); print_list(lst_cmd);
-						ft_sort(*lst_cmd);
-						printf("\n\tft_sort:\n"); print_list(lst_cmd);
-						combine_nodes(lst_cmd);
-						printf("\n\tcombine 2:\n"); print_list(lst_cmd);
-						set_builtin_nodes(lst_cmd);
-						printf("\n\tset builtin:\n"); print_list(lst_cmd);
-						combine_nodes(lst_cmd);
-						printf("\n\tcombine 3:\n"); print_list(lst_cmd);
-						/*execution*/
-						create_cmd_group(&env, *lst_cmd);
-						printf("created cmd group\n");
-						printf("\n\tcreate_cmd_group:\n"); print_list(lst_cmd); print_cmd_group(lst_cmd);
-						ft_execute_cmd(&env, lst_cmd);
-					}
-				}
-				free(cmd_buf); //readline malloc buffer
-				free_list(lst_cmd);
-				free(lst_cmd);
-				lst_cmd = NULL;
+				lexer_seq(&env, lst_cmd, cmd_buf);
 			}
 			else
-				free(cmd_buf); //readline malloc buffer
+				free(cmd_buf);
 		}
 	}
 }
 
-					// if (!ft_strncmp(cmd_buf, "echo", 4))
-					// 	echo_print(cmd_buf);
-					// else if (!ft_strcmp(cmd_buf, "pwd"))
-					// 	print_env_var(envp, "PWD");
-					// else if (!ft_strcmp(cmd_buf, "env"))
-					// 	print_sys_env(&env);
-					// else if (!ft_strcmp(cmd_buf, "export"))
-					// 	ft_export(&env, "AAAAA=\'aaaaaa\' _b=\"xaxaxax\" __c=0812734917 @_d=\"xaxaxax\" _e6=\"xaxaxax\" f^=\"xaxaxax\" 3g=\"xaxaxax\"");
-					// else if (!ft_strcmp(cmd_buf, "unset"))
-					// 	ft_unset(&env, "AAAAA _b __c");
+// int	main(int ac, char **av, char **envp)
+// {
+// 	char	*cmd_buf;
+// 	t_env	env;
+// 	t_node	**lst_cmd; //list to store parsed cmd
+// 	(void) av;
+
+// 	cmd_buf = NULL;
+// 	if (ac == 1)
+// 	{
+// 		init_env(&env, envp);
+// 		while (1)
+// 		{
+// 			signals();
+// 			cmd_buf = get_cmd(cmd_buf);
+// 			printf("cmd_buf input:%s\n", cmd_buf);
+// 			if (!ft_strcmp(cmd_buf, "exit"))
+// 				ft_exit(&env, cmd_buf);
+// 			if (check_cmd(&env, cmd_buf) == true)
+// 			{
+// 				lst_cmd = init_lst(lst_cmd);
+// 				// printf("\n\tHead Node Addr		:%p\n", *lst_cmd);
+// 				ft_parse(lst_cmd, cmd_buf, ft_index(cmd_buf)); //to optimize function
+// 				// printf("\tparse:\n"); print_list(lst_cmd);
+// 				assign_attr(lst_cmd); //whileloop to assign attribute and quote type in node
+// 				printf("\tassign attr:\n"); print_list(lst_cmd);
+// 				if (check_operator(&env, lst_cmd) == true)
+// 				{
+// 					ft_expand(lst_cmd, &env); //expand handle dollar sign (loop through list and replace env var)
+// 					printf("\n\texpand:\n"); print_list(lst_cmd);
+// 					trim_quotes(lst_cmd);
+// 					// printf("\n\ttrim quotes:\n"); print_list(lst_cmd);
+// 					clear_empty_node(lst_cmd);
+// 					// printf("\n\tremove null node:\n"); print_list(lst_cmd);
+// 					if (*lst_cmd)
+// 					{
+// 						set_rdr_nodes(lst_cmd);
+// 						// printf("\n\tset rdr:\n"); print_list(lst_cmd);
+// 						combine_nodes(lst_cmd);
+// 						printf("\n\tcombine:\n"); print_list(lst_cmd);
+// 						ft_sort(*lst_cmd);
+// 						printf("\n\tft_sort:\n"); print_list(lst_cmd);
+// 						combine_nodes(lst_cmd);
+// 						printf("\n\tcombine 2:\n"); print_list(lst_cmd);
+// 						set_builtin_nodes(lst_cmd);
+// 						printf("\n\tset builtin:\n"); print_list(lst_cmd);
+// 						combine_nodes(lst_cmd);
+// 						printf("\n\tcombine 3:\n"); print_list(lst_cmd);
+// 						/*execution*/
+// 						create_cmd_group(&env, *lst_cmd);
+// 						printf("created cmd group\n");
+// 						printf("\n\tcreate_cmd_group:\n"); print_list(lst_cmd); print_cmd_group(lst_cmd);
+// 						ft_execute_cmd(&env, lst_cmd);
+// 					}
+// 				}
+// 				free(cmd_buf); //readline malloc buffer
+// 				free_list(lst_cmd);
+// 				free(lst_cmd);
+// 				lst_cmd = NULL;
+// 			}
+// 			else
+// 				free(cmd_buf); //readline malloc buffer
+// 		}
+// 	}
+// }
 
 // gcc *.c -lreadline && ./a.out
 

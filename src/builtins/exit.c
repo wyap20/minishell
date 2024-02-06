@@ -21,6 +21,5 @@ void	ft_exit(t_env *env, char *cmd_buf)
 	free_2d_arr(env->env_vars);
 	free_2d_arr(env->paths);
 	free(env->env_path);
-	// free(env->home_tilda);
 	exit(0);
 }
