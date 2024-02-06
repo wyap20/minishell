@@ -19,9 +19,9 @@ char	*get_cmd(char *cmd_buf)
 	cmd_buf = readline("minishell> ");//(prompt);
 	if (!cmd_buf)
 		cmd_buf = "exit";
-	else if (str_not_empty(cmd_buf))//(ft_strlen(cmd_buf) > 0)
+	else if (str_not_empty(cmd_buf)) //if only contain whitespace
 	{
-		add_history(cmd_buf);
+		// add_history(cmd_buf);
 		// printf("jisotry - %s\n", cmd_buf);
 		tmp = cmd_buf;
 		cmd_buf = ft_strtrim(cmd_buf, " "); //trim space

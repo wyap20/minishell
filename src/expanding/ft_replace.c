@@ -58,19 +58,18 @@ char	*get_key(t_node *token)
 		{
 			i++;
 			j++;
-			while (tmp[i] != ' ' && tmp[i] != '$' && tmp[i])
+			while (tmp[i] != ' ' && tmp[i] != '$' && tmp[i] && ft_isalpha(tmp[i]))
 			{
 				i++;
 				j++;
 			}
-			printf("\n");
 			key = ft_substr(tmp, i - j, j);
 			if (ft_strlen(key) > 0)
 				break ;
 		}
 		i++;
 	}
-	printf("get key:%s\n", key);
+	// printf("get key:%s\n", key);
 	return (key);
 }
 
@@ -137,7 +136,7 @@ char	*get_val(t_env *env, char *key)
 // 	  return true;
 // }
 
-void	get_key_val_rplc(t_env *env, t_node *ptr)
+t_node	*get_key_val_rplc(t_env *env, t_node *ptr)
 {
 	char	*key;
 	char	*val;
@@ -145,16 +144,13 @@ void	get_key_val_rplc(t_env *env, t_node *ptr)
 
 	key = get_key(ptr);
 	if (key != NULL && key[0] == '$' && ((ft_not_alpha(key[1]) && key[1] != '?') || !key[1]))
-	{
-		ptr = ptr->next;
-		return (free(key));
-	}
+		return (free(key), ptr->next);
 	else if (key != NULL)
 	{
 		tmp = key;
 		key = ft_strtrim(key, "\"\'");
 		free(tmp);
-		printf("trim:%s\n", key);
+		// printf("trim:%s\n", key);
 		val = get_val(env, key);
 		// printf("val:%s\n", val);
 		tmp = ptr->content;
@@ -163,6 +159,7 @@ void	get_key_val_rplc(t_env *env, t_node *ptr)
 		free(key);
 		free(val);
 	}
+	return (ptr);
 }
 
 void	ft_expand(t_node **lst_cmd, t_env *env)
@@ -180,14 +177,14 @@ void	ft_expand(t_node **lst_cmd, t_env *env)
 			ptr->content = ft_strdup("$HOME");
 			free(tmp);
 		}
-		if (!ft_strcmp(ptr->quote_type, "double") || !ft_strcmp(ptr->quote_type, "none")) //if is double or open quote
-			get_key_val_rplc(env, ptr);
-		// if (ptr)
-			// if (!ft_strcmp(ptr->quote_type, "single") || !ft_strchr(ptr->content, '$')) 
-		ptr = ptr->next;
-		// printf("expandmark\n");
+		else if (!ft_strcmp(ptr->quote_type, "double") || !ft_strcmp(ptr->quote_type, "none")) //if is double or open quote
+			ptr = get_key_val_rplc(env, ptr);
+		if (ptr)
+			if (!ft_strcmp(ptr->quote_type, "single") || !ft_strchr(ptr->content, '$'))
+				ptr = ptr->next;
 	}
 }
+		// printf("expandmark\n");
 
 // void	ft_expand(t_node **lst_cmd, t_env *env)
 // {
