@@ -70,7 +70,7 @@ char	*get_key(t_node *token)
 		}
 		i++;
 	}
-	// printf("get key:%s\n", key);
+	printf("get key:%s\n", key);
 	return (key);
 }
 
@@ -154,7 +154,7 @@ void	get_key_val_rplc(t_env *env, t_node *ptr)
 		tmp = key;
 		key = ft_strtrim(key, "\"\'");
 		free(tmp);
-		// printf("trim:%s\n", key);
+		printf("trim:%s\n", key);
 		val = get_val(env, key);
 		// printf("val:%s\n", val);
 		tmp = ptr->content;

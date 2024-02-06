@@ -12,6 +12,10 @@
 
 #include "../../minishell.h"
 
+/* 
+* different from libft ft_strtrim
+* can trim character set as low as 2 char
+*/
 char	*ft_strtrim(char const *s1, char const *set)
 {
 	size_t	start;
@@ -27,7 +31,9 @@ char	*ft_strtrim(char const *s1, char const *set)
 		start++;
 	while (end > start && ft_strchr(set, s1[end]))
 		end--;
-	if (end - start == 0)
-		return (ft_strdup(s1));
 	return (ft_substr(s1, start, end - start + 1));
 }
+
+	// printf("start: %ld\nend: %ld\n", start, end);
+	// if (end - start == 0)
+	// 	return (ft_strdup(s1));
