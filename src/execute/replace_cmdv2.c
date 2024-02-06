@@ -19,6 +19,8 @@ char *ft_get_cmd_path(char **path, char *cmd)
 	int 	i;	
 	
 	i = 0;
+	if (!path)
+		return (ft_strdup(cmd));
 	a = ft_strjoin("/",cmd);
 	while(path[i] != 0x00)
 	{

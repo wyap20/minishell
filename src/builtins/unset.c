@@ -1,6 +1,24 @@
 #include "../../minishell.h"
 
 /*
+* free env_path and paths if $PATH is unset
+*/
+bool	if_unset_path(t_env *env, char	*var)
+{
+	// printf("var:%s\n", var);
+	if (var && !ft_strncmp(var, "PATH=", 5))
+	{
+		free_2d_arr(env->paths);
+		free(env->env_path);
+		env->paths = NULL;
+		env->env_path = NULL;
+		return (true);
+	}
+	free(var);
+	return (false);
+}
+
+/*
 * check if any variable in del matches that in current env_var
 * returns count of matches;
 */
@@ -21,8 +39,10 @@ int	get_valid_count(t_env *env, char **del)
 			if (del[i] && !ft_strncmp(del[i], env->env_vars[j], ft_strlen(del[i])))
 			{
 				tmp = env->env_vars[j];
+				if (if_unset_path(env, tmp) == true)
+					return (0);
 				env->env_vars[j] = ft_strdup(" ");
-				free(tmp);
+				// free(tmp);
 				count++;
 			}
 			// printf("check del mark\ni:%d\n", i);
