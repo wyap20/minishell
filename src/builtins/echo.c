@@ -17,7 +17,7 @@ bool	check_flag(char *str)
 	int	i;
 
 	i = 1;
-	if (str[0] != '-')
+	if (str[0] != '-' || !ft_strcmp(str, "-"))
 		return (false);
 	while (str[i])
 		if (str[i++] != 'n')
@@ -36,6 +36,8 @@ void	echo_print(char **cmds)
 	if (cmds[1])
 		if ((flag = check_flag(cmds[1])) == true)
 			i = 2;
+	if (!cmds[i])
+		return ;
 	while (cmds && cmds[i])
 	{
 		j = 0;

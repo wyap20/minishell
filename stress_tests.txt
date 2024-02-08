@@ -1,0 +1,50 @@
+echo tests:
+
+echo -n
+(does nothing, should prompt for input again)
+
+echo -n asd
+echo -nnnnn asd
+asdminishell>
+
+echo -na asd
+-na asd
+
+echo -nnnna asd
+-nnnna asd
+
+echo --n
+--n
+
+echo --n asd
+--n asd
+
+echo --nnnn asd
+--nnnn asd
+
+echo -n- asd
+-n- asd
+
+echo -asd
+-asd
+
+echo -
+-
+
+echo asd -n
+asd -n
+
+echo - asd
+- asd
+
+echo - n
+- n
+
+echo --n$USERn
+--n
+
+echo --n$USER
+--n[value]
+
+echo [builtin keywords] (echo, pwd, env, export, unset, exit, cd)
+keyword output as string
