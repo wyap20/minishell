@@ -142,13 +142,15 @@ void	ft_cd(t_env *env, char **input)
 	if (env->err_num == 0)
 	{
 		// printf("ft_cd: chdir successful\n");
-		if ((pwd = getcwd(NULL, 0)) == NULL)
+		pwd = getcwd(NULL, 0);
+		if (pwd == NULL)
 			perror("failed to get current working directory\n");
 		update_pwd_oldpwd(env, pwd);
 	}
 	else
 	{
-		printf("minishell: cd: %s: No such file or directory\n", input[1]);
+		printf("minishell: cd: %s: ", input[1]);
+		printf("No such file or directory/Not a directory\n");
 		exit(1);
 	}
 }
