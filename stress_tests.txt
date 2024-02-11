@@ -48,3 +48,38 @@ echo --n$USER
 
 echo [builtin keywords] (echo, pwd, env, export, unset, exit, cd)
 keyword output as string
+
+
+c | <a | ls |<b
+-bash: a: No such file or directory
+-bash: b: No such file or directory
+c: command not found
+
+ <<a <<b wc
+> 123
+> a
+> 1234
+> b
+      1       1       5
+
+<a >z
+-bash: a: No such file or directory
+z file no created
+
+>z <a
+z file created
+-bash: a: No such file or directory
+
+<<a | wc
+> 123
+> a
+      0       0       0
+
+cd [any directory] | echo 123
+123
+directory no changed
+
+ls -la >z >zz | >zzzz wc >zzz 
+all file created
+zz will have list of directory
+zzz will have       0       0       0

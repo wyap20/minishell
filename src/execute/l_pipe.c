@@ -130,9 +130,9 @@ void	ft_execute(t_exe *exe, t_node *lst, t_env *env) //WIP
 		// in ours /bin/ls: cannot access 'a': No such file or directory
 		// is auto print err msg by ls itself
 		if (env->env_path != NULL)
-			printf("minishell> %s: command not found\n", 
+			printf("%s: command not found\n", 
 				lst->cmds[0] + exe->z);
-		else if (env->env_path == NULL)
+		if (env->env_path == NULL)
 			printf("minishell: %s: no such file or directory\n",
 				lst->cmds[0] + exe->z);
 		exit(127);
@@ -329,6 +329,23 @@ void	ft_reorder(t_node *dst, t_node *x)
 	}
 }
 
+/* iterate troguh nodes that are in correct position */
+t_node	*ft_get_req_node(t_node *x)
+{
+	while (!ft_strcmp(x->attr,"rdr") && x->next != NULL)
+		x = x->next;
+	return (x);
+}
+
+/* swap and reorder the nodes function */
+t_node *ft_swap_reorder(t_node *dst, t_node *x)
+{
+	ft_swap_info(dst, x);
+	dst = dst->next;
+	ft_reorder(dst, x);
+	return (dst);
+}
+
 /* re-arrange commands in each group so that redirections runs 1st */
 void	ft_sort(t_node *lst)
 {
@@ -340,8 +357,10 @@ void	ft_sort(t_node *lst)
 		return ;
 	while (x != NULL)
 	{
-		while(!ft_strcmp(x->attr,"rdr"))
-			x = x->next;
+		// while (!ft_strcmp(x->attr,"rdr") && x->next != NULL)
+		// 	x = x->next;
+		// dst = x;
+		x = ft_get_req_node(x);
 		dst = x;
 		while (x != NULL && ft_strcmp(x->attr, "pipe"))
 		{
@@ -349,9 +368,10 @@ void	ft_sort(t_node *lst)
 			{
 				if (dst->attr != x->attr)
 				{
-					ft_swap_info(dst, x);
-					dst = dst->next;
-					ft_reorder(dst, x);
+					// ft_swap_info(dst, x);
+					// dst = dst->next;
+					// ft_reorder(dst, x);
+					dst = ft_swap_reorder(dst, x);
 				}
 			}
 			x = x->next;

@@ -6,7 +6,7 @@
 /*   By: atok <atok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 18:28:19 by wyap              #+#    #+#             */
-/*   Updated: 2024/02/06 02:41:31 by atok             ###   ########.fr       */
+/*   Updated: 2024/02/12 02:52:49 by atok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,7 +166,7 @@ int	main(int ac, char **av, char **envp)
 						combine_nodes(lst_cmd);
 						// printf("\n\tcombine:\n"); print_list(lst_cmd);
 						ft_sort(*lst_cmd);
-						// printf("\n\tft_sort:\n"); print_list(lst_cmd);
+						printf("\n\tft_sort:\n"); print_list(lst_cmd);
 						combine_nodes(lst_cmd);
 						// printf("\n\tcombine 2:\n"); print_list(lst_cmd);
 						// set_builtin_nodes(lst_cmd);
