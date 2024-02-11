@@ -143,7 +143,7 @@ void	set_builtin_nodes(t_node **lst_cmd)
 	ptr = *lst_cmd;
 	while(ptr)
 	{
-		if (!ft_strcmp(ptr->attr, "builtin") && ptr->next && !ft_strcmp(ptr->next->attr, "none"))
+		if (!ft_strcmp(ptr->attr, "builtin") && ptr->next && (!ft_strcmp(ptr->next->attr, "none") || !ft_strcmp(ptr->next->attr, "builtin")))
 		{
 			ptr->next->attr = "builtin_sub";
 			ptr = ptr->next->next;

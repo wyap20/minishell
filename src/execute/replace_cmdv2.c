@@ -12,20 +12,20 @@
 
 #include "../../minishell.h"
 
-char *ft_get_cmd_path(char **path, char *cmd)
+char	*ft_get_cmd_path(char **path, char *cmd)
 {
 	char	*a;
-	char 	*b;
-	int 	i;	
-	
+	char	*b;
+	int		i;	
+
 	i = 0;
 	if (!path)
 		return (ft_strdup(cmd));
-	a = ft_strjoin("/",cmd);
-	while(path[i] != 0x00)
+	a = ft_strjoin("/", cmd);
+	while (path[i] != 0x00)
 	{
-		b = ft_strjoin(path[i],a);
-		if(access(b,F_OK) == 0)
+		b = ft_strjoin(path[i], a);
+		if (access(b, F_OK) == 0)
 		{
 			free(a);
 			return (b);
@@ -35,7 +35,15 @@ char *ft_get_cmd_path(char **path, char *cmd)
 		i++;
 	}
 	free(a);
-	return(ft_strdup(cmd));
+	return (ft_strdup(cmd));
+}
+
+void	set_builtin_attr(t_node *ptr)
+{
+	if (!ft_strcmp(ptr->cmds[0], "echo") || !ft_strcmp(ptr->cmds[0], "cd")
+		|| !ft_strcmp(ptr->cmds[0], "pwd") || !ft_strcmp(ptr->cmds[0], "export")
+		|| !ft_strcmp(ptr->cmds[0], "unset") || !ft_strcmp(ptr->cmds[0], "env"))
+		ptr->attr = "builtin";
 }
 
 void	create_cmd_group(t_env *env, t_node *lst_cmd)
@@ -57,6 +65,7 @@ void	create_cmd_group(t_env *env, t_node *lst_cmd)
 			free(tmp);
 		}
 		tmp = ptr->cmds[0];
+		set_builtin_attr(ptr);
 		if (ft_strcmp(ptr->attr, "builtin"))
 		{
 			ptr->cmds[0] = ft_get_cmd_path(env->paths, ptr->cmds[0]);

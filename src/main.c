@@ -169,9 +169,9 @@ int	main(int ac, char **av, char **envp)
 						// printf("\n\tft_sort:\n"); print_list(lst_cmd);
 						combine_nodes(lst_cmd);
 						// printf("\n\tcombine 2:\n"); print_list(lst_cmd);
-						set_builtin_nodes(lst_cmd);
+						// set_builtin_nodes(lst_cmd);
 						// printf("\n\tset builtin:\n"); print_list(lst_cmd);
-						combine_nodes(lst_cmd);
+						// combine_nodes(lst_cmd);
 						// printf("\n\tcombine 3:\n"); print_list(lst_cmd);
 						/*execution*/
 						create_cmd_group(&env, *lst_cmd);

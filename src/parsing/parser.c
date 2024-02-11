@@ -80,11 +80,11 @@ void	assign_attr(t_node **lst_cmd)
 			ptr->attr = "pipe";
 		// else if (!ft_strcmp(ptr->content, "~"))
 		// 	ptr->attr = "tilde";		
-		else if (!ft_strcmp(ptr->content, "echo") || !ft_strcmp(ptr->content, "cd")
-			|| !ft_strcmp(ptr->content, "pwd") || !ft_strcmp(ptr->content, "export")
-			|| !ft_strcmp(ptr->content, "unset") || !ft_strcmp(ptr->content, "env")
-			|| !ft_strcmp(ptr->content, "exit"))
-			ptr->attr = "builtin";
+		// else if (!ft_strcmp(ptr->content, "echo") || !ft_strcmp(ptr->content, "cd")
+		// 	|| !ft_strcmp(ptr->content, "pwd") || !ft_strcmp(ptr->content, "export")
+		// 	|| !ft_strcmp(ptr->content, "unset") || !ft_strcmp(ptr->content, "env")
+		// 	|| !ft_strcmp(ptr->content, "exit"))
+		// 	ptr->attr = "builtin";
 		else if (!ptr->attr)
 			ptr->attr = "none";
 		ptr = ptr->next;

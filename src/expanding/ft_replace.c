@@ -12,34 +12,38 @@
 
 #include "../../minishell.h"
 
+/*
+* replacing a substring with another substring
+* parameter: string to check for substring
+* key: the substring that will be replaced by 'val' substring
+* val: the substring that replaces the 'key' substring
+* returns string with key substr replaced by val
+*/
 char	*ft_replace (char *str, char *key, char *val)
 {
-	// printf("\n[replace]\nstr:%s\nkey:%s\nval:%s\n\n", str, key, val);
+	int		len;
+	char	*new;
+	char	*ptr;
+
+	len = 0;
+	new = NULL;
 	if (val == NULL)
 		val = "\0";
-	// if slen val = 0 //when there is no such key
-	// if slen val <= slen key // when val is <= key len
-	int len = ft_strlen(str)+ft_strlen(val); // most lazy and efficient way
-	// int len = ft_strlen(str)-ft_strlen(key)+ft_strlen(val);
-	char *ns = malloc(sizeof(char) * (len + 1));
-	
-	ft_strcpy(ns, str);
-
-	char *ptr = ft_strstr(ns, key);
-	// int i = 0;
-	// while (str[i] != *ptr)
-	// 	i++;
+	len = ft_strlen(str) + ft_strlen(val);
+	new = (char *)malloc(sizeof(char) * (len + 1));
+	ft_strcpy(new, str);
+	ptr = ft_strstr(new, key);
 	if (ptr)
 	{
-		//dst will be where the end of val is. src wiil be end of key. n will be wehre key/src end
-		// moving the raminder to the back remainder=anyhong after key)
-		// ft_strncpy (ns, str, i);
-		ft_memmove (ptr+ft_strlen(val), ptr+ft_strlen(key), ft_strlen(ptr+ft_strlen(key))+1);
-		ft_strncpy (ptr, val, ft_strlen(val));
-		// free(str);
+		ft_memmove(ptr + ft_strlen(val), ptr + ft_strlen(key), ft_strlen(ptr + ft_strlen(key)) + 1);
+		ft_strncpy(ptr, val, ft_strlen(val));
 	}
-	return (ns);
+	return (new);
 }
+	//ptr: tells the index position of the key
+	//strnpcy
+	//dst will be where the end of val is. src wiil be end of key. n will be wehre key/src end
+	// moving the raminder to the back remainder=anyhong after key)
 
 char	*get_key(t_node *token)
 {
@@ -174,7 +178,13 @@ void	ft_expand(t_node **lst_cmd, t_env *env)
 		if (!ft_strcmp(ptr->content, "~") && !ft_strcmp(ptr->quote_type, "none"))
 		{
 			tmp = ptr->content;
-			ptr->content = ft_strdup("$HOME");
+			ptr->content = ft_strdup(env->home_tilde);
+			free(tmp);
+		}
+		else if (ptr->content[0] == '~' && ptr->content[1] != '~')
+		{
+			tmp = ptr->content;
+			ptr->content = ft_replace(ptr->content, "~", env->home_tilde);
 			free(tmp);
 		}
 		else if (!ft_strcmp(ptr->quote_type, "double") || !ft_strcmp(ptr->quote_type, "none")) //if is double or open quote
