@@ -60,9 +60,14 @@ void	init_env(t_env *env, char **envp)
 {
 	env->key_count = 0;
 	env->err_num = 0;
+	env->env_vars = NULL;
+	env->env_path = NULL;
+	env->paths = NULL;
+	env->home_tilde = NULL;
 	store_env(env, envp);
 	// store_path(env, envp);
 	store_path(env);
+	store_tilde(env);
 }
 
 // void	lexer_seq(t_env *env, t_node **lst_cmd, char *cmd_buf)

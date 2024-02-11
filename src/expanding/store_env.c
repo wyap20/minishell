@@ -71,7 +71,7 @@ void	store_path(t_env *env)//, char **envp)
 }
 
 // /*store $HOME path for cd ~ */
-// void	store_tilda(t_env *env, char **envp)
+// void	store_tilde(t_env *env, char **envp)
 // {
 // 	int	i;
 
@@ -79,7 +79,20 @@ void	store_path(t_env *env)//, char **envp)
 // 	while (envp[++i]) //find HOME variable in envp
 // 	{
 // 		if (!ft_strncmp(envp[i], "HOME=", 5))
-// 			env->home_tilda = ft_substr(envp[i], 5, (int)ft_strlen(envp[i]) - 5);
+// 			env->home_tilde = ft_substr(envp[i], 5, (int)ft_strlen(envp[i]) - 5);
 // 	}
-// 	// printf("tilda: %s\n", env->home_tilda);
+// 	printf("tilde: %s\n", env->home_tilde);
 // }
+
+void	store_tilde(t_env *env)
+{
+	int	i;
+
+	i = -1;
+	while (env->env_vars[++i]) //find HOME variable in envp
+	{
+		if (!ft_strncmp(env->env_vars[i], "HOME=", 5))
+			env->home_tilde = ft_substr(env->env_vars[i], 5, (int)ft_strlen(env->env_vars[i]) - 5);
+	}
+	// printf("tilde: %s\n", env->home_tilde);
+}

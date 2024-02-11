@@ -149,8 +149,7 @@ void	ft_cd(t_env *env, char **input)
 	}
 	else
 	{
-		printf("minishell: cd: %s: ", input[1]);
-		printf("No such file or directory/Not a directory\n");
+		printf("minishell: cd: %s: %s\n", input[1], strerror(errno));
 		exit(1);
 	}
 }
@@ -197,5 +196,5 @@ void	ft_cd(t_env *env, char **input)
 // if cd successfull chdir retunr 0 if not will return 1
 
 //other cases:
-//replace ~ with env->home_tilda if path ~/..... ??
+//replace ~ with env->home_tilde if path ~/..... ??
 //cd -

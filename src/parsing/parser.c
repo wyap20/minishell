@@ -79,7 +79,7 @@ void	assign_attr(t_node **lst_cmd)
 		else if (!ft_strcmp(ptr->content, "|"))
 			ptr->attr = "pipe";
 		// else if (!ft_strcmp(ptr->content, "~"))
-		// 	ptr->attr = "tilda";		
+		// 	ptr->attr = "tilde";		
 		else if (!ft_strcmp(ptr->content, "echo") || !ft_strcmp(ptr->content, "cd")
 			|| !ft_strcmp(ptr->content, "pwd") || !ft_strcmp(ptr->content, "export")
 			|| !ft_strcmp(ptr->content, "unset") || !ft_strcmp(ptr->content, "env")
