@@ -62,7 +62,7 @@ char	*get_key(t_node *token)
 		{
 			i++;
 			j++;
-			while (tmp[i] != ' ' && tmp[i] != '$' && tmp[i] && ft_isalpha(tmp[i]))
+			while (tmp[i] != ' ' && tmp[i] != '$' && tmp[i] && (ft_isalpha(tmp[i]) || tmp[i] == '?'))
 			{
 				i++;
 				j++;
@@ -109,7 +109,7 @@ char	*get_val(t_env *env, char *key)
 	trim = ft_strtrim(key, "$");
 	key = ft_strjoin(trim, "=");
 	len = (int)ft_strlen(key);
-	printf("get_val key:%s\nlen:%i\n", key, len);
+	// printf("get_val key:%s\nlen:%i\n", key, len);
 	val = NULL;
 	while (env->env_vars[i])//[0])
 	{

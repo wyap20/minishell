@@ -1,4 +1,4 @@
-echo tests:
+[echo tests]
 
 echo -n
 (does nothing, should prompt for input again)
@@ -49,6 +49,8 @@ echo --n$USER
 echo [builtin keywords] (echo, pwd, env, export, unset, exit, cd)
 keyword output as string
 
+********
+[rdr & pipe tests]
 
 c | <a | ls |<b
 -bash: a: No such file or directory
@@ -83,3 +85,63 @@ ls -la >z >zz | >zzzz wc >zzz
 all file created
 zz will have list of directory
 zzz will have       0       0       0
+
+********
+[expanding tests]
+
+$?
+[err_no]
+
+$??
+[err_no]?
+
+$ '$' "$" "'$'"
+$ $ $ '$'
+
+$$
+[shell_pid]
+bash expands it to the shell pid, not required by project
+
+$$$
+[shell_pid]$
+
+$$$$
+[shell_pid][shell_pid]
+
+$?$?
+[err_no][err_no]
+
+$? '$?' "$?" "'$?'"
+[err_no] $? [err_no] '[err_no]'
+
+$? $?? $?$? ?$? ??$? ??$??
+[err_no] [err_no]? [err_no][err_no] ?[err_no] ??[err_no] ??[err_no]?
+
+$US$?ER
+[err_no]ER
+
+*repeat with other env variables
+*repeat with single lettered variables
+*repeat with combination of env variables
+
+export a=asd 
+echo $a
+asd
+
+export a=asd 
+env | grep $a [OR] env | grep a=
+output should contain "a=asd"
+
+export a=asdf b=$a
+echo $a $b
+asdf [blank] (b does not take on value of $a yet)
+export b=$a
+echo $a $b
+asdf asdf (b takes value of a)
+
+export a=asdf b=$a
+echo $a $b
+asdf [blank] (b does not take on value of $a yet)
+export a=123123 b=$a
+echo $a $b
+123123 asdf (a takes on new value; b takes value of a)
