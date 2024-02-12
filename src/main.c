@@ -85,8 +85,6 @@ void	init_env(t_env *env, char **envp)
 // 			combine_nodes(lst_cmd);
 // 			ft_sort(*lst_cmd);
 // 			combine_nodes(lst_cmd);
-// 			set_builtin_nodes(lst_cmd);
-// 			combine_nodes(lst_cmd);
 // 			create_cmd_group(env, *lst_cmd);
 // 			ft_execute_cmd(env, lst_cmd);
 // 		}

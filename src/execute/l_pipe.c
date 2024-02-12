@@ -52,7 +52,7 @@ void	ft_if_open_failed(char *str)
 	char	buf[42];
 
 	tmp = open(str, O_CREAT | O_WRONLY, 0644);
-	write(tmp, "minishell: ", 12);
+	write(tmp, "minishell> ", 12);
 	write(tmp, str, ft_strlen(str));
 	write(tmp, ": No such file or directory\n", 29);
 	close(tmp);
@@ -111,7 +111,7 @@ void	ft_redir_right(t_exe *exe, t_node *lst)
 }
 
 /* executes/run all non-buildins trouh execve()
-returns -1 if coommand or path to command not found*/ 
+returns -1 if coommand or path to command not found*/
 void	ft_execute(t_exe *exe, t_node *lst, t_env *env) //WIP
 {
 	if (execve(lst->cmds[0], lst->cmds, env->env_vars) == -1)
@@ -130,7 +130,7 @@ void	ft_execute(t_exe *exe, t_node *lst, t_env *env) //WIP
 		// in ours /bin/ls: cannot access 'a': No such file or directory
 		// is auto print err msg by ls itself
 		if (env->env_path != NULL)
-			printf("%s: command not found\n", 
+			printf("%s: command not found\n",
 				lst->cmds[0] + exe->z);
 		if (env->env_path == NULL)
 			printf("minishell: %s: no such file or directory\n",
@@ -245,7 +245,7 @@ void	ft_run_cmds(t_exe *exe, t_node *lst, t_env *env)
 			ft_redir_left(exe, lst, env);
 			ft_redir_right(exe, lst);
 		}
-		else 
+		else
 		{
 			if (!ft_strcmp(lst->attr, "builtin"))
 				run_builtin(env, lst);
@@ -332,7 +332,7 @@ void	ft_reorder(t_node *dst, t_node *x)
 /* iterate troguh nodes that are in correct position */
 t_node	*ft_get_req_node(t_node *x)
 {
-	while (!ft_strcmp(x->attr,"rdr") && x->next != NULL)
+	while (!ft_strcmp(x->attr, "rdr") && x->next != NULL)
 		x = x->next;
 	return (x);
 }
@@ -381,7 +381,7 @@ void	ft_sort(t_node *lst)
 	}
 }
 
-/* exclusivel run when no pipe or only 1 cmd group */
+/* exclusively run when no pipe or only 1 cmd group */
 void	ft_if_no_pipes(t_exe *exe, t_node *lst, t_env *env)
 {
 	if (exe->pipes == 0)
@@ -401,12 +401,20 @@ void	ft_if_no_pipes(t_exe *exe, t_node *lst, t_env *env)
 	}
 }
 
+void	sig_nl(int sig_num)
+{
+	if (sig_num != SIGINT)
+		return ;
+	write(1, "\n", 1);
+}
+
 /* execute commands starts here */
 void	ft_execute_cmd(t_env *env, t_node **lst)
 {
 	t_exe	exe;
 
 	ft_initialize_exe_vars(&exe, lst);
+	signal(SIGINT, sig_nl);
 	ft_multi_pipe(&exe,*lst, env);
 	ft_close_all_pipes(&exe);
 	ft_wait_pid(&exe, env);
