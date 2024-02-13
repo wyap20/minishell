@@ -6,7 +6,7 @@
 /*   By: wyap <wyap@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 17:31:01 by wyap              #+#    #+#             */
-/*   Updated: 2024/01/29 13:25:43 by wyap             ###   ########.fr       */
+/*   Updated: 2024/02/13 14:03:49 by wyap             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ void	renew_path(t_env *env)
 	char	*tmp;
 
 	tmp = NULL;
-	// printf("entered renew path\n");
 	if (env->env_path)
 	{
 		tmp = env->env_path;
@@ -39,45 +38,16 @@ void	ft_export(t_env *env, char **cmds)
 	char	**add_vars;
 	char	**updated;
 
-	printf("entered ft_export\n");
-	// printf("export: err_num:%d\n", env->err_num);
 	add_vars = cmds;
-	// for (int k = 0; add_vars[k] ; k++)
-	// 	printf("%d: %s\n", k, add_vars[k]);
 	updated = check_export(add_vars, env);
-	// updated = check_export(add_vars);
-	// free_2d_arr(add_vars);
 	add_to_env(env, updated);
 	renew_path(env);
 	free_2d_arr(updated);
-	// print_sys_env(env);
-	printf("export: err_num:%d\n", env->err_num);
-	printf("exited ft_export\n");
 }
+	// printf("entered ft_export\n");
 
-/*
-* minishell export command
-* updates env->env_var with valid key/value pairs
-* char *add contains key/value pairs to be checked and update into env->env_var
-*/
-// void	ft_export(t_env *env, char *add)
-// {
-// 	char	**add_vars;
-// 	char	**updated;
+	// for (int k = 0; add_vars[k] ; k++)
+	// 	printf("%d: %s\n", k, add_vars[k]);
 
-// 	printf("entered ft_export\n");
-// 	add_vars = ft_split(add, ' ');
-// 	for (int k = 0; add_vars[k] ; k++)
-// 		printf("%d: %s\n", k, add_vars[k]);
-
-// 	updated = check_export(add_vars); //in check_export.c
-// 	free_2d_arr(add_vars);
-// 	add_to_env(env, updated); //in update_env.c
-
-// 	// 	printf("after\n");
-// 	// for (int k = 0; env->env_vars[k]; k++)
-// 	// 	printf("%d: %s\n", k, env->env_vars[k]);
-
-// 	free_2d_arr(updated);
-// 	printf("exited ft_export\n");
-// }
+	// printf("export: err_num:%d\n", env->err_num);
+	// printf("exited ft_export\n");

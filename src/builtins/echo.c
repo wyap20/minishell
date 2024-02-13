@@ -6,7 +6,7 @@
 /*   By: wyap <wyap@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 18:04:11 by wyap              #+#    #+#             */
-/*   Updated: 2023/12/27 18:05:01 by wyap             ###   ########.fr       */
+/*   Updated: 2024/02/13 14:01:15 by wyap             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,11 @@ void	echo_print(char **cmds)
 	flag = false;
 	i = 1;
 	if (cmds[1])
-		if ((flag = check_flag(cmds[1])) == true)
+	{
+		flag = check_flag(cmds[1]);
+		if (flag == true)
 			i = 2;
+	}
 	if (!cmds[i])
 		return ;
 	while (cmds && cmds[i])

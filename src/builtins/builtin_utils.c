@@ -6,7 +6,7 @@
 /*   By: wyap <wyap@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 17:45:23 by wyap              #+#    #+#             */
-/*   Updated: 2024/01/04 13:30:15 by wyap             ###   ########.fr       */
+/*   Updated: 2024/02/13 13:52:31 by wyap             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 int	get_array_count(char **array)
 {
 	int	size;
+
 	size = 0;
 	while (array[size])
 		size++;

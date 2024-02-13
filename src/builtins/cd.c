@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atok <atok@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: wyap <wyap@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:44:59 by wyap              #+#    #+#             */
-/*   Updated: 2024/02/04 04:10:19 by atok             ###   ########.fr       */
+/*   Updated: 2024/02/13 13:54:06 by wyap             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,6 @@ void	update_oldpwd(t_env *env, char *oldpwd)
 
 	i = -1;
 	oldpwd_ptr = NULL;
-	// export = NULL;
-	// printf("entered update oldpwd\n");
 	while (env->env_vars[++i])
 	{
 		if (!ft_strncmp(env->env_vars[i], "OLDPWD=", 7))
@@ -46,7 +44,6 @@ void	update_oldpwd(t_env *env, char *oldpwd)
 			env->env_vars[i] = ft_strjoin("OLDPWD=", oldpwd);
 			free(oldpwd_ptr);
 			free(oldpwd);
-			// printf("updated OLDPWD\n");
 		}
 	}
 	if (!oldpwd_ptr)
@@ -67,14 +64,12 @@ void	export_pwd(t_env *env, char *pwd)
 
 	pwd_ptr = NULL;
 	export = NULL;
-	// printf("ft_cd: PWD not set\n");
 	pwd_ptr = ft_strjoin("PWD=", pwd);
 	export = (char **)malloc(3 * sizeof(char *));
 	export[0] = pwd_ptr;
 	export[1] = ft_strdup("OLDPWD=");
 	export[2] = NULL;
 	ft_export(env, export);
-	// printf("ft_cd: exported PWD & OLDPWD (OLDPWD=[blank])\n");
 	free_2d_arr(export);
 	free(pwd);
 }
@@ -87,17 +82,16 @@ void	update_pwd_oldpwd(t_env *env, char *pwd)
 
 	pwd_ptr = NULL;
 	i = -1;
-	while (env->env_vars[++i]) //if have PWD
+	while (env->env_vars[++i])
 	{
 		if (!ft_strncmp(env->env_vars[i], "PWD=", 4))
 		{
-			pwd_ptr = env->env_vars[i]; //to move to OLDPWD
+			pwd_ptr = env->env_vars[i];
 			env->env_vars[i] = ft_strjoin("PWD=", pwd);
 			free(pwd);
-			// printf("updated PWD\n");
 		}
 	}
-	if (!pwd_ptr) //if no PWD
+	if (!pwd_ptr)
 		export_pwd(env, pwd);
 	if (pwd_ptr)
 	{
@@ -141,7 +135,6 @@ void	ft_cd(t_env *env, char **input)
 	change_dir(env, input);
 	if (env->err_num == 0)
 	{
-		// printf("ft_cd: chdir successful\n");
 		pwd = getcwd(NULL, 0);
 		if (pwd == NULL)
 			perror("failed to get current working directory\n");
@@ -153,48 +146,3 @@ void	ft_cd(t_env *env, char **input)
 		exit(1);
 	}
 }
-
-// void ft_cd(t_env *env, char **input)
-// {
-// 	char	*home_path;
-// 	char	*pwd;
-
-// 	home_path = get_env_home(env);
-// 	pwd = NULL;
-// 	if (input[1] && input[2])
-// 	{
-// 		printf("minishell: cd: too many arguments\n");
-// 		exit(1);
-// 	}
-// 	if (input[1] == NULL)
-// 	{
-// 		if (home_path)
-// 			env->err_num = chdir(home_path);
-// 		else
-// 		{
-// 			printf("minishell: cd: HOME not set\n");
-// 			exit(1);
-// 		}
-// 	}
-// 	else
-// 		env->err_num = chdir(input[1]);
-// 	free(home_path);
-// 	if (env->err_num == 0)
-// 	{
-// 		// printf("ft_cd: chdir successful\n");
-// 		if ((pwd = getcwd(NULL, 0)) == NULL)
-// 			perror("failed to get current working directory\n");
-// 		update_pwd_oldpwd(env, pwd);
-// 	}
-// 	else
-// 	{
-// 		printf("minishell: cd: %s: No such file or directory\n", input[1]);
-// 		exit(1);
-// 	}
-// }
-
-// if cd successfull chdir retunr 0 if not will return 1
-
-//other cases:
-//replace ~ with env->home_tilde if path ~/..... ??
-//cd -
