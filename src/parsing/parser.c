@@ -6,15 +6,12 @@
 /*   By: wyap <wyap@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 15:27:27 by wyap              #+#    #+#             */
-/*   Updated: 2024/01/29 16:05:37 by wyap             ###   ########.fr       */
+/*   Updated: 2024/02/13 12:40:17 by wyap             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
-/*
-* tokenize: add node to list
-* WSL: direct leak (malloc for sub and malloc again for dlstnew)
-*/
+/*tokenize: add node to list*/
 void	tokenize(t_node **lst_cmd, char *cmd_buf, int *int_array, int index)
 {
 	int		i;
@@ -40,14 +37,12 @@ void	tokenize(t_node **lst_cmd, char *cmd_buf, int *int_array, int index)
 				node->attr = "space";
 			ft_dlstadd_back(lst_cmd, node);
 			len = 0;
-			// sub = NULL;
 		}
 	}
-	// free(sub);
 }
-		// while (int_array[i] == 10)
-		// 	i++;
-			// printf("parse node:%s#\n", ft_substr(cmd_buf, start, len));
+// while (int_array[i] == 10)
+// 	i++;
+	// printf("parse node:%s#\n", ft_substr(cmd_buf, start, len));
 
 /*parsing: split command to substring and add to list as nodes*/
 void	ft_parse(t_node **lst_cmd, char *cmd_buf, int *int_array)
@@ -78,22 +73,15 @@ void	assign_attr(t_node **lst_cmd)
 			ptr->attr = "rdr";
 		else if (!ft_strcmp(ptr->content, "|"))
 			ptr->attr = "pipe";
-		// else if (!ft_strcmp(ptr->content, "~"))
-		// 	ptr->attr = "tilde";		
-		// else if (!ft_strcmp(ptr->content, "echo") || !ft_strcmp(ptr->content, "cd")
-		// 	|| !ft_strcmp(ptr->content, "pwd") || !ft_strcmp(ptr->content, "export")
-		// 	|| !ft_strcmp(ptr->content, "unset") || !ft_strcmp(ptr->content, "env")
-		// 	|| !ft_strcmp(ptr->content, "exit"))
-		// 	ptr->attr = "builtin";
 		else if (!ptr->attr)
 			ptr->attr = "none";
 		ptr = ptr->next;
 	}
 }
-		/*if else clause: for further classification for pipe + rdr*/
-		// if (!ft_strcmp(ptr->content, "<<") || !ft_strcmp(ptr->content, ">>")
-		// 	|| !ft_strcmp(ptr->content, "<") || !ft_strcmp(ptr->content, ">"))
-		// 	ptr->attr = "rdr";
-		// else if (!ft_strcmp(ptr->content, "|"))
-		// 	ptr->attr = "pipe"
-
+// else if (!ft_strcmp(ptr->content, "~"))
+// 	ptr->attr = "tilde";		
+// else if (!ft_strcmp(ptr->content, "echo") || !ft_strcmp(ptr->content, "cd")
+// 	|| !ft_strcmp(ptr->content, "pwd") || !ft_strcmp(ptr->content, "export")
+// 	|| !ft_strcmp(ptr->content, "unset") || !ft_strcmp(ptr->content, "env")
+// 	|| !ft_strcmp(ptr->content, "exit"))
+// 	ptr->attr = "builtin";

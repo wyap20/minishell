@@ -6,7 +6,7 @@
 /*   By: wyap <wyap@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/26 01:50:06 by wyap              #+#    #+#             */
-/*   Updated: 2024/01/29 15:29:28 by wyap             ###   ########.fr       */
+/*   Updated: 2024/02/13 12:59:57 by wyap             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,12 @@
 
 void	store_env(t_env *env, char **envp)
 {
-	// (void) env;
 	int	i;
 
 	i = 0;
 	while (envp[i])
 		i++;
-	// printf("%d\n", i);
-	env->env_vars = (char **)malloc((i + 1) * sizeof(char *)); //+1 to have additional array for tail node to insert null
-	//copy entire env
+	env->env_vars = (char **)malloc((i + 1) * sizeof(char *));
 	i = -1;
 	while (envp[++i])
 		env->env_vars[i] = ft_substr(envp[i], 0, (ft_strlen(envp[i])));
@@ -35,7 +32,7 @@ void	store_env(t_env *env, char **envp)
 
 void	split_path(t_env *env)
 {
-	char **tmp;
+	char	**tmp;
 
 	tmp = NULL;
 	if (!env->env_path)
@@ -48,51 +45,38 @@ void	split_path(t_env *env)
 	}
 	else
 		env->paths = ft_split(env->env_path, ':');
+	printf("\n");
+}
 	//check splitted paths
 	// printf("\n**View splitted PATH**\n");
 	// for (int i = 0; env->paths[i]; i++)
 	// 	printf("%d: %s\n", i, env->paths[i]);
-	printf("\n");
-}
 
 /*store $PATH variable*/
-// void	store_path(t_env *env, char **envp)
-void	store_path(t_env *env)//, char **envp)
+void	store_path(t_env *env)
 {
 	int	i;
 
 	i = -1;
-	while (env->env_vars[++i]) //find PATH variable in env->env_vars
+	while (env->env_vars[++i])
 	{
 		if (!ft_strncmp(env->env_vars[i], "PATH=", 5))
-			env->env_path = ft_substr(env->env_vars[i], 5, (int)ft_strlen(env->env_vars[i]) - 5);
+			env->env_path = ft_substr(env->env_vars[i], 5,
+					(int)ft_strlen(env->env_vars[i]) - 5);
 	}
 	split_path(env);
 }
-
-// /*store $HOME path for cd ~ */
-// void	store_tilde(t_env *env, char **envp)
-// {
-// 	int	i;
-
-// 	i = -1;
-// 	while (envp[++i]) //find HOME variable in envp
-// 	{
-// 		if (!ft_strncmp(envp[i], "HOME=", 5))
-// 			env->home_tilde = ft_substr(envp[i], 5, (int)ft_strlen(envp[i]) - 5);
-// 	}
-// 	printf("tilde: %s\n", env->home_tilde);
-// }
 
 void	store_tilde(t_env *env)
 {
 	int	i;
 
 	i = -1;
-	while (env->env_vars[++i]) //find HOME variable in envp
+	while (env->env_vars[++i])
 	{
 		if (!ft_strncmp(env->env_vars[i], "HOME=", 5))
-			env->home_tilde = ft_substr(env->env_vars[i], 5, (int)ft_strlen(env->env_vars[i]) - 5);
+			env->home_tilde = ft_substr(env->env_vars[i],
+					5, (int)ft_strlen(env->env_vars[i]) - 5);
 	}
-	// printf("tilde: %s\n", env->home_tilde);
 }
+	// printf("tilde: %s\n", env->home_tilde);

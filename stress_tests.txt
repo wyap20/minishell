@@ -86,6 +86,19 @@ all file created
 zz will have list of directory
 zzz will have       0       0       0
 
+<a |>b <c | <d
+a c d error message
+b created
+
+<a | <c >b | <d
+a c d error message
+b not created
+
+cat | cat | cat | cat | ls
+displays ls, should be waiting for input; pressing enter same times as cat will return to prompt
+
+test heredoc
+
 ********
 [expanding tests]
 
@@ -145,3 +158,5 @@ asdf [blank] (b does not take on value of $a yet)
 export a=123123 b=$a
 echo $a $b
 123123 asdf (a takes on new value; b takes value of a)
+
+*******

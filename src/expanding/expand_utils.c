@@ -1,11 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   expand_utils.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: wyap <wyap@student.42.fr>                  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/13 12:44:05 by wyap              #+#    #+#             */
+/*   Updated: 2024/02/13 12:47:31 by wyap             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../minishell.h"
 
-char *ft_strcpy(char *dst, char *src)
+char	*ft_strcpy(char *dst, char *src)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	while(src[i] != 0x00)
+	while (src[i] != 0x00)
 	{
 		dst[i] = src[i];
 		i++;
@@ -14,32 +26,27 @@ char *ft_strcpy(char *dst, char *src)
 	return (dst);
 }
 
-int ft_not_alpha(char c)
+int	ft_not_alpha(char c)
 {
-	// if (c == ' ' || c == '\'' || c == '\"' || c == '|' || c == '<' || c == '>' || c == '$')
 	if (!((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z')))
-		return 1;
-	else 
-		return 0;
+		return (1);
+	else
+		return (0);
 }
 
-char *ft_strstr(char *str, char*ss)
+char	*ft_strstr(char *str, char*ss)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = 0;
 	while (str[i] != 0x00)
 	{
 		j = 0;
-		while (str[i + j] == ss[j] && str[i + j] != 0x00)  //handle edge/end case
-		{	
-			// if (ss[j] == 0x00) 
-			// 	return ((char *) str + i);
+		while (str[i + j] == ss[j] && str[i + j] != 0x00)
 			j++;
-		}
-        if (ss[j] == 0x00 && ft_not_alpha(str[i + j]) == 1) // && str[i] == delim? space squo dquot 
-            return ((char *)str + i);
+		if (ss[j] == 0x00 && ft_not_alpha(str[i + j]) == 1)
+			return ((char *)str + i);
 		i++;
 	}
 	return (NULL);
@@ -78,9 +85,9 @@ char	*ft_strncpy(char *dest, const char *src, size_t n)
 	while (i < n && src[i] != 0x00)
 	{
 		dest[i] = src[i];
-		i++;	
+		i++;
 	}
-	while (i < n) 
+	while (i < n)
 	{
 		dest[i] = 0x00;
 		i++;

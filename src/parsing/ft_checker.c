@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_checker.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atok <atok@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: wyap <wyap@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 17:33:43 by atok              #+#    #+#             */
-/*   Updated: 2024/01/30 23:11:49 by atok             ###   ########.fr       */
+/*   Updated: 2024/02/13 12:28:15 by wyap             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	ft_loop_to_pair(char *str, int *i, char c)
 	if (str[*i] == 0x00)
 		return ;
 }
+
 /*
 * check if more than two same arrow
 * return true/false for valid/invalid syntax
@@ -47,6 +48,7 @@ bool	ft_check_arrow(char *str)
 	}
 	return (true);
 }
+
 /*
 * check for unclosed quotes
 * return 0/-1 if no/contains unclosed quotes

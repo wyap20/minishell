@@ -19,7 +19,7 @@
 * val: the substring that replaces the 'key' substring
 * returns string with key substr replaced by val
 */
-char	*ft_replace (char *str, char *key, char *val)
+char	*ft_replace(char *str, char *key, char *val)
 {
 	int		len;
 	char	*new;
@@ -35,15 +35,17 @@ char	*ft_replace (char *str, char *key, char *val)
 	ptr = ft_strstr(new, key);
 	if (ptr)
 	{
-		ft_memmove(ptr + ft_strlen(val), ptr + ft_strlen(key), ft_strlen(ptr + ft_strlen(key)) + 1);
+		ft_memmove(ptr + ft_strlen(val), ptr + ft_strlen(key),
+			ft_strlen(ptr + ft_strlen(key)) + 1);
 		ft_strncpy(ptr, val, ft_strlen(val));
 	}
 	return (new);
 }
-	//ptr: tells the index position of the key
-	//strnpcy
-	//dst will be where the end of val is. src wiil be end of key. n will be wehre key/src end
-	// moving the raminder to the back remainder=anyhong after key)
+//ptr: tells the index position of the key
+//strnpcy
+//dst will be where the end of val is. src wiil be end of key.
+//n will be wehre key/src end
+// moving the raminder to the back remainder=anyhong after key)
 
 char	*get_key(t_node *token)
 {
@@ -73,9 +75,9 @@ char	*get_key(t_node *token)
 		}
 		i++;
 	}
-	// printf("get key:%s\n", key);
 	return (key);
 }
+	// printf("get key:%s\n", key);
 
 char	*expand_errno(t_env *env, char *key)
 {
@@ -86,12 +88,12 @@ char	*expand_errno(t_env *env, char *key)
 	err_no = ft_itoa(env->err_num);
 	sub = ft_substr(key, 2, ft_strlen(key) - 1);
 	val = ft_strjoin(err_no, sub);
+	return (free(sub), free(err_no), val);
+}
 	// printf("key:%s\n", key);
 	// printf("itoa errnum:%s\n", err_no);
 	// printf("sub:%s\n", sub);
 	// printf("expand errno val:%s\n", val);
-	return (free(sub), free(err_no), val);
-}
 
 char	*get_val(t_env *env, char *key)
 {
@@ -109,12 +111,12 @@ char	*get_val(t_env *env, char *key)
 	trim = ft_strtrim(key, "$");
 	key = ft_strjoin(trim, "=");
 	len = (int)ft_strlen(key);
-	// printf("get_val key:%s\nlen:%i\n", key, len);
 	val = NULL;
-	while (env->env_vars[i])//[0])
+	while (env->env_vars[i])
 	{
 		if (!ft_strncmp(env->env_vars[i], key, len))
-			val = ft_substr(env->env_vars[i], len, (int)ft_strlen(env->env_vars[i]) - len);
+			val = ft_substr(env->env_vars[i], len,
+					(int)ft_strlen(env->env_vars[i]) - len);
 		i++;
 	}
 	return (free(trim), free(key), val);
@@ -123,23 +125,6 @@ char	*get_val(t_env *env, char *key)
 	// for (int j = 0; env->env_vars[j][0]; j++)
 	// 	printf("%d: %s\n", j, env->env_vars[j]);
 
-// bool check_dollar(const char *str)
-// {
-// 	int i;
-	
-// 	i = 0;
-// 	while (str[i] != '\0')
-// 	{
-// 		if (str[i] == '$')
-// 		{
-// 			if (str[i + 1] == '\"' || !ft_not_alpha(str[i + 1]))
-// 				return false; //nothing left to replace
-// 		}
-// 		i++;
-// 	}
-// 	  return true;
-// }
-
 t_node	*get_key_val_rplc(t_env *env, t_node *ptr)
 {
 	char	*key;
@@ -147,16 +132,15 @@ t_node	*get_key_val_rplc(t_env *env, t_node *ptr)
 	char	*tmp;
 
 	key = get_key(ptr);
-	if (key != NULL && key[0] == '$' && ((ft_not_alpha(key[1]) && key[1] != '?') || !key[1]))
+	if (key != NULL && key[0] == '$'
+		&& ((ft_not_alpha(key[1]) && key[1] != '?') || !key[1]))
 		return (free(key), ptr->next);
 	else if (key != NULL)
 	{
 		tmp = key;
 		key = ft_strtrim(key, "\"\'");
 		free(tmp);
-		// printf("trim:%s\n", key);
 		val = get_val(env, key);
-		// printf("val:%s\n", val);
 		tmp = ptr->content;
 		ptr->content = ft_replace(ptr->content, key, val);
 		free(tmp);
@@ -165,6 +149,8 @@ t_node	*get_key_val_rplc(t_env *env, t_node *ptr)
 	}
 	return (ptr);
 }
+		// printf("trim:%s\n", key);
+		// printf("val:%s\n", val);
 
 void	ft_expand(t_node **lst_cmd, t_env *env)
 {
@@ -187,7 +173,7 @@ void	ft_expand(t_node **lst_cmd, t_env *env)
 			ptr->content = ft_replace(ptr->content, "~", env->home_tilde);
 			free(tmp);
 		}
-		else if (!ft_strcmp(ptr->quote_type, "double") || !ft_strcmp(ptr->quote_type, "none")) //if is double or open quote
+		else if (!ft_strcmp(ptr->quote_type, "double") || !ft_strcmp(ptr->quote_type, "none"))
 			ptr = get_key_val_rplc(env, ptr);
 		if (ptr)
 			if (!ft_strcmp(ptr->quote_type, "single") || !ft_strchr(ptr->content, '$'))
@@ -195,116 +181,3 @@ void	ft_expand(t_node **lst_cmd, t_env *env)
 	}
 }
 		// printf("expandmark\n");
-
-// void	ft_expand(t_node **lst_cmd, t_env *env)
-// {
-// 	t_node	*ptr;
-// 	char	*key;
-// 	char	*val;
-// 	char	*tmp;
-
-// 	ptr = *lst_cmd;
-// 	while (ptr)
-// 	{
-// 		if (!ft_strcmp(ptr->quote_type, "double") || !ft_strcmp(ptr->quote_type, "none")) //if is double or open quote
-// 		{
-// 			key = get_key(ptr);
-// 			// printf("key0:%d\nkey1:%d\n", key[0], key[1]);
-// 			// printf("%d\n", ft_not_alpha(key[1]));
-// 			//handle standalone '$'
-// 			if (key != NULL && key[0] == '$' && (ft_not_alpha(key[1]) || !key[1]))
-// 				ptr = ptr->next;
-// 			else if (key != NULL)
-// 			{
-// 				tmp = key;
-// 				key = ft_strtrim(key, "\"\'");
-// 				free(tmp);
-// 				printf("trim:%s\n", key);
-// 				val = get_val(env, key);
-// 				printf("val:%s\n", val);
-// 				tmp = ptr->content;
-// 				ptr->content = ft_replace(ptr->content, key, val);
-// 				free(tmp);
-// 				free(key);
-// 				free(val);
-// 			}
-// 		}
-// 		if (ptr)
-// 			if (!ft_strcmp(ptr->quote_type, "single") || !ft_strchr(ptr->content, '$')) 
-// 				ptr = ptr->next;
-// 		// printf("expandmark\n");
-// 	}
-// }
-
-// int main(void)
-// {
-// 	// char arg[]= "atok";
-// 	// char *$USER = arg;
-// 	// char *$USER = "atok";
-// 	// printf("hi%s\n", $USER);
-
-// 	// char *intput = "echo $test 42";
-// 	// char *$test = "42 kl is muy home";
-// 	// char *$output = "echo 42 kl is muy home 42";
-
-// 	// char *str = "echo me$USER";
-// 	char *str = "echo me$USERme xop";
-// 	// char *str = "echo me$USER me";
-// 	// char *str = "echo me$USER test$USER";
-
-
-// 	// char *key = "$USER";
-// 	char *key = "$USERme";
-// 	// char *val = "tok";
-// 	// char *val = "";
-// 	char *val = "usernameisatok";
-// 	char *ns;
-
-// 	ns = ft_replace(str,key,val);
-// 	printf("%s\n",ns);
-// 	free(ns);
-// 	return(0);
-// }
-
-// while loop input find $
-// substr $... return it as char *key
-// for val, use key to find val
-
-
-// echo hello world | wc
-
-// node1
-// Cmd_string = echo hello world
-// Cmd_array = {echo, hello, world. NULL}
-// redir1
-// redirype = <<
-// redirtext = end
-//    heredoc = ""
-
-// node 2
-// Cmd_string = wc
-// Cmd_array = {wc NULL}
-
-// node1
-// echo
-// node2
-// hello
-// node3
-// world
-// node4
-// |
-// node5
-// wc
-
-// check node until | or end
-// array {echo, NULL}
-// array {echo,world,NULL}
-// array {echo,world,hello,NULL}
-
-// | -> run Cmd 
-
-// array {wc, NULL}
-
-// \0 -> run Cmd
-
-

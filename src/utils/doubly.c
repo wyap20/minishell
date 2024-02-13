@@ -6,7 +6,7 @@
 /*   By: wyap <wyap@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/03 19:32:28 by wyap              #+#    #+#             */
-/*   Updated: 2024/01/27 14:05:28 by wyap             ###   ########.fr       */
+/*   Updated: 2024/02/13 12:17:27 by wyap             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,8 @@ t_node	*ft_dlstnew(char *data)
 	if (!new)
 		return (NULL);
 	new->content = data;
-	// new->index = -1;
-	new->quote_type = NULL; //{(null), single (s), double (d)} 
-	new->attr = NULL; //{(null), builtin (b), external (e), operator (o)} 
+	new->quote_type = NULL;
+	new->attr = NULL;
 	new->cmds = NULL;
 	new->prev = NULL;
 	new->next = NULL;

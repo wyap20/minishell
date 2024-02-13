@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils1.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atok <atok@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: wyap <wyap@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 01:12:54 by wyap              #+#    #+#             */
-/*   Updated: 2024/01/30 21:21:20 by atok             ###   ########.fr       */
+/*   Updated: 2024/02/13 12:15:42 by wyap             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,9 @@ static void	sighandler(int sig)
 void	signals(void)
 {
 	signal(SIGINT, sighandler);
-	signal(SIGQUIT, SIG_IGN); //ignore ctrl + '\'
+	signal(SIGQUIT, SIG_IGN);
 }
+	// signal(SIGQUIT, SIG_IGN); //ignore ctrl + '\'
 
 // void print_nodes(t_node **lst_cmd)
 // {
@@ -45,13 +46,12 @@ void	signals(void)
 
 void	print_list(t_node **lst)
 {
-	t_node *tmp;
+	t_node	*tmp;
 
 	tmp = *lst;
 	printf("\n\t***lst_cmd***\n");
 	while (tmp)
 	{
-		// printf("\tNode Index		:%d", tmp->index);
 		printf("\n\tNode Content		:%s", tmp->content);
 		printf("\n\tAttribute		:%s", tmp->attr);
 		printf("\n\tQuote Type		:%s", tmp->quote_type);
@@ -67,7 +67,6 @@ void	print_cmd_group(t_node **lst)
 	t_node	*ptr;
 
 	ptr = *lst;
-
 	printf("\n\t***PRINT CMD GROUP***");
 	while (ptr)
 	{
@@ -80,9 +79,7 @@ void	print_cmd_group(t_node **lst)
 	}
 }
 
-/*free malloc all strings then free malloc of 2D array
-* !!! INSPECT FURTHER, COULD BE CAUSE OF MEMORY LEAKS
-*/
+/*free malloc all strings then free malloc of 2D array*/
 void	free_2d_arr(char **arr)
 {
 	int	i;
@@ -98,20 +95,17 @@ void	free_2d_arr(char **arr)
 
 void	free_node(t_node *node)
 {
-	// free(node->attr); //no malloc
 	free(node->content);
 	free_2d_arr(node->cmds);
-	// free(node->next); //cannot free next node?
-	// free(node->prev); //cannot free prev node?
-	// free(node->quote_type); //no malloc
 	free(node);
 }
 
 void	free_list(t_node **lst_cmd)
 {
-	t_node *ptr = *lst_cmd;
-	t_node *tmp;
+	t_node	*ptr;
+	t_node	*tmp;
 
+	ptr = *lst_cmd;
 	while (ptr)
 	{
 		tmp = ptr->next;
@@ -122,30 +116,21 @@ void	free_list(t_node **lst_cmd)
 
 bool	is_whitespace(char c)
 {
-	return (c == ' ' || c == '\t' || c == '\n' || c == '\r' || c == '\f' || c == '\v');
+	return (c == ' ' || c == '\t' || c == '\n' || c == '\r'
+		|| c == '\f' || c == '\v');
 }
 
 bool	str_not_empty(const char *str)
 {
-	// int	i;
+	int	i;
 
-	// if (!str)
-	// 	return (false);
-	// i = 0;
-	// while (str[i])
-	// {
-	// 	if (!is_whitespace(str[i]))
-	// 		return (true);
-	// 	i++;
-	// }
-	// return (false);
-	int i = 0;
-	while(str[i])
+	i = 0;
+	while (str[i])
 	{
-		if(is_whitespace(str[i]))
+		if (is_whitespace(str[i]))
 			i++;
 		else
-			return(false);
+			return (false);
 	}
-	return(true);
+	return (true);
 }
