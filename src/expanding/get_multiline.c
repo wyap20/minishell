@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_multiline.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wyap <wyap@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: atok <atok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 12:58:07 by wyap              #+#    #+#             */
-/*   Updated: 2024/02/13 12:58:08 by wyap             ###   ########.fr       */
+/*   Updated: 2024/02/13 22:19:02 by atok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,22 +34,35 @@ char	*join_lines(char *multi, char *line, int count)
 	return (multi);
 }
 
-char	*get_multiline(char	*delim)
+void	sig_hd(int sig)
+{
+	int	null_fd;
+	
+	if (sig != SIGINT)
+		return ;
+	g_hdflag = 1;
+	null_fd = open("/dev/null", O_RDONLY);
+	dup2(null_fd, STDIN_FILENO);
+	close(null_fd);
+}
+
+char *read_multiline_input(char *delim)
 {
 	char	*line;
 	char	*multi;
-	char	*tmp;
 	int		count;
 
 	multi = NULL;
 	count = 0;
-	while (1)
-	{
+	while (1) {
 		line = readline("> ");
-		if (!ft_strcmp(line, delim))
+		if (!line || !ft_strcmp(line, delim))
 		{
+			if (!line && g_hdflag == 0)
+				printf("minishell: warning: here-document delimited"
+					"by end-of-file (wanted `%s')\n", delim);
 			free(line);
-			break ;
+			break;
 		}
 		else if (line && ft_strcmp(line, delim))
 		{
@@ -57,11 +70,67 @@ char	*get_multiline(char	*delim)
 			count++;
 		}
 	}
-	tmp = multi;
-	multi = ft_strjoin(tmp, "\n");
-	free(tmp);
 	return (multi);
 }
+
+char	*get_multiline(char *delim)
+{
+	char *multi;
+	int tmp_fd;
+
+	multi = NULL;
+	tmp_fd = dup(STDIN_FILENO);
+	signal(SIGINT, sig_hd);
+
+	multi = read_multiline_input(delim);
+
+	dup2(tmp_fd, STDIN_FILENO);
+	close(tmp_fd);
+
+	char *tmp = multi;
+	multi = ft_strjoin(tmp, "\n");
+	free(tmp);
+
+	return (multi);
+}
+
+/* old pre-refactor */
+// char	*get_multiline(char* delim)
+// {
+// 	char	*line;
+// 	char	*multi;
+// 	char	*tmp;
+// 	int		count;
+// 	int		tmp_fd;
+
+// 	multi = NULL;
+// 	count = 0;
+// 	tmp_fd = dup(STDIN_FILENO);
+// 	signal(SIGINT,sig_hd);
+// 	while (1)
+// 	{
+// 		line = readline("> ");
+// 		if (!line || !ft_strcmp(line, delim))
+// 		{
+// 			if (!line && g_hdflag == 0)
+// 				printf("minishell: here-document delimited" 
+// 					"by end-of-file (wanted `%s')\n", delim);
+// 			free(line);
+// 			break ;
+// 		}
+// 		else if (line && ft_strcmp(line, delim))
+// 		{
+// 			multi = join_lines(multi, line, count);
+// 			count++;
+// 		}
+// 	}
+// 	dup2(tmp_fd,STDIN_FILENO);
+// 	close(tmp_fd);
+// 	tmp = multi;
+// 	multi = ft_strjoin(tmp, "\n");
+// 	free(tmp);
+// 	return (multi);
+// }
 
 // char	*get_multiline(char	*str)
 // {

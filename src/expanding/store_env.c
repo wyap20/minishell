@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   store_env.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wyap <wyap@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: atok <atok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/26 01:50:06 by wyap              #+#    #+#             */
-/*   Updated: 2024/02/13 12:59:57 by wyap             ###   ########.fr       */
+/*   Updated: 2024/02/13 20:57:41 by atok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	split_path(t_env *env)
 	}
 	else
 		env->paths = ft_split(env->env_path, ':');
-	printf("\n");
+	// printf("\n"); << weird \n when start up culprit
 }
 	//check splitted paths
 	// printf("\n**View splitted PATH**\n");

@@ -17,6 +17,8 @@
 // #include "/usr/local/opt/readline/include" //(rl_clear_history)
 // /usr/local/opt/readline/lib
 
+extern int g_hdflag;
+
 /*
 node struct:
 int index
@@ -120,7 +122,7 @@ void	*ft_memmove(void *dest, const void *src, size_t n);
 char	*ft_strncpy(char *dest, const char *src, size_t n);
 
 /*execute*/
-void	create_cmd_group(t_env *env, t_node *lst_cmd);
+int		create_cmd_group(t_env *env, t_node *lst_cmd);
 void	get_pipe_count(t_exe *exe, t_node **lst_cmd);
 void	ft_execute_cmd(t_env *env, t_node **lst);
 void	ft_initialize_exe_vars(t_exe *exe, t_node **lst);

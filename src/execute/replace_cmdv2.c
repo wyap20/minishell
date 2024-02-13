@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   replace_cmdv2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wyap <wyap@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: atok <atok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 12:38:57 by atok              #+#    #+#             */
-/*   Updated: 2024/02/13 15:44:15 by wyap             ###   ########.fr       */
+/*   Updated: 2024/02/13 22:37:51 by atok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,31 +46,93 @@ void	set_builtin_attr(t_node *ptr)
 		ptr->attr = "builtin";
 }
 
-void	create_cmd_group(t_env *env, t_node *lst_cmd)
+// Function to process each node in the command list
+void process_node(t_env *env, t_node *node)
 {
-	t_node	*ptr;
 	char	*tmp;
 
+	tmp = NULL;
+	node->cmds = ft_split(node->content, ' ');
+	if (!node->cmds[0])
+		return;
+	if (!ft_strcmp(node->cmds[0], "<<"))
+	{
+		tmp = node->cmds[1];
+		node->cmds[1] = get_multiline(node->cmds[1]);
+		free(tmp);
+	}
+	tmp = node->cmds[0];
+	set_builtin_attr(node);
+	if (ft_strcmp(node->attr, "builtin"))
+	{
+		node->cmds[0] = ft_get_cmd_path(env->paths, node->cmds[0]);
+		free(tmp);
+	}
+}
+
+// Function to process the command group list
+int process_cmd_group(t_env *env, t_node *lst_cmd)
+{
+	t_node	*ptr;
+	
 	ptr = lst_cmd;
 	while (ptr)
 	{
-		tmp = NULL;
-		ptr->cmds = ft_split(ptr->content, ' ');
-		if (!ptr->cmds[0])
-			return ;
-		if (!ft_strcmp(ptr->cmds[0], "<<"))
-		{
-			tmp = ptr->cmds[1];
-			ptr->cmds[1] = get_multiline(ptr->cmds[1]);
-			free(tmp);
-		}
-		tmp = ptr->cmds[0];
-		set_builtin_attr(ptr);
-		if (ft_strcmp(ptr->attr, "builtin"))
-		{
-			ptr->cmds[0] = ft_get_cmd_path(env->paths, ptr->cmds[0]);
-			free(tmp);
-		}
+		if (g_hdflag == 1)
+			return (printf("\n"), 1);
+		process_node(env, ptr);
 		ptr = ptr->next;
 	}
+	if (g_hdflag == 1)
+		return (printf("\n"), 1);
+	else
+		return (0);
 }
+
+// Main function to create the command group
+int create_cmd_group(t_env *env, t_node *lst_cmd)
+{
+	int	result;
+	
+	result = process_cmd_group(env, lst_cmd);
+	if (result == 1)
+		return (1);
+	else
+		return 0;
+}
+
+/* old pre-refactor */
+// int	create_cmd_group(t_env *env, t_node *lst_cmd)
+// {
+// 	t_node	*ptr;
+// 	char	*tmp;
+
+// 	ptr = lst_cmd;
+// 	while (ptr)
+// 	{
+// 		if (g_hdflag == 1)
+// 			return (printf ("\n"),1);
+// 		tmp = NULL;
+// 		ptr->cmds = ft_split(ptr->content, ' ');
+// 		if (!ptr->cmds[0])
+// 			return (0);
+// 		if (!ft_strcmp(ptr->cmds[0], "<<"))
+// 		{
+// 			tmp = ptr->cmds[1];
+// 			ptr->cmds[1] = get_multiline(ptr->cmds[1]);
+// 			free(tmp);
+// 		}
+// 		tmp = ptr->cmds[0];
+// 		set_builtin_attr(ptr);
+// 		if (ft_strcmp(ptr->attr, "builtin"))
+// 		{
+// 			ptr->cmds[0] = ft_get_cmd_path(env->paths, ptr->cmds[0]);
+// 			free(tmp);
+// 		}
+// 		ptr = ptr->next;
+// 	}
+// 	if (g_hdflag == 1)
+// 		return (printf ("\n"),1);
+// 	else
+// 		return (0);
+// }

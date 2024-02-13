@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wyap <wyap@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: atok <atok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 18:28:19 by wyap              #+#    #+#             */
-/*   Updated: 2024/02/13 16:20:42 by wyap             ###   ########.fr       */
+/*   Updated: 2024/02/13 20:42:52 by atok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,7 @@ void	init_env(t_env *env, char **envp)
 // 		}
 // 	}
 // }
+int	g_hdflag = 0;
 
 int	main(int ac, char **av, char **envp)
 {
@@ -133,6 +134,7 @@ int	main(int ac, char **av, char **envp)
 		init_env(&env, envp);
 		while (1)
 		{
+			g_hdflag = 0;
 			signals();
 			cmd_buf = get_cmd(cmd_buf);
 			printf("cmd_buf input:%s\n", cmd_buf);
@@ -169,10 +171,12 @@ int	main(int ac, char **av, char **envp)
 						// combine_nodes(lst_cmd);
 						// printf("\n\tcombine 3:\n"); print_list(lst_cmd);
 						/*execution*/
-						create_cmd_group(&env, *lst_cmd);
-						printf("created cmd group\n");
-						printf("\n\tcreate_cmd_group:\n"); print_list(lst_cmd); print_cmd_group(lst_cmd);
-						ft_execute_cmd(&env, lst_cmd);
+						if (create_cmd_group(&env, *lst_cmd) == 0)
+						{
+							printf("created cmd group\n");
+							printf("\n\tcreate_cmd_group:\n"); print_list(lst_cmd); print_cmd_group(lst_cmd);
+							ft_execute_cmd(&env, lst_cmd);
+						}
 					}
 				}
 				free(cmd_buf);

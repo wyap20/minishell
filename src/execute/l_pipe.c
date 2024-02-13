@@ -19,11 +19,19 @@ int	ft_here_doc(char *str)
 	int	len;
 
 	len = 0;
-	while (str[len] != 0x00)
-		len++;
-	pipe(io);
-	write(io[1], str, len);
-	close(io[1]);
+	if (str)
+	{
+		while (str[len] != 0x00)
+			len++;
+		pipe(io);
+		write(io[1], str, len);
+		close(io[1]);
+	}
+	else
+	{
+		pipe(io);
+		close(io[1]);
+	}
 	return (io[0]);
 }
 
