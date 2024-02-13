@@ -36,28 +36,29 @@ int	ft_here_doc(char *str)
 }
 
 /* writes to a tmp fd for output to be truncated before writing to std err*/
-void	ft_if_open_failed(char *str)
-{
-	int		tmp;
-	int		n;
-	char	buf[42];
+//can remove
+// void	ft_if_open_failed(char *str)
+// {
+// 	int		tmp;
+// 	int		n;
+// 	char	buf[42];
 
-	tmp = open(str, O_CREAT | O_WRONLY, 0644);
-	write(tmp, "minishell> ", 12);
-	write(tmp, str, ft_strlen(str));
-	write(tmp, ": No such file or directory\n", 29);
-	close(tmp);
-	tmp = open(str, O_RDONLY);
-	while (1)
-	{
-		n = read(tmp, buf, 42);
-		if (n == 0)
-			break ;
-		write(2, buf, n);
-	}
-	close(tmp);
-	unlink(str);
-}
+// 	tmp = open(str, O_CREAT | O_WRONLY, 0644);
+// 	write(tmp, "minishell> ", 12);
+// 	write(tmp, str, ft_strlen(str));
+// 	write(tmp, ": No such file or directory\n", 29);
+// 	close(tmp);
+// 	tmp = open(str, O_RDONLY);
+// 	while (1)
+// 	{
+// 		n = read(tmp, buf, 42);
+// 		if (n == 0)
+// 			break ;
+// 		write(2, buf, n);
+// 	}
+// 	close(tmp);
+// 	unlink(str);
+// }
 
 /* handles left redirections */
 void	ft_redir_left(t_exe *exe, t_node *lst, t_env *env)
@@ -67,7 +68,8 @@ void	ft_redir_left(t_exe *exe, t_node *lst, t_env *env)
 		exe->redir[0] = open(lst->cmds[1], O_RDONLY);
 		if (exe->redir[0] == -1)
 		{
-			ft_if_open_failed(lst->cmds[1]);
+			// ft_if_open_failed(lst->cmds[1]); // can remove
+			printf("minishell: %s: %s\n",lst->cmds[1],strerror(errno));
 			env->err_num = 1;
 			exit(1);
 		}

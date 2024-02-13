@@ -86,6 +86,14 @@ all file created
 zz will have list of directory
 zzz will have       0       0       0
 
+>a >b  ls >c  | <c ls >d 
+c: No such file or directory
+a b c created wiht c having ls content
+run again >a >b  ls >c  | <c ls >d 
+c will be updated with file directory
+& file d will becreated with same content as cat
+
+
 <a |>b <c | <d
 a c d error message
 b created
