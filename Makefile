@@ -6,7 +6,7 @@
 #    By: wyap <wyap@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/06 18:40:56 by wyap              #+#    #+#              #
-#    Updated: 2024/01/29 16:08:54 by wyap             ###   ########.fr        #
+#    Updated: 2024/02/13 16:18:07 by wyap             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,8 @@ SRC = main.c utils/ft_split.c utils/ft_strlen.c utils/ft_strjoin.c\
 		builtins/builtin_utils.c builtins/echo.c builtins/export.c\
 		builtins/check_export.c builtins/update_env.c builtins/unset.c\
 		builtins/exit.c execute/replace_cmdv2.c execute/l_pipe.c builtins/cd.c\
-		builtins/pwd.c
+		builtins/pwd.c execute/swap_node.c execute/execute.c execute/init_exe.c\
+		execute/no_child.c
 
 OBJ = $(addprefix $(SRC_DIR), $(SRC:.c=.o))
 

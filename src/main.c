@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atok <atok@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: wyap <wyap@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 18:28:19 by wyap              #+#    #+#             */
-/*   Updated: 2024/02/12 02:52:49 by atok             ###   ########.fr       */
+/*   Updated: 2024/02/13 16:20:42 by wyap             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,27 +16,25 @@ char	*get_cmd(char *cmd_buf)
 {
 	char	*tmp;
 
-	cmd_buf = readline("minishell> ");//(prompt);
+	cmd_buf = readline("minishell> ");
 	if (!cmd_buf)
 		cmd_buf = "exit";
-	else if (str_not_empty(cmd_buf)) //if only contain whitespace
+	else if (str_not_empty(cmd_buf))
 	{
-		// add_history(cmd_buf);
-		// printf("jisotry - %s\n", cmd_buf);
 		tmp = cmd_buf;
-		cmd_buf = ft_strtrim(cmd_buf, " "); //trim space
+		cmd_buf = ft_strtrim(cmd_buf, " ");
 		free(tmp);
 	}
 	else if (!str_not_empty(cmd_buf) && (ft_strlen(cmd_buf) > 0))
 	{
 		add_history(cmd_buf);
-		// printf("&& - %s\n", cmd_buf);
 		tmp = cmd_buf;
-		cmd_buf = ft_strtrim(cmd_buf, " "); //trim space
+		cmd_buf = ft_strtrim(cmd_buf, " ");
 		free(tmp);
 	}
 	return (cmd_buf);
 }
+	// else if (str_not_empty(cmd_buf)) //if only contain whitespace
 
 	// cur_path = NULL;
 	// if ((cur_path = getcwd(NULL, 0)) == NULL)
@@ -47,7 +45,7 @@ char	*get_cmd(char *cmd_buf)
 	// free(prompt);
 	// free(cur_path);
 
-t_node **init_lst(t_node **lst_cmd)
+t_node	**init_lst(t_node **lst_cmd)
 {
 	lst_cmd = (t_node **)malloc(sizeof(t_node *));
 	if (!lst_cmd)
@@ -65,7 +63,6 @@ void	init_env(t_env *env, char **envp)
 	env->paths = NULL;
 	env->home_tilde = NULL;
 	store_env(env, envp);
-	// store_path(env, envp);
 	store_path(env);
 	store_tilde(env);
 }
@@ -127,7 +124,7 @@ int	main(int ac, char **av, char **envp)
 {
 	char	*cmd_buf;
 	t_env	env;
-	t_node	**lst_cmd; //list to store parsed cmd
+	t_node	**lst_cmd;
 	(void) av;
 
 	cmd_buf = NULL;
@@ -178,48 +175,18 @@ int	main(int ac, char **av, char **envp)
 						ft_execute_cmd(&env, lst_cmd);
 					}
 				}
-				free(cmd_buf); //readline malloc buffer
+				free(cmd_buf);
 				free_list(lst_cmd);
 				free(lst_cmd);
 				lst_cmd = NULL;
 			}
 			else
-				free(cmd_buf); //readline malloc buffer
+				free(cmd_buf);
 		}
 	}
 }
-
-// gcc *.c -lreadline && ./a.out
 
 /*
 Q: why not scanf()?
 A: will not accept enter as input, has no history capabilities
 */
-
-/*piping info/exercise*/
-// int	main(int ac, char **av, char **envp)
-// {
-// 	char *cmd1[] = {"/bin/ls", 0};
-// 	char *cmd2[] = {"/usr/bin/wc", 0};
-// 	int fd[2];
-
-
-// 	pipe(fd);
-
-// 	int i = fork();
-// 	if ( i == 0)
-// 	{
-// 		dup2(fd[1], STDOUT_FILENO); // fd[1] write or in
-// 		close(fd[1]);
-// 		close(fd[0]);
-// 		execve(cmd1[0], cmd1, envp);
-// 	}
-// 	else
-// 	{
-// 		dup2(fd[0], STDIN_FILENO); // fd[0] read or out
-// 		close(fd[1]);
-// 		close(fd[0]);
-// 		execve(cmd2[0], cmd2, envp);
-// 		perror("error"); // should be "zsh: command not found: ..."
-// 	}
-// }
