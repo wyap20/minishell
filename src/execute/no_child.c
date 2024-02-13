@@ -12,7 +12,6 @@
 
 #include "../../minishell.h"
 
-
 /* exclusively run when no pipe or only 1 cmd group */
 void	ft_if_no_pipes(t_exe *exe, t_node *lst, t_env *env)
 {

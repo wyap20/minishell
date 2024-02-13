@@ -69,7 +69,7 @@ void	ft_redir_left(t_exe *exe, t_node *lst, t_env *env)
 		if (exe->redir[0] == -1)
 		{
 			// ft_if_open_failed(lst->cmds[1]); // can remove
-			printf("minishell: %s: %s\n",lst->cmds[1],strerror(errno));
+			printf("minishell: %s: %s\n", lst->cmds[1], strerror(errno));
 			env->err_num = 1;
 			exit(1);
 		}

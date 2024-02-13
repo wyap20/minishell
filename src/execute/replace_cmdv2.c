@@ -46,15 +46,15 @@ void	set_builtin_attr(t_node *ptr)
 		ptr->attr = "builtin";
 }
 
-// Function to process each node in the command list
-void process_node(t_env *env, t_node *node)
+/* Function to process each node in the command list*/
+void	process_node(t_env *env, t_node *node)
 {
 	char	*tmp;
 
 	tmp = NULL;
 	node->cmds = ft_split(node->content, ' ');
 	if (!node->cmds[0])
-		return;
+		return ;
 	if (!ft_strcmp(node->cmds[0], "<<"))
 	{
 		tmp = node->cmds[1];
@@ -70,11 +70,11 @@ void process_node(t_env *env, t_node *node)
 	}
 }
 
-// Function to process the command group list
-int process_cmd_group(t_env *env, t_node *lst_cmd)
+/* Function to process the command group list*/
+int	process_cmd_group(t_env *env, t_node *lst_cmd)
 {
 	t_node	*ptr;
-	
+
 	ptr = lst_cmd;
 	while (ptr)
 	{
@@ -89,11 +89,10 @@ int process_cmd_group(t_env *env, t_node *lst_cmd)
 		return (0);
 }
 
-// Main function to create the command group
-int create_cmd_group(t_env *env, t_node *lst_cmd)
+int	create_cmd_group(t_env *env, t_node *lst_cmd)
 {
 	int	result;
-	
+
 	result = process_cmd_group(env, lst_cmd);
 	if (result == 1)
 	{	
@@ -101,7 +100,7 @@ int create_cmd_group(t_env *env, t_node *lst_cmd)
 		return (1);
 	}
 	else
-		return 0;
+		return (0);
 }
 
 /* old pre-refactor */

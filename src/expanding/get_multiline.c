@@ -37,7 +37,7 @@ char	*join_lines(char *multi, char *line, int count)
 void	sig_hd(int sig)
 {
 	int	null_fd;
-	
+
 	if (sig != SIGINT)
 		return ;
 	g_hdflag = 1;
@@ -46,7 +46,7 @@ void	sig_hd(int sig)
 	close(null_fd);
 }
 
-char *read_multiline_input(char *delim)
+char	*read_multiline_input(char *delim)
 {
 	char	*line;
 	char	*multi;
@@ -54,7 +54,8 @@ char *read_multiline_input(char *delim)
 
 	multi = NULL;
 	count = 0;
-	while (1) {
+	while (1)
+	{
 		line = readline("> ");
 		if (!line || !ft_strcmp(line, delim))
 		{
@@ -62,7 +63,7 @@ char *read_multiline_input(char *delim)
 				printf("minishell: warning: here-document delimited"
 					"by end-of-file (wanted `%s')\n", delim);
 			free(line);
-			break;
+			break ;
 		}
 		else if (line && ft_strcmp(line, delim))
 		{
@@ -75,22 +76,19 @@ char *read_multiline_input(char *delim)
 
 char	*get_multiline(char *delim)
 {
-	char *multi;
-	int tmp_fd;
+	char	*multi;
+	int		tmp_fd;
+	char	*tmp;
 
 	multi = NULL;
 	tmp_fd = dup(STDIN_FILENO);
 	signal(SIGINT, sig_hd);
-
 	multi = read_multiline_input(delim);
-
 	dup2(tmp_fd, STDIN_FILENO);
 	close(tmp_fd);
-
-	char *tmp = multi;
+	tmp = multi;
 	multi = ft_strjoin(tmp, "\n");
 	free(tmp);
-
 	return (multi);
 }
 

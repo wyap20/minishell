@@ -45,12 +45,12 @@ void	split_path(t_env *env)
 	}
 	else
 		env->paths = ft_split(env->env_path, ':');
-	// printf("\n"); << weird \n when start up culprit
 }
 	//check splitted paths
 	// printf("\n**View splitted PATH**\n");
 	// for (int i = 0; env->paths[i]; i++)
 	// 	printf("%d: %s\n", i, env->paths[i]);
+	// printf("\n");
 
 /*store $PATH variable*/
 void	store_path(t_env *env)
