@@ -93,6 +93,9 @@ run again >a >b  ls >c  | <c ls >d
 c will be updated with file directory
 & file d will becreated with same content as cat
 
+<<a <<b <<c
+try and Ctrl+D and Ctrl+C in any sequnce
+and check $?
 
 <a |>b <c | <d
 a c d error message

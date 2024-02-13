@@ -6,7 +6,7 @@
 /*   By: atok <atok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 12:38:57 by atok              #+#    #+#             */
-/*   Updated: 2024/02/13 23:22:30 by atok             ###   ########.fr       */
+/*   Updated: 2024/02/13 23:34:52 by atok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,10 @@ int create_cmd_group(t_env *env, t_node *lst_cmd)
 	
 	result = process_cmd_group(env, lst_cmd);
 	if (result == 1)
+	{	
+		env->err_num = 130;
 		return (1);
+	}
 	else
 		return 0;
 }
