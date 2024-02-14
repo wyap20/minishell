@@ -35,30 +35,28 @@ int	ft_here_doc(char *str)
 	return (io[0]);
 }
 
-/* writes to a tmp fd for output to be truncated before writing to std err*/
-//can remove
-// void	ft_if_open_failed(char *str)
-// {
-// 	int		tmp;
-// 	int		n;
-// 	char	buf[42];
+/* join string before writing to a std_err */
+void	ft_if_open_failed(char *str)
+{
+	char	*buf;
+	char	*tmp;
 
-// 	tmp = open(str, O_CREAT | O_WRONLY, 0644);
-// 	write(tmp, "minishell> ", 12);
-// 	write(tmp, str, ft_strlen(str));
-// 	write(tmp, ": No such file or directory\n", 29);
-// 	close(tmp);
-// 	tmp = open(str, O_RDONLY);
-// 	while (1)
-// 	{
-// 		n = read(tmp, buf, 42);
-// 		if (n == 0)
-// 			break ;
-// 		write(2, buf, n);
-// 	}
-// 	close(tmp);
-// 	unlink(str);
-// }
+	buf = ft_strjoin("minishell: ", str);
+	tmp = buf;
+	buf = ft_strjoin(buf, ":");
+	free(tmp);
+	tmp = buf;
+	buf = ft_strjoin(buf, " ");
+	free(tmp);
+	tmp = buf;
+	buf = ft_strjoin(buf, strerror(errno));
+	free(tmp);
+	tmp = buf;
+	buf = ft_strjoin(buf, "\n");
+	free(tmp);
+	write(2, buf, ft_strlen(buf));
+	free(buf);
+}
 
 /* handles left redirections */
 void	ft_redir_left(t_exe *exe, t_node *lst, t_env *env)
@@ -68,8 +66,7 @@ void	ft_redir_left(t_exe *exe, t_node *lst, t_env *env)
 		exe->redir[0] = open(lst->cmds[1], O_RDONLY);
 		if (exe->redir[0] == -1)
 		{
-			// ft_if_open_failed(lst->cmds[1]); // can remove
-			printf("minishell: %s: %s\n", lst->cmds[1], strerror(errno));
+			ft_if_open_failed(lst->cmds[1]);
 			env->err_num = 1;
 			exit(1);
 		}
@@ -107,16 +104,9 @@ void	ft_redir_right(t_exe *exe, t_node *lst)
 returns -1 if coommand or path to command not found*/
 void	ft_execute(t_exe *exe, t_node *lst, t_env *env) //WIP
 {
+	(void) exe;
 	if (execve(lst->cmds[0], lst->cmds, env->env_vars) == -1)
 	{
-		dup2(STDERR_FILENO, STDOUT_FILENO);
-		exe->z = ft_strlen(lst->cmds[0]);
-		while (exe->z > 0)
-		{
-			if (lst->cmds[0][exe->z] == '/')
-				break ;
-			exe->z--;
-		}
 		if (env->env_path != NULL)
 			printf("minishell: %s: command not found\n",
 				lst->cmds[0]);

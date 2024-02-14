@@ -6,7 +6,7 @@
 /*   By: atok <atok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 12:38:57 by atok              #+#    #+#             */
-/*   Updated: 2024/02/13 23:34:52 by atok             ###   ########.fr       */
+/*   Updated: 2024/02/14 13:43:08 by atok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ char	*ft_get_cmd_path(char **path, char *cmd)
 {
 	char	*a;
 	char	*b;
-	int		i;	
+	int		i;
 
 	i = 0;
 	if (!path)

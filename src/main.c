@@ -6,7 +6,7 @@
 /*   By: atok <atok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 18:28:19 by wyap              #+#    #+#             */
-/*   Updated: 2024/02/13 20:42:52 by atok             ###   ########.fr       */
+/*   Updated: 2024/02/14 12:27:32 by atok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,9 +127,9 @@ void	lexer_seq(t_env *env, t_node **lst_cmd, char *cmd_buf)
 {
 	ft_parse(lst_cmd, cmd_buf, ft_index(cmd_buf));
 	assign_attr(lst_cmd);
-	if (check_operator(&env, lst_cmd) == true)
+	if (check_operator(env, lst_cmd) == true)
 	{
-		ft_expand(lst_cmd, &env);
+		ft_expand(lst_cmd, env);
 		trim_quotes(lst_cmd);
 		clear_empty_node(lst_cmd);
 		if (*lst_cmd)
@@ -138,8 +138,8 @@ void	lexer_seq(t_env *env, t_node **lst_cmd, char *cmd_buf)
 			combine_nodes(lst_cmd);
 			ft_sort(*lst_cmd);
 			combine_nodes(lst_cmd);
-			if (create_cmd_group(&env, *lst_cmd) == 0)
-				ft_execute_cmd(&env, lst_cmd);
+			if (create_cmd_group(env, *lst_cmd) == 0)
+				ft_execute_cmd(env, lst_cmd);
 		}
 	}
 	free(cmd_buf);
