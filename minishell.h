@@ -100,22 +100,27 @@ bool	check_cmd(t_env *env, char *cmd_str);
 int	ft_check_quote(char *str);
 bool	ft_check_arrow(char *str);
 int	*ft_index(char *cmd_buf);
+int	*ft_quote_pair(int *out, char *str);
+int	*ft_index_quote(int *out, char *str);
+int	*ft_index_left_arrow(int *out, char *str);
+int	*ft_index_right_arrow(int *out, char *str);
 void	ft_parse(t_node **lst_cmd ,char *cmd_buf, int *int_array);
 void	assign_attr(t_node **lst_cmd);
 bool	check_operator(t_env *env, t_node **lst_cmd);
+void	trim_quotes(t_node **lst_cmd);
+void	clear_empty_node(t_node **lst_cmd);
+void	set_rdr_nodes(t_node **lst_cmd);
+void	combine_nodes(t_node **lst_cmd);
+// void	set_builtin_nodes(t_node **lst_cmd);
+void ft_sort(t_node *lst);
 
 // expanding
 void	store_env(t_env *env, char **envp);
 void	store_path(t_env *env);
 void	store_tilde(t_env *env);
 void	ft_expand(t_node **lst_cmd, t_env *env);
-void	trim_quotes(t_node **lst_cmd);
-void	clear_empty_node(t_node **lst_cmd);
-void	set_rdr_nodes(t_node **lst_cmd);
-void	combine_nodes(t_node **lst_cmd);
-void	set_builtin_nodes(t_node **lst_cmd);
-void ft_sort(t_node *lst);
-char	*get_multiline(char	*delim);
+char	*expand_errno(t_env *env, char *key);
+
 
 /*expand utils*/
 char *ft_strcpy(char *dst, char *src);
@@ -125,6 +130,7 @@ void	*ft_memmove(void *dest, const void *src, size_t n);
 char	*ft_strncpy(char *dest, const char *src, size_t n);
 
 /*execute*/
+char	*get_multiline(char	*delim);
 int		create_cmd_group(t_env *env, t_node *lst_cmd);
 void	get_pipe_count(t_exe *exe, t_node **lst_cmd);
 void	ft_execute_cmd(t_env *env, t_node **lst);

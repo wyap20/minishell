@@ -47,53 +47,66 @@ char	*ft_replace(char *str, char *key, char *val)
 //n will be wehre key/src end
 // moving the raminder to the back remainder=anyhong after key)
 
-char	*get_key(t_node *token)
+// char	*get_key(t_node *token)
+// {
+// 	char	*key;
+// 	char	*tmp;
+// 	int		i;
+// 	int		j;
+
+// 	i = -1;
+// 	j = 0;
+// 	tmp = token->content;
+// 	key = NULL;
+// 	while (tmp[++i])
+// 	{
+// 		if (tmp[i] == '$')
+// 		{
+// 			i++;
+// 			j++;
+// 			while (tmp[i] != ' ' && tmp[i] != '$' && tmp[i]
+// 				&& (ft_isalpha(tmp[i]) || tmp[i] == '?'))
+// 			{
+// 				i++;
+// 				j++;
+// 			}
+// 			key = ft_substr(tmp, i - j, j);
+// 			if (ft_strlen(key) > 0)
+// 				break ;
+// 		}
+// 	}
+// 	return (key);
+// }
+
+char	*get_key(t_node *t)
 {
 	char	*key;
-	char	*tmp;
 	int		i;
 	int		j;
 
-	i = 0;
+	i = -1;
 	j = 0;
-	tmp = token->content;
 	key = NULL;
-	while (tmp[i])
+	while (t->content[++i])
 	{
-		if (tmp[i] == '$')
+		if (t->content[i] == '$')
 		{
 			i++;
 			j++;
-			while (tmp[i] != ' ' && tmp[i] != '$' && tmp[i] && (ft_isalpha(tmp[i]) || tmp[i] == '?'))
+			while (t->content[i] != ' ' && t->content[i] != '$' && t->content[i]
+				&& (ft_isalpha(t->content[i]) || t->content[i] == '?'))
 			{
 				i++;
 				j++;
 			}
-			key = ft_substr(tmp, i - j, j);
+			key = ft_substr(t->content, i - j, j);
 			if (ft_strlen(key) > 0)
 				break ;
 		}
-		i++;
 	}
 	return (key);
 }
 	// printf("get key:%s\n", key);
-
-char	*expand_errno(t_env *env, char *key)
-{
-	char	*err_no;
-	char	*sub;
-	char	*val;
-
-	err_no = ft_itoa(env->err_num);
-	sub = ft_substr(key, 2, ft_strlen(key) - 1);
-	val = ft_strjoin(err_no, sub);
-	return (free(sub), free(err_no), val);
-}
-	// printf("key:%s\n", key);
-	// printf("itoa errnum:%s\n", err_no);
-	// printf("sub:%s\n", sub);
-	// printf("expand errno val:%s\n", val);
 
 char	*get_val(t_env *env, char *key)
 {

@@ -6,7 +6,7 @@
 /*   By: wyap <wyap@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 11:05:53 by wyap              #+#    #+#             */
-/*   Updated: 2024/02/14 14:37:24 by wyap             ###   ########.fr       */
+/*   Updated: 2024/02/14 16:11:59 by wyap             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ char	*check_remain_char1(char *str, char type)
 			if (!ft_isalnum(buf[j]) && buf[j] != '_')
 			{
 				if (type == 'p')
-					printf("minishell: export: '%s':not a valid identifier\n", buf);
+					printf("minishell: export: '%s':not a valid identifier\n",
+						buf);
 				free_2d_arr(split);
 				free(str);
 				return (ft_strdup(" "));
@@ -65,7 +66,7 @@ char	*check_remain_char2(char *str, char type)
 	else
 		buf = str;
 	if (type == 'p')
-		printf("minishell: export: '%s':not a valid identifier\n", buf);
+		printf("minishell: export: '%s': not a valid identifier\n", buf);
 	free_2d_arr(split);
 	free(str);
 	return (ft_strdup(" "));
