@@ -1,3 +1,18 @@
+[parsing test]
+"echo echo"
+bash: echo echo: command not found
+
+"ls -la"
+bash: ls -la: command not found
+
+"echo ls -la"
+bash: echo ls -la: command not found
+
+<< (standalone rdr or pipe)
+bash: syntax error near unexpected token [`newline']
+
+*******
+
 [echo tests]
 
 echo -n
@@ -66,7 +81,7 @@ c: command not found
 
 <a >z
 -bash: a: No such file or directory
-z file no created
+z file not created
 
 >z <a
 z file created
@@ -79,7 +94,7 @@ z file created
 
 cd [any directory] | echo 123
 123
-directory no changed
+directory not changed
 
 ls -la >z >zz | >zzzz wc >zzz 
 all file created
@@ -88,10 +103,10 @@ zzz will have       0       0       0
 
 >a >b  ls >c  | <c ls >d 
 c: No such file or directory
-a b c created wiht c having ls content
+a b c created with c having ls content
 run again >a >b  ls >c  | <c ls >d 
 c will be updated with file directory
-& file d will becreated with same content as cat
+& file d will be created with same content as cat
 
 <<a <<b <<c
 try and Ctrl+D and Ctrl+C in any sequnce

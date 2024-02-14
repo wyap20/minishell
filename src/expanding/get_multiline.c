@@ -49,7 +49,7 @@ char	*read_multiline_input(char *delim)
 		{
 			if (!line && g_hdflag == 0)
 				printf("minishell: warning: here-document delimited"
-					"by end-of-file (wanted `%s')\n", delim);
+					" by end-of-file (wanted `%s')\n", delim);
 			free(line);
 			break ;
 		}
