@@ -6,7 +6,7 @@
 /*   By: wyap <wyap@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 18:28:19 by wyap              #+#    #+#             */
-/*   Updated: 2024/02/14 16:34:31 by wyap             ###   ########.fr       */
+/*   Updated: 2024/02/14 16:59:44 by wyap             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,12 +76,12 @@ void	lexer_seq(t_env *env, t_node **lst_cmd, char *cmd_buf)
 	assign_attr(lst_cmd);
 	if (check_operator(env, lst_cmd) == true)
 	{
-		ft_expand(lst_cmd, env);
+		ft_expand(*lst_cmd, env);
 		trim_quotes(lst_cmd);
 		clear_empty_node(lst_cmd);
 		if (*lst_cmd)
 		{
-			set_rdr_nodes(lst_cmd);
+			set_rdr_nodes(*lst_cmd);
 			combine_nodes(lst_cmd);
 			ft_sort(*lst_cmd);
 			combine_nodes(lst_cmd);

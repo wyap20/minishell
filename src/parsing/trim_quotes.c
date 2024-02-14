@@ -6,7 +6,7 @@
 /*   By: wyap <wyap@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 13:28:19 by wyap              #+#    #+#             */
-/*   Updated: 2024/02/13 12:41:10 by wyap             ###   ########.fr       */
+/*   Updated: 2024/02/14 16:40:49 by wyap             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ void	trim_inner_quotes(t_node *ptr)
 	i = 0;
 	j = 0;
 	len = ft_strlen(ptr->content);
-	if (!ft_strcmp(ptr->quote_type, "double"))
+	if (!ft_strcmp(ptr->quote_type, "d"))
 		quote = '\"';
-	else if (!ft_strcmp(ptr->quote_type, "single"))
+	else if (!ft_strcmp(ptr->quote_type, "s"))
 		quote = '\'';
 	while (i < len)
 	{
@@ -47,13 +47,13 @@ void	trim_quotes(t_node **lst_cmd)
 	tmp = NULL;
 	while (ptr)
 	{
-		while (!ft_strcmp(ptr->quote_type, "none") && ptr->next)
+		while (!ft_strcmp(ptr->quote_type, "non") && ptr->next)
 			ptr = ptr->next;
-		if (!ft_strcmp(ptr->quote_type, "none") && ptr->next == NULL)
+		if (!ft_strcmp(ptr->quote_type, "non") && ptr->next == NULL)
 			break ;
-		if (!ft_strcmp(ptr->quote_type, "double"))
+		if (!ft_strcmp(ptr->quote_type, "d"))
 			quote = "\"";
-		else if (!ft_strcmp(ptr->quote_type, "single"))
+		else if (!ft_strcmp(ptr->quote_type, "s"))
 			quote = "\'";
 		tmp = ptr->content;
 		ptr->content = ft_strtrim(ptr->content, quote);

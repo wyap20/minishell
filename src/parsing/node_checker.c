@@ -6,7 +6,7 @@
 /*   By: wyap <wyap@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 12:34:54 by wyap              #+#    #+#             */
-/*   Updated: 2024/02/13 12:37:22 by wyap             ###   ########.fr       */
+/*   Updated: 2024/02/14 16:40:02 by wyap             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ bool	check_operator_syntax(t_env *env, t_node *ptr)
 		|| !ft_strcmp(ptr->content, ">>"))
 	{
 		if (!ft_strcmp(ptr->next->attr, "pipe")
-			|| (!ft_strcmp(ptr->next->attr, "space")
+			|| (!ft_strcmp(ptr->next->attr, "sp")
 				&& !ft_strcmp(ptr->next->next->attr, "pipe")))
 		{
 			printf("minishell: syntax error: near unexpected token\n");
@@ -36,7 +36,7 @@ bool	check_operator_syntax(t_env *env, t_node *ptr)
 		}
 	}
 	if (!ft_strcmp(ptr->attr, "rdr") && (!ft_strcmp(ptr->next->attr, "rdr")
-			|| (!ft_strcmp(ptr->next->attr, "space")
+			|| (!ft_strcmp(ptr->next->attr, "sp")
 				&& !ft_strcmp(ptr->next->next->attr, "rdr"))))
 	{
 		printf("minishell: syntax error near unexpected token\n");
@@ -48,7 +48,7 @@ bool	check_operator_syntax(t_env *env, t_node *ptr)
 // if (!ft_strcmp(ptr->attr, "pipe"))
 // 	if ((!ft_strcmp(ptr->next->content, ">>")
 // 		|| !ft_strcmp(ptr->next->content, ">"))
-// 		|| (!ft_strcmp(ptr->next->attr, "space")
+// 		|| (!ft_strcmp(ptr->next->attr, "sp")
 // 		&& (!ft_strcmp(ptr->next->next->content, ">>")
 // 		|| !ft_strcmp(ptr->next->next->content, ">"))))
 // 		return (false);

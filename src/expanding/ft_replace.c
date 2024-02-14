@@ -165,32 +165,63 @@ t_node	*get_key_val_rplc(t_env *env, t_node *ptr)
 		// printf("trim:%s\n", key);
 		// printf("val:%s\n", val);
 
-void	ft_expand(t_node **lst_cmd, t_env *env)
+// void	ft_expand(t_node **lst_cmd, t_env *env)
+// {
+// t_node	*ptr;
+// char	*tmp;
+
+// ptr = *lst_cmd;
+// tmp = NULL;
+// while (ptr)
+// {
+// if (!ft_strcmp(ptr->content, "~") && !ft_strcmp(ptr->quote_type, "non"))
+// {
+// tmp = ptr->content;
+// ptr->content = ft_strdup(env->home_tilde);
+// free(tmp);
+// }
+// else if (ptr->content[0] == '~' && ptr->content[1] != '~')
+// {
+// tmp = ptr->content;
+// ptr->content = ft_replace(ptr->content, "~", env->home_tilde);
+// free(tmp);
+// }
+// else if (!ft_strcmp(ptr->quote_type, "d")
+// || !ft_strcmp(ptr->quote_type, "non"))
+// ptr = get_key_val_rplc(env, ptr);
+// if (ptr)
+// if (!ft_strcmp(ptr->quote_type, "s") || !ft_strchr(ptr->content, '$'))
+// 	ptr = ptr->next;
+// }
+// }
+		// printf("expandmark\n");
+
+void	ft_expand(t_node *lst, t_env *env)
 {
-	t_node	*ptr;
 	char	*tmp;
 
-	ptr = *lst_cmd;
 	tmp = NULL;
-	while (ptr)
+	while (lst)
 	{
-		if (!ft_strcmp(ptr->content, "~") && !ft_strcmp(ptr->quote_type, "none"))
+		if (!ft_strcmp(lst->content, "~") && !ft_strcmp(lst->quote_type, "non"))
 		{
-			tmp = ptr->content;
-			ptr->content = ft_strdup(env->home_tilde);
+			tmp = lst->content;
+			lst->content = ft_strdup(env->home_tilde);
 			free(tmp);
 		}
-		else if (ptr->content[0] == '~' && ptr->content[1] != '~')
+		else if (lst->content[0] == '~' && lst->content[1] != '~')
 		{
-			tmp = ptr->content;
-			ptr->content = ft_replace(ptr->content, "~", env->home_tilde);
+			tmp = lst->content;
+			lst->content = ft_replace(lst->content, "~", env->home_tilde);
 			free(tmp);
 		}
-		else if (!ft_strcmp(ptr->quote_type, "double") || !ft_strcmp(ptr->quote_type, "none"))
-			ptr = get_key_val_rplc(env, ptr);
-		if (ptr)
-			if (!ft_strcmp(ptr->quote_type, "single") || !ft_strchr(ptr->content, '$'))
-				ptr = ptr->next;
+		else if (!ft_strcmp(lst->quote_type, "d")
+			|| !ft_strcmp(lst->quote_type, "non"))
+			lst = get_key_val_rplc(env, lst);
+		if (lst)
+			if (!ft_strcmp(lst->quote_type, "s")
+				|| !ft_strchr(lst->content, '$'))
+				lst = lst->next;
 	}
 }
 		// printf("expandmark\n");

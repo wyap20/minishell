@@ -6,7 +6,7 @@
 /*   By: wyap <wyap@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 14:05:50 by wyap              #+#    #+#             */
-/*   Updated: 2024/02/14 16:19:02 by wyap             ###   ########.fr       */
+/*   Updated: 2024/02/14 16:54:58 by wyap             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,8 @@ t_node	*combine_w_prev(t_node *ptr)
 	t_node	*tmp;
 	char	*content_ptr;
 
-	if (ptr->prev && (!ft_strcmp(ptr->prev->attr, "none")
-			|| !ft_strcmp(ptr->prev->attr, "space")))
+	if (ptr->prev && (!ft_strcmp(ptr->prev->attr, "non")
+			|| !ft_strcmp(ptr->prev->attr, "sp")))
 	{
 		content_ptr = ptr->prev->content;
 		ptr->prev->content = ft_strjoin(ptr->prev->content, ptr->content);
@@ -66,8 +66,8 @@ t_node	*combine_w_next(t_node *ptr)
 	char	*content_ptr;
 
 	tmp = ptr->next;
-	if (tmp && (!ft_strcmp(tmp->attr, "none")
-			|| !ft_strcmp(tmp->attr, "space")))
+	if (tmp && (!ft_strcmp(tmp->attr, "non")
+			|| !ft_strcmp(tmp->attr, "sp")))
 	{
 		content_ptr = ptr->content;
 		ptr->content = ft_strjoin(ptr->content, tmp->content);
@@ -80,34 +80,66 @@ t_node	*combine_w_next(t_node *ptr)
 	return (ptr);
 }
 
-void	set_rdr_nodes(t_node **lst_cmd)
+void	set_rdr_nodes(t_node *lst)
 {
-	t_node	*ptr;
-
-	ptr = *lst_cmd;
-	while (ptr)
+	while (lst)
 	{
-		if (!ft_strcmp(ptr->attr, "rdr") && ptr->next && ptr->next->next
-			&& !ft_strcmp(ptr->next->attr, "space") && !ft_strcmp(ptr->next->next->attr, "none"))
+		if (!ft_strcmp(lst->attr, "rdr") && lst->next
+			&& lst->next->next && !ft_strcmp(lst->next->attr, "sp")
+			&& !ft_strcmp(lst->next->next->attr, "non"))
 		{
-			ptr->next->attr = "rdr_sub";
-			ptr->next->next->attr = "rdr_sub";
-			ptr = ptr->next->next->next;
+			lst->next->attr = "rdr_sub";
+			lst->next->next->attr = "rdr_sub";
+			lst = lst->next->next->next;
 		}
-		else if ((!ft_strcmp(ptr->attr, "rdr") && ptr->next && !ft_strcmp(ptr->next->attr, "none")))
+		else if ((!ft_strcmp(lst->attr, "rdr")
+				&& lst->next && !ft_strcmp(lst->next->attr, "non")))
 		{
-			ptr->next->attr = "rdr_sub";
-			ptr = ptr->next->next;
+			lst->next->attr = "rdr_sub";
+			lst = lst->next->next;
 		}
 		else
-			ptr = ptr->next;
-		if (ptr && !ft_strcmp(ptr->attr, "space") && !ft_strcmp(ptr->prev->attr, "rdr_sub"))
+			lst = lst->next;
+		if (lst && !ft_strcmp(lst->attr, "sp")
+			&& !ft_strcmp(lst->prev->attr, "rdr_sub"))
 		{
-			ptr->attr = "rdr_sub";
-			ptr = ptr->next;
+			lst->attr = "rdr_sub";
+			lst = lst->next;
 		}
 	}
 }
+
+// void	set_rdr_nodes(t_node **lst_cmd)
+// {
+// t_node	*ptr;
+
+// ptr = *lst_cmd;
+// while (ptr)
+// {
+// if (!ft_strcmp(ptr->attr, "rdr") && ptr->next && ptr->next->next
+// && !ft_strcmp(ptr->next->attr, "sp") 
+// && !ft_strcmp(ptr->next->next->attr, "non"))
+// {
+// ptr->next->attr = "rdr_sub";
+// ptr->next->next->attr = "rdr_sub";
+// ptr = ptr->next->next->next;
+// }
+// else if ((!ft_strcmp(ptr->attr, "rdr") && ptr->next
+// && !ft_strcmp(ptr->next->attr, "non")))
+// {
+// ptr->next->attr = "rdr_sub";
+// ptr = ptr->next->next;
+// }
+// else
+// ptr = ptr->next;
+// if (ptr && !ft_strcmp(ptr->attr, "sp") &&
+// !ft_strcmp(ptr->prev->attr, "rdr_sub"))
+// {
+// ptr->attr = "rdr_sub";
+// ptr = ptr->next;
+// }
+// }
+// }
 
 /*
 * combine nodes that is not operator or commands
@@ -122,11 +154,11 @@ void	combine_nodes(t_node **lst_cmd)
 		if (!ft_strcmp(ptr->attr, "rdr") && ptr->next
 			&& !ft_strcmp(ptr->next->attr, "rdr_sub"))
 			ptr = make_rdr_group(ptr);
-		else if (!ft_strcmp(ptr->attr, "none") || !ft_strcmp(ptr->attr, "space"))
+		else if (!ft_strcmp(ptr->attr, "non") || !ft_strcmp(ptr->attr, "sp"))
 			ptr = combine_w_prev(ptr);
 		else if (!ft_strcmp(ptr->attr, "builtin")
 			|| ((!ft_strcmp(ptr->attr, "rdr") || !ft_strcmp(ptr->attr, "pipe"))
-				&& ptr->next && ft_strcmp(ptr->next->attr, "none")))
+				&& ptr->next && ft_strcmp(ptr->next->attr, "non")))
 			ptr = combine_w_next(ptr);
 		if (ptr && ptr->next)
 			ptr = ptr->next;

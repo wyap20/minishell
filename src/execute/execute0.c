@@ -50,7 +50,8 @@ void	ft_run_cmds(t_exe *exe, t_node *lst, t_env *env, char type)
 {
 	while (lst != NULL && lst->cmds[0][0] != '|')
 	{
-		if (lst->cmds[0][0] == '<' || lst->cmds[0][0] == '>')
+		if ((lst->cmds[0][0] == '<' || lst->cmds[0][0] == '>')
+			&& !ft_strcmp(lst->attr, "rdr"))
 		{
 			ft_redir_left(exe, lst, env);
 			ft_redir_right(exe, lst);

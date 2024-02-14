@@ -6,7 +6,7 @@
 #    By: wyap <wyap@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/06 18:40:56 by wyap              #+#    #+#              #
-#    Updated: 2024/02/14 16:36:09 by wyap             ###   ########.fr        #
+#    Updated: 2024/02/14 17:20:48 by wyap             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,12 +38,10 @@ FSAN = -fsanitize=address -g3 -ggdb
 
 .PHONY = all clean fclean re debug
 
-# Artie's PC: -lncurses flag required
 $(NAME): $(OBJ)
 	$(GCC) $(CFLAGS) -ggdb -g3 $(OBJ) -o $(NAME) -lreadline -lncurses -L /usr/local/opt/readline/lib
-# $(READLINE_MAC)
 
-all: $(NAME) debug
+all: $(NAME)
 
 clean:
 	$(RM) $(OBJ)
