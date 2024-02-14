@@ -100,6 +100,44 @@ void	ft_redir_right(t_exe *exe, t_node *lst)
 	}
 }
 
+void	ft_print_cmd_not_found(char *str)
+{
+	char	*buf;
+	char	*tmp;
+
+	buf = ft_strjoin("minishell: ", str);
+	tmp = buf;
+	buf = ft_strjoin(buf, ":");
+	free(tmp);
+	tmp = buf;
+	buf = ft_strjoin(buf, " command not found\n");
+	free(tmp);
+	write(2, buf, ft_strlen(buf));
+	free(buf);
+}
+
+void	ft_print_no_file_or_dir(char *str)
+{
+	char	*buf;
+	char	*tmp;
+
+	buf = ft_strjoin("minishell: ", str);
+	tmp = buf;
+	buf = ft_strjoin(buf, ":");
+	free(tmp);
+	tmp = buf;
+	buf = ft_strjoin(buf, " ");
+	free(tmp);
+	tmp = buf;
+	buf = ft_strjoin(buf, strerror(errno));
+	free(tmp);
+	tmp = buf;
+	buf = ft_strjoin(buf, "\n");
+	free(tmp);
+	write(2, buf, ft_strlen(buf));
+	free(buf);
+}
+
 /* executes/run all non-buildins trouh execve()
 returns -1 if coommand or path to command not found*/
 void	ft_execute(t_exe *exe, t_node *lst, t_env *env) //WIP
@@ -108,18 +146,12 @@ void	ft_execute(t_exe *exe, t_node *lst, t_env *env) //WIP
 	if (execve(lst->cmds[0], lst->cmds, env->env_vars) == -1)
 	{
 		if (env->env_path != NULL)
-			printf("minishell: %s: command not found\n",
-				lst->cmds[0]);
+			ft_print_cmd_not_found(lst->cmds[0]);
 		if (env->env_path == NULL)
-			printf("minishell: %s: %s\n", lst->cmds[0], strerror(errno));
+			ft_print_no_file_or_dir(lst->cmds[0]);
 		exit(127);
 	}
 }
-		// may only need printf for cmd not found and the exit 127 only
-		// ls a 
-		// in bash ls: cannot access 'a': No such file or directory
-		// in ours /bin/ls: cannot access 'a': No such file or directory
-		// is auto print err msg by ls itself
 
 /* set up the pipes before running/executing commands for each gorup */
 void	ft_set_pipe(t_exe *exe, int i)

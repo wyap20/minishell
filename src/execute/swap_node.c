@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   swap_node.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wyap <wyap@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: atok <atok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 16:01:49 by wyap              #+#    #+#             */
-/*   Updated: 2024/02/13 16:02:55 by wyap             ###   ########.fr       */
+/*   Updated: 2024/02/14 16:13:29 by atok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,6 @@ void	ft_sort(t_node *lst)
 		return ;
 	while (x != NULL)
 	{
-		// while (!ft_strcmp(x->attr,"rdr") && x->next != NULL)
-		// 	x = x->next;
-		// dst = x;
 		x = ft_get_req_node(x);
 		dst = x;
 		while (x != NULL && ft_strcmp(x->attr, "pipe"))
@@ -88,9 +85,6 @@ void	ft_sort(t_node *lst)
 			{
 				if (dst->attr != x->attr)
 				{
-					// ft_swap_info(dst, x);
-					// dst = dst->next;
-					// ft_reorder(dst, x);
 					dst = ft_swap_reorder(dst, x);
 				}
 			}
