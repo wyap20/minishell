@@ -80,17 +80,20 @@ void	ft_dlstadd_back(t_node **lst, t_node *new);
 int		ft_dlstsize(t_node	*lst);
 t_node	*ft_dlstlast(t_node *lst);
 
-/*utils*/
+/*sighandler*/
 void	signals(void);
-// void	print_nodes(t_node **lst_cmd);
-void	print_list(t_node **lst);
+void	sig_hd(int sig);
+
+/*utils*/
 void	free_node(t_node *node);
 void	free_list(t_node **lst_cmd);
 void	free_2d_arr(char **arr);
 bool	str_not_empty(const char *str);
-void	print_cmd_group(t_node **lst);
 void	print_sys_env(t_env *env);
 
+// void	print_nodes(t_node **lst_cmd);
+// void	print_list(t_node **lst);
+// void	print_cmd_group(t_node **lst);
 
 // parsing
 bool	check_cmd(t_env *env, char *cmd_str);
@@ -130,17 +133,19 @@ void	ft_sort(t_node *lst);
 void	ft_if_no_pipes(t_exe *exe, t_node *lst, t_env *env);
 void	ft_close_all_pipes(t_exe *exe);
 void	ft_multi_pipe(t_exe *exe, t_node *lst, t_env *env);
-void	run_builtin(t_env *env, t_node *ptr);
+void	run_builtin(t_env *env, t_node *ptr, char type);
+
 
 
 /*built in*/
 void	echo_print(char **cmds);
-void	ft_export(t_env *env, char **cmds);
-char	**check_export(char **add, t_env *env);
+void	ft_export(t_env *env, char **cmds, char type);
+char	**check_export(char **add, t_env *env, char type);
 void	add_to_env(t_env *env, char **updated);
 void	ft_unset(t_env *env, char **cmds);
 void	ft_exit(t_env *env, char *cmd_buf);
-void ft_cd(t_env *env, char **input);
+// void ft_cd(t_env *env, char **input);
+void	ft_cd(t_env *env, char **input, char type);
 void	ft_pwd(void);
 
 /*built in utils*/

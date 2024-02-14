@@ -6,7 +6,7 @@
 /*   By: wyap <wyap@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:44:59 by wyap              #+#    #+#             */
-/*   Updated: 2024/02/13 13:54:06 by wyap             ###   ########.fr       */
+/*   Updated: 2024/02/14 15:02:01 by wyap             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char	*get_env_home(t_env *env)
 	return (ret);
 }
 
-void	update_oldpwd(t_env *env, char *oldpwd)
+void	update_oldpwd(t_env *env, char *oldpwd, char type)
 {
 	int		i;
 	char	*oldpwd_ptr;
@@ -51,13 +51,13 @@ void	update_oldpwd(t_env *env, char *oldpwd)
 		export = (char **)malloc(2 * sizeof(char *));
 		export[0] = ft_strjoin("OLDPWD=", oldpwd);
 		export[1] = NULL;
-		ft_export(env, export);
+		ft_export(env, export, type);
 		free_2d_arr(export);
 		free(oldpwd);
 	}
 }
 
-void	export_pwd(t_env *env, char *pwd)
+void	export_pwd(t_env *env, char *pwd, char type)
 {
 	char	*pwd_ptr;
 	char	**export;
@@ -69,12 +69,12 @@ void	export_pwd(t_env *env, char *pwd)
 	export[0] = pwd_ptr;
 	export[1] = ft_strdup("OLDPWD=");
 	export[2] = NULL;
-	ft_export(env, export);
+	ft_export(env, export, type);
 	free_2d_arr(export);
 	free(pwd);
 }
 
-void	update_pwd_oldpwd(t_env *env, char *pwd)
+void	update_pwd_oldpwd(t_env *env, char *pwd, char type)
 {
 	int		i;
 	char	*pwd_ptr;
@@ -92,11 +92,11 @@ void	update_pwd_oldpwd(t_env *env, char *pwd)
 		}
 	}
 	if (!pwd_ptr)
-		export_pwd(env, pwd);
+		export_pwd(env, pwd, type);
 	if (pwd_ptr)
 	{
 		split = ft_split(pwd_ptr, '=');
-		update_oldpwd(env, ft_strdup(split[1]));
+		update_oldpwd(env, ft_strdup(split[1]), type);
 		free_2d_arr(split);
 	}
 	free(pwd_ptr);
@@ -127,7 +127,7 @@ void	change_dir(t_env *env, char **input)
 	free(home_path);
 }
 
-void	ft_cd(t_env *env, char **input)
+void	ft_cd(t_env *env, char **input, char type)
 {
 	char	*pwd;
 
@@ -138,7 +138,7 @@ void	ft_cd(t_env *env, char **input)
 		pwd = getcwd(NULL, 0);
 		if (pwd == NULL)
 			perror("failed to get current working directory\n");
-		update_pwd_oldpwd(env, pwd);
+		update_pwd_oldpwd(env, pwd, type);
 	}
 	else
 	{

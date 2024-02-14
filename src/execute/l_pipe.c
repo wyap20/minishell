@@ -155,7 +155,7 @@ void	ft_exe_pipe(t_exe *exe)
 }
 
 /* runs own implementaion of buildin commands as per subject pdf */
-void	run_builtin(t_env *env, t_node *ptr)
+void	run_builtin(t_env *env, t_node *ptr, char type)
 {
 	char	*cmd;
 
@@ -167,15 +167,15 @@ void	run_builtin(t_env *env, t_node *ptr)
 	else if (!ft_strcmp(cmd, "env"))
 		print_sys_env(env);
 	else if (!ft_strcmp(cmd, "export"))
-		ft_export(env, ptr->cmds);
+		ft_export(env, ptr->cmds, type);
 	else if (!ft_strcmp(cmd, "unset"))
 		ft_unset(env, ptr->cmds);
 	else if (!ft_strcmp(cmd, "cd"))
-		ft_cd(env, ptr->cmds);
+		ft_cd(env, ptr->cmds, type);
 }
 
 /* runs all the command for the groups */
-void	ft_run_cmds(t_exe *exe, t_node *lst, t_env *env)
+void	ft_run_cmds(t_exe *exe, t_node *lst, t_env *env, char type)
 {
 	while (lst != NULL && lst->cmds[0][0] != '|')
 	{
@@ -187,7 +187,7 @@ void	ft_run_cmds(t_exe *exe, t_node *lst, t_env *env)
 		else
 		{
 			if (!ft_strcmp(lst->attr, "builtin"))
-				run_builtin(env, lst);
+				run_builtin(env, lst, type);
 			else
 				ft_execute(exe, lst, env);
 		}
@@ -238,7 +238,7 @@ void	ft_multi_pipe(t_exe *exe, t_node *lst, t_env *env)
 		{
 			ft_set_pipe(exe, i);
 			ft_close_all_pipes(exe);
-			ft_run_cmds(exe, lst, env);
+			ft_run_cmds(exe, lst, env, 'c');
 			exit(0);
 		}
 		i++;

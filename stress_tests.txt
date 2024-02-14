@@ -108,7 +108,22 @@ b not created
 cat | cat | cat | cat | ls
 displays ls, should be waiting for input; pressing enter same times as cat will return to prompt
 
+rm >a z ls x >b y
+rm: z: No such file or directory
+rm: ls: No such file or directory
+rm: x: No such file or directory
+rm: y: No such file or directory
+a and b created, both empty
+
+ls 123 >z asd
+ls: 123: No such file or directory
+ls: asd: No such file or directory
+z created, empty
+
 test heredoc
+Ctrl + C
+Ctrl + D
+Ctrl + \
 
 ********
 [expanding tests]
@@ -152,6 +167,9 @@ export a=asd
 echo $a
 asd
 
+*******
+[export-unset test]
+
 export a=asd 
 env | grep $a [OR] env | grep a=
 output should contain "a=asd"
@@ -170,4 +188,20 @@ export a=123123 b=$a
 echo $a $b
 123123 asdf (a takes on new value; b takes value of a)
 
+export a
+export a b c D
+export a ab abc abcd
+does not export
+
+export a=
+adds to env_vars, blank value
+export a=123 ab=asd
+updates a value, adds ab
+export ab=$asd
+ab should have no value bc $asd not found and replaced by blank
+
+unset a
+should unset successful if exist, else does nothing
+unset 
 *******
+

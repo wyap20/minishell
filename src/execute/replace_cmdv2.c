@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   replace_cmdv2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atok <atok@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: wyap <wyap@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 12:38:57 by atok              #+#    #+#             */
-/*   Updated: 2024/02/14 13:43:08 by atok             ###   ########.fr       */
+/*   Updated: 2024/02/14 14:45:16 by wyap             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ int	create_cmd_group(t_env *env, t_node *lst_cmd)
 
 	result = process_cmd_group(env, lst_cmd);
 	if (result == 1)
-	{	
+	{
 		env->err_num = 130;
 		return (1);
 	}

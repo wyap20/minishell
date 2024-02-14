@@ -6,7 +6,7 @@
 /*   By: wyap <wyap@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/09 17:31:01 by wyap              #+#    #+#             */
-/*   Updated: 2024/02/13 14:03:49 by wyap             ###   ########.fr       */
+/*   Updated: 2024/02/14 14:44:10 by wyap             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,13 @@ void	renew_path(t_env *env)
 * updates env->env_var with valid key/value pairs
 * char *add contains key/value pairs to be checked and update into env->env_var
 */
-void	ft_export(t_env *env, char **cmds)
+void	ft_export(t_env *env, char **cmds, char type)
 {
 	char	**add_vars;
 	char	**updated;
 
 	add_vars = cmds;
-	updated = check_export(add_vars, env);
+	updated = check_export(add_vars, env, type);
 	add_to_env(env, updated);
 	renew_path(env);
 	free_2d_arr(updated);

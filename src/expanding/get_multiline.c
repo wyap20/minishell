@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_multiline.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atok <atok@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: wyap <wyap@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 12:58:07 by wyap              #+#    #+#             */
-/*   Updated: 2024/02/13 22:19:02 by atok             ###   ########.fr       */
+/*   Updated: 2024/02/14 14:57:50 by wyap             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,18 +32,6 @@ char	*join_lines(char *multi, char *line, int count)
 		free(line);
 	}
 	return (multi);
-}
-
-void	sig_hd(int sig)
-{
-	int	null_fd;
-
-	if (sig != SIGINT)
-		return ;
-	g_hdflag = 1;
-	null_fd = open("/dev/null", O_RDONLY);
-	dup2(null_fd, STDIN_FILENO);
-	close(null_fd);
 }
 
 char	*read_multiline_input(char *delim)

@@ -6,7 +6,7 @@
 /*   By: wyap <wyap@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 11:05:53 by wyap              #+#    #+#             */
-/*   Updated: 2024/02/13 14:00:14 by wyap             ###   ########.fr       */
+/*   Updated: 2024/02/14 14:37:24 by wyap             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 * if no '=', or remaining characters is invalid, free str and return space
 * otherwise return str as it is
 */
-char	*check_remain_char1(char *str)
+char	*check_remain_char1(char *str, char type)
 {
 	char	**split;
 	char	*buf;
@@ -33,7 +33,8 @@ char	*check_remain_char1(char *str)
 		{
 			if (!ft_isalnum(buf[j]) && buf[j] != '_')
 			{
-				printf("minishell: export: '%s':not a valid identifier\n", buf);
+				if (type == 'p')
+					printf("minishell: export: '%s':not a valid identifier\n", buf);
 				free_2d_arr(split);
 				free(str);
 				return (ft_strdup(" "));
@@ -50,7 +51,7 @@ char	*check_remain_char1(char *str)
 * obtain variable name to be included in error message
 * set the string to one space, to be ignored later
 */
-char	*check_remain_char2(char *str)
+char	*check_remain_char2(char *str, char type)
 {
 	char	**split;
 	char	*buf;
@@ -63,7 +64,8 @@ char	*check_remain_char2(char *str)
 	}
 	else
 		buf = str;
-	printf("minishell: export: '%s':not a valid identifier\n", buf);
+	if (type == 'p')
+		printf("minishell: export: '%s':not a valid identifier\n", buf);
 	free_2d_arr(split);
 	free(str);
 	return (ft_strdup(" "));
@@ -126,7 +128,7 @@ int	new_arr_size(char **add, t_env *env)
 	// printf("export: err_num:%d\n", env->err_num);
 
 /*validate eligible new key/value to be added in the environment*/
-char	**check_export(char **add, t_env *env)
+char	**check_export(char **add, t_env *env, char type)
 {
 	char	**updated;
 	int		i;
@@ -143,10 +145,10 @@ char	**check_export(char **add, t_env *env)
 				add[i] = ft_strdup(" ");
 			}
 			else
-				add[i] = check_remain_char1(add[i]);
+				add[i] = check_remain_char1(add[i], type);
 		}
 		else if (!ft_isalpha(add[i][0]))
-			add[i] = check_remain_char2(add[i]);
+			add[i] = check_remain_char2(add[i], type);
 		i++;
 	}
 	size = new_arr_size(add, env);
