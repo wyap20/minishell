@@ -6,7 +6,7 @@
 /*   By: wyap <wyap@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/05 14:05:50 by wyap              #+#    #+#             */
-/*   Updated: 2024/02/14 16:00:40 by wyap             ###   ########.fr       */
+/*   Updated: 2024/02/14 16:19:02 by wyap             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,26 +36,6 @@ t_node	*make_rdr_group(t_node *ptr)
 	}
 	return (ptr);
 }
-
-// t_node	*make_builtin_grp(t_node *ptr)
-// {
-// 	t_node	*tmp;
-// 	char	*content_ptr;
-
-// 	printf("\n\tcombine builtin mark\n");
-// 	tmp = ptr->next;
-// 	if (tmp && !ft_strcmp(tmp->attr, "builtin_sub"))
-// 	{
-// 		content_ptr = ptr->content;
-// 		ptr->content = ft_strjoin(ptr->content, tmp->content);
-// 		free(content_ptr);
-// 		ptr->next = tmp->next;
-// 		if (tmp->next)
-// 			tmp->next->prev = ptr;
-// 		free_node(tmp);
-// 	}
-// 	return (ptr);
-// }
 
 /*merge current node with previous node*/
 t_node	*combine_w_prev(t_node *ptr)
@@ -128,23 +108,6 @@ void	set_rdr_nodes(t_node **lst_cmd)
 		}
 	}
 }
-
-// void	set_builtin_nodes(t_node **lst_cmd)
-// {
-// 	t_node *ptr;
-
-// 	ptr = *lst_cmd;
-// 	while(ptr)
-// 	{
-// 		if (!ft_strcmp(ptr->attr, "builtin") && ptr->next && (!ft_strcmp(ptr->next->attr, "none") || !ft_strcmp(ptr->next->attr, "builtin")))
-// 		{
-// 			ptr->next->attr = "builtin_sub";
-// 			ptr = ptr->next->next;
-// 		}
-// 		else
-// 			ptr = ptr->next;
-// 	}
-// }
 
 /*
 * combine nodes that is not operator or commands

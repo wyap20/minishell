@@ -6,7 +6,7 @@
 #    By: wyap <wyap@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/06 18:40:56 by wyap              #+#    #+#              #
-#    Updated: 2024/02/14 16:09:07 by wyap             ###   ########.fr        #
+#    Updated: 2024/02/14 16:36:09 by wyap             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,10 +23,10 @@ SRC = main.c utils/ft_split.c utils/ft_strlen.c utils/ft_strjoin.c\
 		expanding/store_env.c expanding/expand_utils.c expanding/get_multiline.c\
 		builtins/builtin_utils.c builtins/echo.c builtins/export.c\
 		builtins/check_export.c builtins/update_env.c builtins/unset.c\
-		builtins/exit.c execute/replace_cmdv2.c execute/l_pipe.c builtins/cd.c\
-		builtins/pwd.c execute/swap_node.c execute/execute.c execute/init_exe.c\
+		builtins/exit.c execute/replace_cmdv2.c execute/execute0.c builtins/cd.c\
+		builtins/pwd.c execute/swap_node.c execute/execute1.c execute/init_exe.c\
 		execute/no_child.c utils/signal_util.c parsing/index_quote_arrw.c\
-		expanding/errno.c
+		expanding/errno.c execute/rdr.c execute/execute2.c
 
 OBJ = $(addprefix $(SRC_DIR), $(SRC:.c=.o))
 

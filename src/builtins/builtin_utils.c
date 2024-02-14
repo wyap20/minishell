@@ -6,7 +6,7 @@
 /*   By: wyap <wyap@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 17:45:23 by wyap              #+#    #+#             */
-/*   Updated: 2024/02/13 13:52:31 by wyap             ###   ########.fr       */
+/*   Updated: 2024/02/14 16:20:42 by wyap             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,25 @@ void	print_sys_env(t_env *env)
 	while (env->env_vars[++i])
 		printf("%s\n", env->env_vars[i]);
 	return ;
+}
+
+/*get HOME in env_vars
+* used in ft_cd
+*/
+char	*get_env_home(t_env *env)
+{
+	char	*ret;
+	int		i;
+
+	ret = NULL;
+	i = -1;
+	while (env->env_vars[++i])
+	{
+		if (!ft_strncmp(env->env_vars[i], "HOME=", 5))
+			ret = ft_substr(env->env_vars[i], 5,
+					(int)ft_strlen(env->env_vars[i]) - 5);
+	}
+	return (ret);
 }
 
 /*

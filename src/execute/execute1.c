@@ -6,11 +6,31 @@
 /*   By: wyap <wyap@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 16:09:21 by wyap              #+#    #+#             */
-/*   Updated: 2024/02/13 16:21:16 by wyap             ###   ########.fr       */
+/*   Updated: 2024/02/14 16:27:25 by wyap             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
+
+/* runs own implementaion of buildin commands as per subject pdf */
+void	run_builtin(t_env *env, t_node *ptr, char type)
+{
+	char	*cmd;
+
+	cmd = ptr->cmds[0];
+	if (!ft_strcmp(cmd, "echo"))
+		echo_print(ptr->cmds);
+	else if (!ft_strcmp(cmd, "pwd"))
+		ft_pwd();
+	else if (!ft_strcmp(cmd, "env"))
+		print_sys_env(env);
+	else if (!ft_strcmp(cmd, "export"))
+		ft_export(env, ptr->cmds, type);
+	else if (!ft_strcmp(cmd, "unset"))
+		ft_unset(env, ptr->cmds);
+	else if (!ft_strcmp(cmd, "cd"))
+		ft_cd(env, ptr->cmds, type);
+}
 
 /* waits for all child process to end to get final error number */
 void	ft_wait_pid(t_exe *exe, t_env *env)
@@ -39,13 +59,6 @@ void	ft_free_pp(t_exe *exe)
 	free(exe->pid);
 	if (exe->num_pipes > 0)
 		free(exe->pipes);
-}
-
-void	sig_nl(int sig_num)
-{
-	if (sig_num != SIGINT)
-		return ;
-	write(1, "\n", 1);
 }
 
 /* execute commands starts here */

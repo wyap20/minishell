@@ -83,6 +83,7 @@ t_node	*ft_dlstlast(t_node *lst);
 /*sighandler*/
 void	signals(void);
 void	sig_hd(int sig);
+void	sig_nl(int sig_num);
 
 /*utils*/
 void	free_node(t_node *node);
@@ -141,6 +142,11 @@ void	ft_close_all_pipes(t_exe *exe);
 void	ft_multi_pipe(t_exe *exe, t_node *lst, t_env *env);
 void	run_builtin(t_env *env, t_node *ptr, char type);
 
+void	ft_redir_right(t_exe *exe, t_node *lst);
+void	ft_redir_left(t_exe *exe, t_node *lst, t_env *env);
+void	ft_close_all_pipes(t_exe *exe);
+void	ft_execute(t_node *lst, t_env *env);
+
 
 
 /*built in*/
@@ -156,5 +162,7 @@ void	ft_pwd(void);
 
 /*built in utils*/
 int	get_array_count(char **array);
+char	*get_env_home(t_env *env);
+
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: wyap <wyap@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 16:07:09 by wyap              #+#    #+#             */
-/*   Updated: 2024/02/14 16:09:44 by wyap             ###   ########.fr       */
+/*   Updated: 2024/02/14 16:18:24 by wyap             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,4 +27,3 @@ char	*expand_errno(t_env *env, char *key)
 	// printf("itoa errnum:%s\n", err_no);
 	// printf("sub:%s\n", sub);
 	// printf("expand errno val:%s\n", val);
-	

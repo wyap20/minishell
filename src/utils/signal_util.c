@@ -6,7 +6,7 @@
 /*   By: wyap <wyap@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 14:53:00 by wyap              #+#    #+#             */
-/*   Updated: 2024/02/14 15:18:30 by wyap             ###   ########.fr       */
+/*   Updated: 2024/02/14 16:26:49 by wyap             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,4 +41,12 @@ void	sig_hd(int sig)
 	null_fd = open("/dev/null", O_RDONLY);
 	dup2(null_fd, STDIN_FILENO);
 	close(null_fd);
+}
+
+/*signal newline in ft_execute_cmd()*/
+void	sig_nl(int sig_num)
+{
+	if (sig_num != SIGINT)
+		return ;
+	write(1, "\n", 1);
 }

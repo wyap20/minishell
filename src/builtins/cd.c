@@ -6,27 +6,11 @@
 /*   By: wyap <wyap@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 13:44:59 by wyap              #+#    #+#             */
-/*   Updated: 2024/02/14 15:02:01 by wyap             ###   ########.fr       */
+/*   Updated: 2024/02/14 16:21:09 by wyap             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
-
-char	*get_env_home(t_env *env)
-{
-	char	*ret;
-	int		i;
-
-	ret = NULL;
-	i = -1;
-	while (env->env_vars[++i])
-	{
-		if (!ft_strncmp(env->env_vars[i], "HOME=", 5))
-			ret = ft_substr(env->env_vars[i], 5,
-					(int)ft_strlen(env->env_vars[i]) - 5);
-	}
-	return (ret);
-}
 
 void	update_oldpwd(t_env *env, char *oldpwd, char type)
 {
