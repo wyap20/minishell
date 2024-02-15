@@ -6,7 +6,7 @@
 /*   By: wyap <wyap@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 18:04:11 by wyap              #+#    #+#             */
-/*   Updated: 2024/02/13 14:01:15 by wyap             ###   ########.fr       */
+/*   Updated: 2024/02/15 15:01:22 by wyap             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,6 @@ void	echo_print(char **cmds)
 		if (flag == true)
 			i = 2;
 	}
-	if (!cmds[i])
-		return ;
 	while (cmds && cmds[i])
 	{
 		j = 0;
@@ -53,4 +51,6 @@ void	echo_print(char **cmds)
 	if (flag == false)
 		printf("\n");
 }
+	// if (!cmds[i])
+	// 	return ;
 	// printf("%d, %d\n", i, flag);
