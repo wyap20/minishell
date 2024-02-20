@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wyap <wyap@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: atok <atok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/14 17:08:15 by wyap              #+#    #+#             */
-/*   Updated: 2024/02/14 17:17:36 by wyap             ###   ########.fr       */
+/*   Updated: 2024/02/20 18:20:46 by atok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,9 +101,9 @@ void	free_2d_arr(char **arr);
 bool	str_not_empty(const char *str);
 void	print_sys_env(t_env *env);
 
-// void	print_nodes(t_node **lst_cmd);
-// void	print_list(t_node **lst);
-// void	print_cmd_group(t_node **lst);
+void	print_nodes(t_node **lst_cmd);
+void	print_list(t_node **lst);
+void	print_cmd_group(t_node **lst);
 
 // parsing
 bool	check_cmd(t_env *env, char *cmd_str);
@@ -172,4 +172,5 @@ void	ft_pwd(void);
 int		get_array_count(char **array);
 char	*get_env_home(t_env *env);
 
+char	**ft_split_cmds(char *str); // <<
 #endif

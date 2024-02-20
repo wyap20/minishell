@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: wyap <wyap@student.42.fr>                  +#+  +:+       +#+         #
+#    By: atok <atok@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/06 18:40:56 by wyap              #+#    #+#              #
-#    Updated: 2024/02/14 17:20:48 by wyap             ###   ########.fr        #
+#    Updated: 2024/02/20 18:20:53 by atok             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,8 @@ SRC = main.c utils/ft_split.c utils/ft_strlen.c utils/ft_strjoin.c\
 		builtins/exit.c execute/replace_cmdv2.c execute/execute0.c builtins/cd.c\
 		builtins/pwd.c execute/swap_node.c execute/execute1.c execute/init_exe.c\
 		execute/no_child.c utils/signal_util.c parsing/index_quote_arrw.c\
-		expanding/errno.c execute/rdr.c execute/execute2.c
+		expanding/errno.c execute/rdr.c execute/execute2.c\
+		parsing/ft_split_cmd.c # << 
 
 OBJ = $(addprefix $(SRC_DIR), $(SRC:.c=.o))
 

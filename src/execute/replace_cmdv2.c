@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   replace_cmdv2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wyap <wyap@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: atok <atok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/24 12:38:57 by atok              #+#    #+#             */
-/*   Updated: 2024/02/14 14:45:16 by wyap             ###   ########.fr       */
+/*   Updated: 2024/02/20 18:08:19 by atok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,8 @@ void	process_node(t_env *env, t_node *node)
 	char	*tmp;
 
 	tmp = NULL;
-	node->cmds = ft_split(node->content, ' ');
+	// node->cmds = ft_split(node->content, ' ');
+	node->cmds = ft_split_cmds(node->content);
 	if (!node->cmds[0])
 		return ;
 	if (!ft_strcmp(node->cmds[0], "<<"))

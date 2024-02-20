@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils1.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wyap <wyap@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: atok <atok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 01:12:54 by wyap              #+#    #+#             */
-/*   Updated: 2024/02/14 15:25:59 by wyap             ###   ########.fr       */
+/*   Updated: 2024/02/16 01:17:12 by atok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,37 +83,37 @@ bool	str_not_empty(const char *str)
 // 	}
 // }
 
-// void	print_list(t_node **lst)
-// {
-// 	t_node	*tmp;
+void	print_list(t_node **lst)
+{
+	t_node	*tmp;
 
-// 	tmp = *lst;
-// 	printf("\n\t***lst_cmd***\n");
-// 	while (tmp)
-// 	{
-// 		printf("\n\tNode Content		:%s", tmp->content);
-// 		printf("\n\tAttribute		:%s", tmp->attr);
-// 		printf("\n\tQuote Type		:%s", tmp->quote_type);
-// 		printf("\n\tCurr Node Addr		:%p", tmp);
-// 		printf("\n\tPrev Node Addr		:%p", tmp->prev);
-// 		printf("\n\tNext Node Addr		:%p\n", tmp->next);
-// 		tmp = tmp->next;
-// 	}
-// }
+	tmp = *lst;
+	printf("\n\t***lst_cmd***\n");
+	while (tmp)
+	{
+		printf("\n\tNode Content		:%s", tmp->content);
+		printf("\n\tAttribute		:%s", tmp->attr);
+		printf("\n\tQuote Type		:%s", tmp->quote_type);
+		printf("\n\tCurr Node Addr		:%p", tmp);
+		printf("\n\tPrev Node Addr		:%p", tmp->prev);
+		printf("\n\tNext Node Addr		:%p\n", tmp->next);
+		tmp = tmp->next;
+	}
+}
 
-// void	print_cmd_group(t_node **lst)
-// {
-// 	t_node	*ptr;
+void	print_cmd_group(t_node **lst)
+{
+	t_node	*ptr;
 
-// 	ptr = *lst;
-// 	printf("\n\t***PRINT CMD GROUP***");
-// 	while (ptr)
-// 	{
-// 		printf("\n\tCurr Node Addr		:%p", ptr);
-// 		if (ptr->cmds)
-// 			for (int i = 0; ptr->cmds[i]; i++)
-// 				printf("\n\tcmd[%d]:%s", i, ptr->cmds[i]);
-// 		printf("\n\n");
-// 		ptr = ptr->next;
-// 	}
-// }
+	ptr = *lst;
+	printf("\n\t***PRINT CMD GROUP***");
+	while (ptr)
+	{
+		printf("\n\tCurr Node Addr		:%p", ptr);
+		if (ptr->cmds)
+			for (int i = 0; ptr->cmds[i]; i++)
+				printf("\n\tcmd[%d]:%s", i, ptr->cmds[i]);
+		printf("\n\n");
+		ptr = ptr->next;
+	}
+}
