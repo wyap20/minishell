@@ -210,18 +210,20 @@ void	remove_quote(char *s, char c, int *i)
 {
 	int	j;
 
-	j = *i;
-	ft_memmove(s + j, s + (j + 1), ft_strlen(s + (j + 1)) + 1);
+	j = *i + 1;
 	while (s[j] != '\0') 
 	{
 		if (s[j] == c) 
 		{
-			ft_memmove(s + j, s + (j + 1), ft_strlen(s + (j + 1)) + 1);
-			*i = j;
+			ft_memmove(s + *i, s + (*i + 1), ft_strlen(s + (*i + 1)) + 1);
+			ft_memmove(s + j - 1, s + (j), ft_strlen(s + (j)) + 1);
+			*i = j - 1;
 			break;
 		}
 		j++;
 	}
+	if (s[j] == '\0')
+		(*i)++;
 }
 
 void ft_trim(char *s) 
@@ -236,42 +238,38 @@ void ft_trim(char *s)
 		{
 			c = s[i];
 			remove_quote(s, c, &i);
-			if (s[i] == '\0') // Break if the end of the string is reached
-				break;
 		} 
 		else 
-		{
 			i++;
-		}
 	}
 }
 
-// void	ft_trim(char *s)
+// void	ft_trim(char *str)
 // {
 // 	int		i;
 // 	int		j;
 // 	char	c;
 
 // 	i = 0;
-// 	while (s[i] != 0x00)
+// 	while (str[i] != 0x00)
 // 	{
-// 		if (s[i] == '\'' || s[i] == '\"')
+// 		if (str[i] == '\'' || str[i] == '\"')
 // 		{
-// 			c = s[i];
-// 			ft_memmove(s + i, s + (i + 1), ft_strlen(s + (i + 1)) + 1);
-// 			j = i;
-// 			while (s[j] != 0x00)
+// 			c = str[i];
+// 			j = i + 1;
+// 			while (str[j] != 0x00)
 // 			{
-// 				if (s[j] == c)
+// 				if (str[j] == c)
 // 				{
-// 					ft_memmove(s + j, s + (j + 1), ft_strlen(s + (j + 1)) + 1);
-// 					i = j;
+// 					ft_memmove(str + i, str + (i + 1), ft_strlen(str + (i + 1)) + 1);
+// 					ft_memmove(str + j - 1, str + (j), ft_strlen(str + (j)) + 1);
+// 					i = j - 1;
 // 					break ;
 // 				}
 // 				j++;
 // 			}
-// 			if(s[j] == 0x00)
-// 				break;
+// 			if(str[j] == 0x00)
+// 				i++;
 // 		}
 // 		else
 // 			i++;

@@ -6,7 +6,7 @@
 /*   By: atok <atok@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 18:28:19 by wyap              #+#    #+#             */
-/*   Updated: 2024/02/21 04:28:57 by atok             ###   ########.fr       */
+/*   Updated: 2024/02/22 18:02:22 by atok             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,7 +155,7 @@ int	main(int ac, char **av, char **envp)
 				{
 					ft_expand(*lst_cmd, &env); //expand handle dollar sign (loop through list and replace env var)
 					printf("\n\texpand:\n"); print_list(lst_cmd);
-					// trim_quotes(lst_cmd);
+					// trim_quotes(lst_cmd); // <<
 					printf("\n\ttrim quotes:\n"); print_list(lst_cmd);
 					clear_empty_node(lst_cmd);
 					printf("\n\tremove null node:\n"); print_list(lst_cmd);
