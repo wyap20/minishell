@@ -131,7 +131,7 @@ void	store_path(t_env *env);
 void	store_tilde(t_env *env);
 void	ft_expand(t_node *lst_cmd, t_env *env);
 char	*expand_errno(t_env *env, char *key);
-// void	ft_expand(t_node **lst_cmd, t_env *env);
+
 
 /*expand utils*/
 char	*ft_strcpy(char *dst, char *src);

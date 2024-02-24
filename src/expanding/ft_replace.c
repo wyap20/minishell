@@ -157,6 +157,15 @@ t_node	*get_key_val_rplc(t_env *env, t_node *ptr)
 		tmp = ptr->content;
 		ptr->content = ft_replace(ptr->content, key, val);
 		free(tmp);
+		if (!ft_strcmp(ptr->quote_type, "non"))
+		{
+			tmp = ptr->content;
+			ptr->content = ft_strjoin("\"", ptr->content);
+			free(tmp);
+			tmp = ptr->content;
+			ptr->content = ft_strjoin(ptr->content, "\"");
+			free(tmp);
+		}
 		free(key);
 		free(val);
 	}
@@ -209,7 +218,7 @@ void	ft_expand(t_node *lst, t_env *env)
 			lst->content = ft_strdup(env->home_tilde);
 			free(tmp);
 		}
-		else if (lst->content[0] == '~' && lst->content[1] != '~')
+		else if (lst->content[0] == '~' && lst->content[1] == '/')
 		{
 			tmp = lst->content;
 			lst->content = ft_replace(lst->content, "~", env->home_tilde);
@@ -225,3 +234,11 @@ void	ft_expand(t_node *lst, t_env *env)
 	}
 }
 		// printf("expandmark\n");
+
+//tilde test case
+// ~ ~ (expand OK)
+
+// doesnt expand
+// ~x~
+// x~
+// ~~

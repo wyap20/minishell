@@ -70,30 +70,30 @@ void	init_env(t_env *env, char **envp)
 }
 
 /*lexer sequence: to parse and format cmd input*/
-void	lexer_seq(t_env *env, t_node **lst_cmd, char *cmd_buf)
-{
-	ft_parse(lst_cmd, cmd_buf, ft_index(cmd_buf));
-	assign_attr(lst_cmd);
-	if (check_operator(env, lst_cmd) == true)
-	{
-		ft_expand(*lst_cmd, env);
-		trim_quotes(lst_cmd);
-		clear_empty_node(lst_cmd);
-		if (*lst_cmd)
-		{
-			set_rdr_nodes(*lst_cmd);
-			combine_nodes(lst_cmd);
-			ft_sort(*lst_cmd);
-			combine_nodes(lst_cmd);
-			if (create_cmd_group(env, *lst_cmd) == 0)
-				ft_execute_cmd(env, lst_cmd);
-		}
-	}
-	free(cmd_buf);
-	free_list(lst_cmd);
-	free(lst_cmd);
-	lst_cmd = NULL;
-}
+// void	lexer_seq(t_env *env, t_node **lst_cmd, char *cmd_buf)
+// {
+// 	ft_parse(lst_cmd, cmd_buf, ft_index(cmd_buf));
+// 	assign_attr(lst_cmd);
+// 	if (check_operator(env, lst_cmd) == true)
+// 	{
+// 		ft_expand(*lst_cmd, env);
+// 		trim_quotes(lst_cmd);
+// 		clear_empty_node(lst_cmd);
+// 		if (*lst_cmd)
+// 		{
+// 			set_rdr_nodes(*lst_cmd);
+// 			combine_nodes(lst_cmd);
+// 			ft_sort(*lst_cmd);
+// 			combine_nodes(lst_cmd);
+// 			if (create_cmd_group(env, *lst_cmd) == 0)
+// 				ft_execute_cmd(env, lst_cmd);
+// 		}
+// 	}
+// 	free(cmd_buf);
+// 	free_list(lst_cmd);
+// 	free(lst_cmd);
+// 	lst_cmd = NULL;
+// }
 
 // int	main(int ac, char **av, char **envp)
 // {
@@ -156,9 +156,9 @@ int	main(int ac, char **av, char **envp)
 					ft_expand(*lst_cmd, &env); //expand handle dollar sign (loop through list and replace env var)
 					printf("\n\texpand:\n"); print_list(lst_cmd);
 					// trim_quotes(lst_cmd); // <<
-					printf("\n\ttrim quotes:\n"); print_list(lst_cmd);
-					clear_empty_node(lst_cmd);
-					printf("\n\tremove null node:\n"); print_list(lst_cmd);
+					// printf("\n\ttrim quotes:\n"); print_list(lst_cmd);
+					// clear_empty_node(lst_cmd);
+					// printf("\n\tremove null node:\n"); print_list(lst_cmd);
 					if (*lst_cmd)
 					{
 						set_rdr_nodes(*lst_cmd);

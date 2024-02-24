@@ -292,8 +292,15 @@ char **ft_split_cmds(char *str)
 	// 	printf("%c ",str[i]);
 	// printf("\n");
 	output = ft_split_v2(str,id,3);
-	//----------
 	int i = 0;
+	// printf("\n");
+	// while (output[i] != 0x00)
+	// {
+	// 	printf("\toutput[%d]: %s\n", i, output[i]);
+	// 	i++;
+	// }
+	// //----------
+	// i = 0;
 	while (output[i] != 0x00)
 		ft_trim(output[i++]);
 	free(id);
