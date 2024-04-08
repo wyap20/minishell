@@ -47,37 +47,6 @@ char	*ft_replace(char *str, char *key, char *val)
 //n will be wehre key/src end
 // moving the raminder to the back remainder=anyhong after key)
 
-// char	*get_key(t_node *token)
-// {
-// 	char	*key;
-// 	char	*tmp;
-// 	int		i;
-// 	int		j;
-
-// 	i = -1;
-// 	j = 0;
-// 	tmp = token->content;
-// 	key = NULL;
-// 	while (tmp[++i])
-// 	{
-// 		if (tmp[i] == '$')
-// 		{
-// 			i++;
-// 			j++;
-// 			while (tmp[i] != ' ' && tmp[i] != '$' && tmp[i]
-// 				&& (ft_isalpha(tmp[i]) || tmp[i] == '?'))
-// 			{
-// 				i++;
-// 				j++;
-// 			}
-// 			key = ft_substr(tmp, i - j, j);
-// 			if (ft_strlen(key) > 0)
-// 				break ;
-// 		}
-// 	}
-// 	return (key);
-// }
-
 char	*get_key(t_node *t)
 {
 	char	*key;
@@ -158,52 +127,21 @@ t_node	*get_key_val_rplc(t_env *env, t_node *ptr)
 		ptr->content = ft_replace(ptr->content, key, val);
 		free(tmp);
 		if (!ft_strcmp(ptr->quote_type, "non"))
-		{
-			tmp = ptr->content;
-			ptr->content = ft_strjoin("\"", ptr->content);
-			free(tmp);
-			tmp = ptr->content;
-			ptr->content = ft_strjoin(ptr->content, "\"");
-			free(tmp);
-		}
+			force_quotes(ptr);
 		free(key);
 		free(val);
 	}
 	return (ptr);
 }
+			// tmp = ptr->content;
+			// ptr->content = ft_strjoin("\"", ptr->content);
+			// free(tmp);
+			// tmp = ptr->content;
+			// ptr->content = ft_strjoin(ptr->content, "\"");
+			// free(tmp);
+
 		// printf("trim:%s\n", key);
 		// printf("val:%s\n", val);
-
-// void	ft_expand(t_node **lst_cmd, t_env *env)
-// {
-// t_node	*ptr;
-// char	*tmp;
-
-// ptr = *lst_cmd;
-// tmp = NULL;
-// while (ptr)
-// {
-// if (!ft_strcmp(ptr->content, "~") && !ft_strcmp(ptr->quote_type, "non"))
-// {
-// tmp = ptr->content;
-// ptr->content = ft_strdup(env->home_tilde);
-// free(tmp);
-// }
-// else if (ptr->content[0] == '~' && ptr->content[1] != '~')
-// {
-// tmp = ptr->content;
-// ptr->content = ft_replace(ptr->content, "~", env->home_tilde);
-// free(tmp);
-// }
-// else if (!ft_strcmp(ptr->quote_type, "d")
-// || !ft_strcmp(ptr->quote_type, "non"))
-// ptr = get_key_val_rplc(env, ptr);
-// if (ptr)
-// if (!ft_strcmp(ptr->quote_type, "s") || !ft_strchr(ptr->content, '$'))
-// 	ptr = ptr->next;
-// }
-// }
-		// printf("expandmark\n");
 
 void	ft_expand(t_node *lst, t_env *env)
 {
@@ -234,11 +172,3 @@ void	ft_expand(t_node *lst, t_env *env)
 	}
 }
 		// printf("expandmark\n");
-
-//tilde test case
-// ~ ~ (expand OK)
-
-// doesnt expand
-// ~x~
-// x~
-// ~~

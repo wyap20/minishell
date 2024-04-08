@@ -12,6 +12,7 @@
 
 #include "../../minishell.h"
 
+/*combine characters that should be redirection*/
 t_node	*make_rdr_group(t_node *ptr)
 {
 	t_node	*tmp;
@@ -108,38 +109,6 @@ void	set_rdr_nodes(t_node *lst)
 		}
 	}
 }
-
-// void	set_rdr_nodes(t_node **lst_cmd)
-// {
-// t_node	*ptr;
-
-// ptr = *lst_cmd;
-// while (ptr)
-// {
-// if (!ft_strcmp(ptr->attr, "rdr") && ptr->next && ptr->next->next
-// && !ft_strcmp(ptr->next->attr, "sp") 
-// && !ft_strcmp(ptr->next->next->attr, "non"))
-// {
-// ptr->next->attr = "rdr_sub";
-// ptr->next->next->attr = "rdr_sub";
-// ptr = ptr->next->next->next;
-// }
-// else if ((!ft_strcmp(ptr->attr, "rdr") && ptr->next
-// && !ft_strcmp(ptr->next->attr, "non")))
-// {
-// ptr->next->attr = "rdr_sub";
-// ptr = ptr->next->next;
-// }
-// else
-// ptr = ptr->next;
-// if (ptr && !ft_strcmp(ptr->attr, "sp") &&
-// !ft_strcmp(ptr->prev->attr, "rdr_sub"))
-// {
-// ptr->attr = "rdr_sub";
-// ptr = ptr->next;
-// }
-// }
-// }
 
 /*
 * combine nodes that is not operator or commands

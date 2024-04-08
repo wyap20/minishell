@@ -49,7 +49,7 @@ void	ft_reorder(t_node *dst, t_node *x)
 	}
 }
 
-/* iterate troguh nodes that are in correct position */
+/* iterate through nodes that are in correct position */
 t_node	*ft_get_req_node(t_node *x)
 {
 	while (!ft_strcmp(x->attr, "rdr") && x->next != NULL)

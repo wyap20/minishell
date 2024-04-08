@@ -52,7 +52,6 @@ void	process_node(t_env *env, t_node *node)
 	char	*tmp;
 
 	tmp = NULL;
-	// node->cmds = ft_split(node->content, ' ');
 	node->cmds = ft_split_cmds(node->content);
 	if (!node->cmds[0])
 		return ;

@@ -16,18 +16,19 @@ SRC_DIR = src/
 SRC = main.c utils/ft_split.c utils/ft_strlen.c utils/ft_strjoin.c\
 		utils/ft_strcmp.c utils/ft_strncmp.c utils/ft_isalnum.c\
 		utils/ft_strtrim.c utils/ft_strchr.c utils/ft_isalpha.c\
-		utils/ft_strdup.c utils/ft_substr.c parsing/parse_pipe.c\
+		utils/ft_strdup.c utils/ft_substr.c utils/signal_util.c\
 		utils/utils1.c utils/doubly.c utils/ft_itoa.c parsing/ft_checker.c\
 		parsing/node_checker.c parsing/trim_quotes.c parsing/ft_indexing.c\
 		parsing/parser.c parsing/combine.c expanding/ft_replace.c\
-		expanding/store_env.c expanding/expand_utils.c expanding/get_multiline.c\
-		builtins/builtin_utils.c builtins/echo.c builtins/export.c\
-		builtins/check_export.c builtins/update_env.c builtins/unset.c\
-		builtins/exit.c execute/replace_cmdv2.c execute/execute0.c builtins/cd.c\
-		builtins/pwd.c execute/swap_node.c execute/execute1.c execute/init_exe.c\
-		execute/no_child.c utils/signal_util.c parsing/index_quote_arrw.c\
-		expanding/errno.c execute/rdr.c execute/execute2.c\
-		parsing/ft_split_cmd.c # << 
+		parsing/ft_split_cmd.c parsing/ft_split_cmd2.c parsing/ft_trim.c\
+		parsing/parse_pipe.c parsing/index_quote_arrw.c expanding/store_env.c\
+		expanding/errno.c expanding/force_quotes.c  expanding/expand_utils.c\
+		expanding/get_multiline.c builtins/builtin_utils.c builtins/echo.c\
+		builtins/export.c builtins/check_export.c builtins/update_env.c\
+		builtins/unset.c builtins/exit.c builtins/cd.c builtins/pwd.c\
+		execute/replace_cmdv2.c	execute/execute0.c execute/swap_node.c\
+		execute/execute1.c execute/init_exe.c execute/no_child.c execute/rdr.c\
+		execute/execute2.c
 
 OBJ = $(addprefix $(SRC_DIR), $(SRC:.c=.o))
 

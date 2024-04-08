@@ -12,7 +12,7 @@
 
 #include "../../minishell.h"
 
-/* initialize varaible used in execution */
+/* initialize variable used in execution */
 void	ft_initialize_exe_vars(t_exe *exe, t_node **lst)
 {
 	exe->num_pipes = 0;

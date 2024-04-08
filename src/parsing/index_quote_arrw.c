@@ -70,38 +70,6 @@ int	*ft_index_quote(int *out, char *str)
 	return (out);
 }
 
-// int	*ft_index_quote(int *out, char *str)
-// {
-// 	int		i;
-// 	char	c;
-
-// 	i = -1;
-// 	while (str[++i] != 0x00)
-// 	{
-// 		if (str[i] == '\'')
-// 		{
-// 			c = str[i];
-// 			out[i] = 1;
-// 			i++;
-// 			while (str[i] != c)
-// 				out[i++] = 1;
-// 			out[i] = 1;
-// 			c = 0x00;
-// 		}
-// 		if (str[i] == '\"')
-// 		{
-// 			c = str[i];
-// 			out[i] = 11;
-// 			i++;
-// 			while (str[i] != c)
-// 				out[i++] = 11;
-// 			out[i] = 11;
-// 			c = 0x00;
-// 		}
-// 	}
-// 	return (out);
-// }
-
 int	*ft_index_left_arrow(int *out, char *str)
 {
 	int	i;

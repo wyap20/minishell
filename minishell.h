@@ -122,6 +122,11 @@ void	clear_empty_node(t_node **lst_cmd);
 void	set_rdr_nodes(t_node *lst_cmd);
 void	combine_nodes(t_node **lst_cmd);
 void	ft_sort(t_node *lst);
+
+char	**ft_split_cmds(char *str); // <<
+char	**ft_split_v2(char const *s, int *d, int c);
+int		ft_fill_in(int *id, int i, int q);
+void	ft_trim(char *s);
 // void	set_rdr_nodes(t_node **lst_cmd);
 // void	set_builtin_nodes(t_node **lst_cmd);
 
@@ -131,7 +136,7 @@ void	store_path(t_env *env);
 void	store_tilde(t_env *env);
 void	ft_expand(t_node *lst_cmd, t_env *env);
 char	*expand_errno(t_env *env, char *key);
-
+void	force_quotes(t_node *ptr);
 
 /*expand utils*/
 char	*ft_strcpy(char *dst, char *src);
